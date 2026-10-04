@@ -2,7 +2,7 @@
 # Announces a new alpha build on Telegram (optional: needs TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID).
 set -uo pipefail
 
-: "${COMMIT_LOG:?COMMIT_LOG env var required}"
+: "${COMMIT_LOG:=● No new commits since the last build}"
 : "${VERSION:?VERSION env var required}"
 : "${GITHUB_REPOSITORY:?GITHUB_REPOSITORY env var required}"
 : "${SKIP_BUILD:=false}"

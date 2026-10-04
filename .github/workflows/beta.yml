@@ -40,13 +40,16 @@ jobs:
 
     - name: Get Commits Since Last Run
       run: |
-        if [ -f last_sha.txt ]; then
-          LAST_SHA=$(cat last_sha.txt)
+        FORMAT="● %s ~%an [֍](https://github.com/${{ github.repository }}/commit/%H)"
+        LAST_SHA=$(cat last_sha.txt 2>/dev/null || true)
+        # The saved commit may be gone (rewritten history) or be HEAD itself: then just list the latest commits
+        if [ -n "$LAST_SHA" ] && [ "$LAST_SHA" != "$(git rev-parse HEAD)" ] && git merge-base --is-ancestor "$LAST_SHA" HEAD 2>/dev/null; then
+          echo "Commits since $LAST_SHA:"
+          COMMIT_LOGS=$(git log "$LAST_SHA..HEAD" --pretty=format:"$FORMAT" --max-count=10)
         else
-          LAST_SHA=$(git rev-list --max-parents=0 HEAD)
+          echo "No usable previous run; listing the latest commits"
+          COMMIT_LOGS=$(git log HEAD --pretty=format:"$FORMAT" --max-count=5)
         fi
-        echo "Commits since $LAST_SHA:"
-        COMMIT_LOGS=$(git log $LAST_SHA..HEAD --pretty=format:"● %s ~%an [֍](https://github.com/${{ github.repository }}/commit/%H)" --max-count=10)
         COMMIT_LOGS=$(echo "$COMMIT_LOGS" | sed -E 's/#([0-9]+)/[#\1](https:\/\/github.com\/Arkhins-0\/Arkhime\/pull\/\1)/g')
         COMMIT_LOGS="${COMMIT_LOGS//'%'/'%25'}"
         COMMIT_LOGS="${COMMIT_LOGS//$'\n'/'%0A'}"
@@ -66,9 +69,12 @@ jobs:
 
     - name: Set variables
       run: |
-        VER=$(grep -E -o 'baseVersion = ".*"' android/app/build.gradle.kts 2>/dev/null | sed -e 's/baseVersion = //g' | tr -d '"')
-        if [ -z "$VER" ]; then
-          VER=$(grep -E -o 'versionName = ".*"' android/app/build.gradle.kts 2>/dev/null | sed -e 's/versionName = //g' | tr -d '"')
+        # A version tag names the version; otherwise use the build file's default (val baseVersion = ... ?: "1.0.0")
+        if [[ "${{ github.ref }}" == refs/tags/v* ]]; then
+          VER="${{ github.ref_name }}"
+          VER="${VER#v}"
+        else
+          VER=$(grep -E 'val baseVersion' android/app/build.gradle.kts | grep -oE '"[0-9]+(\.[0-9]+)*"' | tail -1 | tr -d '"')
         fi
         SHA=${{ github.sha }}
         VERSION="$VER+${SHA:0:7}"
@@ -140,6 +146,8 @@ jobs:
 
     - name: Upload APK to Telegram
       if: ${{ github.repository == 'Arkhins-0/Arkhime' }}
+      # Telegram is optional: a failed post must not fail the build
+      continue-on-error: true
       shell: bash
       run: |
         chmod +x workflowscripts/notify.sh
