@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "475842360198",
+    "project_id": "arkhime",
+    "storage_bucket": "arkhime.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:475842360198:android:334a6587ee20c42f9b3207",
+        "android_client_info": {
+          "package_name": "ani.arkhime.com"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB0s3avL7vLXm8qasB28R0BOn7d96AxaSw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:475842360198:android:728ae8ea5ce113a99b3207",
+        "android_client_info": {
+          "package_name": "ani.arkhime.com.beta"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB0s3avL7vLXm8qasB28R0BOn7d96AxaSw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

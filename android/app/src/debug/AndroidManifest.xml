@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application>
+        <!-- Debug only: fire test release/addition alerts over adb -->
+        <receiver
+            android:name="ani.arkhime.com.notifications.updates.UpdateTestReceiver"
+            android:exported="true" />
+    </application>
+</manifest>

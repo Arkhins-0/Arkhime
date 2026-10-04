@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-feature
+        android:name="android.software.leanback"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.touchscreen"
+        android:required="false" />
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="29" />
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+    <uses-permission
+        android:name="android.permission.READ_APP_SPECIFIC_LOCALES"
+        tools:ignore="ProtectedPermissions" />
+
+    <application
+        android:name=".App"
+        android:allowBackup="true"
+        android:banner="@mipmap/ic_banner_foreground"
+        android:enableOnBackInvokedCallback="true"
+        android:icon="${icon_placeholder}"
+        android:label="@string/app_name"
+        android:largeHeap="true"
+        android:requestLegacyExternalStorage="true"
+        android:roundIcon="${icon_placeholder_round}"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Arkhime"
+        android:usesCleartextTraffic="true"
+        tools:ignore="AllowBackup"
+        tools:targetApi="tiramisu">
+        <receiver
+            android:name=".widgets.upcoming.UpcomingWidget"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/upcoming_widget_info" />
+        </receiver>
+        <activity
+            android:name=".widgets.upcoming.UpcomingWidgetConfigure"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
+
+        <receiver
+            android:name=".widgets.statistics.ProfileStatsWidget"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/statistics_widget_info" />
+        </receiver>
+        <receiver
+            android:name=".widgets.continue_widget.ContinueWidget"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/continue_widget_info" />
+        </receiver>
+        <receiver android:name=".notifications.IncognitoNotificationClickReceiver" />
+
+        <activity android:name=".others.calc.CalcActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity android:name=".settings.AnilistSettingsActivity"/>
+        <activity android:name=".forum.ForumActivity" />
+        <activity android:name=".forum.ThreadViewActivity" />
+        <activity android:name=".settings.UserInterfaceSettingsActivity" />
+        <activity android:name=".settings.FAQActivity" />
+        <activity
+            android:name=".settings.data.SettingsDataActivity"
+            android:parentActivityName=".settings.SettingsActivity" />
+        <activity
+            android:name=".settings.SettingsActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".settings.SettingsAboutActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".home.status.StatusActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".settings.SettingsAccountActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".settings.SettingsAnimeActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".settings.SettingsCommonActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".settings.SettingsMangaActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".settings.SettingsNotificationActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".settings.SettingsThemeActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".widgets.statistics.ProfileStatsConfigure"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".profile.ProfileActivity"
+            android:parentActivityName=".MainActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity
+            android:name=".profile.FollowActivity"
+            android:parentActivityName=".MainActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity
+            android:name=".profile.activity.FeedActivity"
+            android:configChanges="orientation|screenSize|screenLayout"
+            android:label="Inbox Activity"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".profile.notification.NotificationActivity"
+            android:label="Inbox Activity"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".others.imagesearch.ImageSearchActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".util.ActivityMarkdownCreator"
+            android:windowSoftInputMode="adjustResize|stateVisible" />
+        <activity
+            android:name=".media.ReviewActivity"
+            android:parentActivityName=".media.MediaDetailsActivity" />
+        <activity
+            android:name=".media.ReviewViewActivity"
+            android:parentActivityName=".media.ReviewActivity" />
+        <activity
+            android:name=".media.SearchActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity android:name=".media.StudioActivity" />
+        <activity android:name=".media.AuthorActivity" />
+        <activity
+            android:name=".media.CalendarActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity android:name=".media.user.ListActivity" />
+        <activity
+            android:name=".profile.SingleStatActivity"
+            android:parentActivityName=".profile.ProfileActivity" />
+        <activity android:name=".media.GenreActivity" />
+        <activity
+            android:name=".media.MediaListViewActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".media.MediaDetailsActivity"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/Theme.Arkhime.NeverCutout"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity android:name=".media.CharacterDetailsActivity" />
+        <activity android:name=".home.NoInternet" />
+        <activity android:name=".others.CrashActivity"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:process=":error_process"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".connections.anilist.Login"
+            android:configChanges="orientation|screenSize|layoutDirection"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:launchMode="singleTask">
+            <intent-filter android:label="Anilist Login for Arkhime">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="anilist"
+                    android:scheme="arkhime" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".connections.mal.Login"
+            android:configChanges="orientation|screenSize|layoutDirection"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:launchMode="singleTask">
+            <intent-filter android:label="Myanimelist Login for Arkhime">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <!-- MAL redirects to https://arkhime.arkhins.com, which forwards to arkhime://mal -->
+                <data
+                    android:host="mal"
+                    android:scheme="arkhime" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".connections.anilist.UrlMedia"
+            android:configChanges="orientation|screenSize|layoutDirection"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:launchMode="singleTask">
+            <intent-filter android:label="Open in Arkhime">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="anime"
+                    android:scheme="arkhime" />
+                <data
+                    android:host="watch"
+                    android:scheme="arkhime" />
+                <data
+                    android:host="manga"
+                    android:scheme="arkhime" />
+                <data
+                    android:host="read"
+                    android:scheme="arkhime" />
+                <data
+                    android:host="media"
+                    android:scheme="arkhime" />
+                <data
+                    android:host="open"
+                    android:scheme="arkhime" />
+                <data
+                    android:host="user"
+                    android:scheme="arkhime" />
+                <data
+                    android:host="u"
+                    android:scheme="arkhime" />
+                <data
+                    android:host="profile"
+                    android:scheme="arkhime" />
+            </intent-filter>
+            <intent-filter android:label="@string/read_on_arkhime">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="http" />
+                <data android:scheme="https" />
+                <data android:host="anilist.co" />
+                <data android:host="myanimelist.net" />
+                <data android:pathPrefix="/manga" />
+            </intent-filter>
+            <intent-filter android:label="@string/watch_on_arkhime">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="http" />
+                <data android:scheme="https" />
+                <data android:host="anilist.co" />
+                <data android:host="myanimelist.net" />
+                <data android:pathPrefix="/anime" />
+            </intent-filter>
+            <intent-filter android:label="@string/view_profile_in_arkhime">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="http" />
+                <data android:scheme="https" />
+                <data android:host="anilist.co" />
+                <data android:pathPrefix="/user" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:configChanges="orientation|screenSize|layoutDirection"
+            android:launchMode="singleTop"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.Main" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="content" />
+                <data android:scheme="file" />
+
+                <data android:pathPattern=".*\\.ani" />
+                <data android:pathPattern=".*\\.sani" />
+
+                <data android:mimeType="application/x-ani" />
+                <data android:mimeType="application/x-sani" />
+            </intent-filter>
+        </activity>
+
+        <receiver
+            android:name=".notifications.AlarmPermissionStateReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.app.action.SCHEDULE_EXACT_ALARM_PERMISSION_STATE_CHANGED" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name=".notifications.BootCompletedReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".notifications.anilist.AnilistNotificationReceiver" />
+        <receiver
+            android:name=".notifications.updates.UpdateActionReceiver"
+            android:exported="false" />
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:enabled="true"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
+
+        <service
+            android:name=".widgets.upcoming.UpcomingRemoteViewsService"
+            android:exported="true"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
+    </application>
+
+</manifest>
