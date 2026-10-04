@@ -2,6 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application>
+        <!-- Debug only: open any screen by name over adb (phones that block simulated taps) -->
+        <activity
+            android:name="ani.arkhime.com.ScreenLauncher"
+            android:exported="true"
+            android:excludeFromRecents="true"
+            android:noHistory="true"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <!-- Debug only: fire test release/addition alerts over adb -->
         <receiver
             android:name="ani.arkhime.com.notifications.updates.UpdateTestReceiver"
