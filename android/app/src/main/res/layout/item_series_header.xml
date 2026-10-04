@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingHorizontal="8dp"
+    android:paddingTop="12dp"
+    android:paddingBottom="4dp">
+
+    <LinearLayout
+        android:id="@+id/seriesHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingVertical="6dp">
+
+        <ImageView
+            android:id="@+id/seriesChevron"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            app:srcCompat="@drawable/ic_round_arrow_drop_down_24"
+            app:tint="?attr/colorOnBackground"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/seriesTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:fontFamily="@font/jakarta_bold"
+            android:singleLine="true"
+            android:textColor="?attr/colorOnBackground"
+            android:textSize="15sp"
+            tools:text="Attack on Titan" />
+
+        <TextView
+            android:id="@+id/seriesCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:fontFamily="@font/jakarta_bold"
+            android:textColor="?attr/colorPrimary"
+            android:textSize="12sp"
+            tools:text="4 +2" />
+
+        <TextView
+            android:id="@+id/seriesCompletion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="4dp"
+            android:fontFamily="@font/jakarta_bold"
+            android:textColor="?attr/colorOutline"
+            android:textSize="12sp"
+            tools:text="62%" />
+    </LinearLayout>
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/seriesBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="1000"
+        app:indicatorColor="?attr/colorPrimary"
+        app:trackColor="?attr/colorSurfaceContainerHighest"
+        app:trackCornerRadius="2dp"
+        app:trackThickness="3dp"
+        tools:progress="620" />
+</LinearLayout>

@@ -1,0 +1,100 @@
+/* Only scan the marketing site; the web app has its own stylesheet */
+@import "tailwindcss" source("./");
+
+/* Arkhime palette v2 (same as the Android app): rose accent, peach and amber highlights */
+:root {
+  --background: #fff8f9;
+  --foreground: #201a1d;
+  --muted: #6a5c62;
+  --card: #ffffff;
+  --card-2: #f5ebee;
+  --border: #ecdfe4;
+  --accent: #c2102f;
+  --accent-solid: #e11d48;
+  --accent-2: #e8742f;
+  --accent-3: #c98a00;
+  --accent-contrast: #ffffff;
+  --glow: rgba(225, 29, 72, 0.18);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --background: #121013;
+    --foreground: #ede5ea;
+    --muted: #a99ca3;
+    --card: #1a171b;
+    --card-2: #231f24;
+    --border: #2f2a30;
+    --accent: #ff4f6d;
+    --accent-solid: #ff2d55;
+    --accent-2: #ffb59a;
+    --accent-3: #ffc768;
+    --accent-contrast: #ffffff;
+    --glow: rgba(255, 45, 85, 0.28);
+  }
+}
+
+:root[data-theme="dark"] {
+  --background: #121013;
+  --foreground: #ede5ea;
+  --muted: #a99ca3;
+  --card: #1a171b;
+  --card-2: #231f24;
+  --border: #2f2a30;
+  --accent: #ff4f6d;
+  --accent-solid: #ff2d55;
+  --accent-2: #ffb59a;
+  --accent-3: #ffc768;
+  --accent-contrast: #ffffff;
+  --glow: rgba(255, 45, 85, 0.28);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-card: var(--card);
+  --color-card-2: var(--card-2);
+  --color-border: var(--border);
+  --color-accent: var(--accent);
+  --color-accent-2: var(--accent-2);
+  --color-accent-3: var(--accent-3);
+  --color-accent-solid: var(--accent-solid);
+  --color-accent-contrast: var(--accent-contrast);
+  --font-sans: var(--font-jakarta);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+/* Soft brand glow behind the hero */
+.hero-glow {
+  background:
+    radial-gradient(60% 50% at 75% 30%, var(--glow), transparent 70%),
+    radial-gradient(40% 40% at 15% 10%, color-mix(in srgb, var(--accent-3) 12%, transparent), transparent 70%);
+}
+
+/* Faint grid that fades out, for texture */
+.grid-fade {
+  background-image:
+    linear-gradient(to right, color-mix(in srgb, var(--foreground) 6%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--foreground) 6%, transparent) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(70% 60% at 50% 0%, black, transparent 75%);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .float {
+    animation: float 7s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+}

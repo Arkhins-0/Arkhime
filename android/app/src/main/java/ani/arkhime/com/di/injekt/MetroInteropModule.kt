@@ -1,0 +1,45 @@
+package ani.arkhime.com.di.injekt
+
+import android.app.Application
+import android.content.Context
+import dev.zacsweers.metro.Inject
+import eu.kanade.domain.base.BasePreferences
+import eu.kanade.tachiyomi.network.JavaScriptEngine
+import eu.kanade.tachiyomi.network.NetworkHelper
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.protobuf.ProtoBuf
+import tachiyomi.core.preference.PreferenceStore
+import uy.kohesive.injekt.api.InjektModule
+import uy.kohesive.injekt.api.InjektRegistrar
+import uy.kohesive.injekt.api.addSingleton
+
+@OptIn(ExperimentalSerializationApi::class)
+@Inject
+class MetroInteropModule(
+    private val context: Context,
+    private val preferenceStore: PreferenceStore,
+    private val basePreferences: BasePreferences,
+    private val networkHelper: NetworkHelper,
+    private val javaScriptEngine: JavaScriptEngine,
+    private val json: Json,
+    private val protoBuf: ProtoBuf,
+) : InjektModule {
+
+    override fun InjektRegistrar.registerInjectables() {
+        addSingleton(context)
+        if (context is Application) {
+            addSingleton<Application>(context)
+        }
+
+        addSingleton(preferenceStore)
+        addSingleton(basePreferences)
+
+        addSingleton(networkHelper)
+        addSingleton(networkHelper.client)
+        addSingleton(javaScriptEngine)
+
+        addSingleton(json)
+        addSingleton(protoBuf)
+    }
+}

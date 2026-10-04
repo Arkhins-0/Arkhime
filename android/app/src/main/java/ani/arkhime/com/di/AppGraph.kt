@@ -1,0 +1,43 @@
+package ani.arkhime.com.di
+
+import android.app.Application
+import android.content.Context
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.DependencyGraph
+import dev.zacsweers.metro.Provides
+import ani.arkhime.com.App
+import ani.arkhime.com.MainActivity
+import ani.arkhime.com.di.injekt.MetroInteropModule
+import eu.kanade.domain.base.BasePreferences
+import eu.kanade.tachiyomi.network.JavaScriptEngine
+import eu.kanade.tachiyomi.network.NetworkHelper
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.protobuf.ProtoBuf
+import tachiyomi.core.preference.PreferenceStore
+@OptIn(ExperimentalSerializationApi::class)
+@DependencyGraph(
+    scope = AppScope::class,
+    bindingContainers = [AppBindings::class],
+)
+interface AppGraph {
+    fun inject(app: App)
+    fun inject(mainActivity: MainActivity)
+
+    val context: Context
+    val application: Application
+
+    val preferenceStore: PreferenceStore
+    val basePreferences: BasePreferences
+
+    val networkHelper: NetworkHelper
+    val javaScriptEngine: JavaScriptEngine
+    val json: Json
+    val protoBuf: ProtoBuf
+    val metroInteropModule: MetroInteropModule
+
+    @DependencyGraph.Factory
+    fun interface Factory {
+        fun create(@Provides context: Context): AppGraph
+    }
+}
