@@ -18,7 +18,7 @@ interface StatusMeta {
  * solid fill; the app has no gradients.
  */
 export const PALETTE = [
-  "#5a4a4e", // crimson
+  "#4a4a50", // crimson
   "#6f5a5f", // raspberry
   "#8a6f74", // berry
   "#c77dba", // plum
@@ -56,7 +56,7 @@ export const STATUS_META: Record<MediaListStatus, StatusMeta> = {
     label: () => "Paused",
   },
   DROPPED: {
-    color: "#5a4a4e",
+    color: "#4a4a50",
     label: () => "Dropped",
   },
 };
@@ -170,10 +170,10 @@ export function titleCaseEnum(value: string | null | undefined): string {
 
 const MEDIA_STATUS_META: Record<string, { label: string; color: string }> = {
   RELEASING: { label: "Releasing", color: "#ff6a4d" },
-  FINISHED: { label: "Finished", color: "#6e5d61" },
+  FINISHED: { label: "Finished", color: "#6b6b72" },
   NOT_YET_RELEASED: { label: "Not Yet Released", color: "#a98bd9" },
   HIATUS: { label: "Hiatus", color: "#8a6f74" },
-  CANCELLED: { label: "Cancelled", color: "#5a4a4e" },
+  CANCELLED: { label: "Cancelled", color: "#4a4a50" },
 };
 
 /** "Releasing" / "Finished" / "Not Yet Released" … from AniList's airing status enum. */
@@ -474,7 +474,7 @@ export function relationLabel(relationType: string | null | undefined): string {
  * at the crimson end, a high one at the teal end.
  */
 export function scoreColor(score: number | null | undefined): string {
-  if (!score) return "#6e5d61";
+  if (!score) return "#6b6b72";
   if (score >= 88) return "#ff4f6d";
   if (score >= 80) return "#f2884b";
   if (score >= 72) return "#e6a23c";
@@ -483,7 +483,7 @@ export function scoreColor(score: number | null | undefined): string {
   if (score >= 48) return "#c77dba";
   if (score >= 40) return "#8a6f74";
   if (score >= 30) return "#6f5a5f";
-  return "#5a4a4e";
+  return "#4a4a50";
 }
 
 export const DAY_NAMES = [

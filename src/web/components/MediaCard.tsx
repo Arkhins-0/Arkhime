@@ -85,7 +85,7 @@ function MediaCard({
         {/* Community score, bottom-right, on its own solid chip. */}
         {media.averageScore && !caption ? (
           <span
-            className="absolute bottom-1 right-1 rounded-sm bg-[#0d0a0b]/90 px-1.5 py-0.5 text-[11px] font-bold tabular-nums"
+            className="absolute bottom-1 right-1 rounded-sm bg-[#000000]/90 px-1.5 py-0.5 text-[11px] font-bold tabular-nums"
             style={{ color: scoreColor(media.averageScore) }}
           >
             {media.averageScore}
@@ -123,7 +123,7 @@ function MediaCard({
               }
             }}
             title="Add to Planning"
-            className="absolute right-1 top-1 flex h-6 w-6 items-center justify-center rounded-sm bg-[#0d0a0b]/85 text-fg-bright opacity-0 transition-opacity hover:bg-[#ff4f6d] hover:text-[#1a0507] focus:opacity-100 group-hover/card:opacity-100"
+            className="absolute right-1 top-1 flex h-6 w-6 items-center justify-center rounded-sm bg-[#000000]/85 text-fg-bright opacity-0 transition-opacity hover:bg-[#ff4f6d] hover:text-[#1a0507] focus:opacity-100 group-hover/card:opacity-100"
           >
             <IconPlus size={13} />
           </span>

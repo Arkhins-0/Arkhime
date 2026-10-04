@@ -49,7 +49,7 @@ export default function Hero({
 
         {/* AniList darkens the lower band so the name stays readable. A
             flat translucent fill does the same without a gradient. */}
-        <div className="absolute inset-x-0 bottom-0 h-[64px] bg-[#130e10]/55" />
+        <div className="absolute inset-x-0 bottom-0 h-[64px] bg-[#000000]/55" />
 
         <div className="absolute inset-x-0 bottom-0">
           <div className="mx-auto flex max-w-site items-end gap-3 px-4 pb-3 sm:px-6 sm:pb-4">

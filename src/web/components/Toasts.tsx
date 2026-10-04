@@ -14,7 +14,7 @@ export interface Toast {
 const ACCENT: Record<ToastKind, string> = {
   info: "#e6a23c",
   success: "#ff6a4d",
-  error: "#5a4a4e",
+  error: "#4a4a50",
 };
 
 /** Bottom-right stack of transient messages. Auto-dismisses after 4.5s. */

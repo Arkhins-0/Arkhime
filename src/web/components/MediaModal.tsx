@@ -252,7 +252,7 @@ export default function MediaModal({
           {stack.length > 1 ? (
             <button
               onClick={back}
-              className="flex h-9 w-9 items-center justify-center rounded bg-[#0d0a0b]/80 text-fg-bright transition-colors hover:bg-[#0d0a0b]"
+              className="flex h-9 w-9 items-center justify-center rounded bg-[#000000]/80 text-fg-bright transition-colors hover:bg-[#000000]"
               aria-label="Back"
             >
               <IconChevronLeft size={17} />
@@ -260,7 +260,7 @@ export default function MediaModal({
           ) : null}
           <button
             onClick={onClose}
-            className="flex h-9 w-9 items-center justify-center rounded bg-[#0d0a0b]/80 text-fg-bright transition-colors hover:bg-[#0d0a0b]"
+            className="flex h-9 w-9 items-center justify-center rounded bg-[#000000]/80 text-fg-bright transition-colors hover:bg-[#000000]"
             aria-label="Close"
           >
             <IconClose size={17} />
@@ -335,9 +335,9 @@ export default function MediaModal({
                         className="flex w-9 items-center justify-center rounded transition-colors disabled:opacity-50"
                         style={{
                           backgroundColor: detail.isFavourite
-                            ? "#5a4a4e"
-                            : "#33262a",
-                          color: detail.isFavourite ? "#fff" : "#a19598",
+                            ? "#4a4a50"
+                            : "#2a2a2e",
+                          color: detail.isFavourite ? "#fff" : "#b4b4bb",
                         }}
                       >
                         <IconHeart size={15} filled={!!detail.isFavourite} />
@@ -634,14 +634,14 @@ function Overview({
                 <button
                   onClick={() => setShowSpoilers(true)}
                   className="rounded-sm px-2 py-1 text-[11.5px] font-semibold text-status-dropped"
-                  style={{ backgroundColor: withAlpha("#5a4a4e", 0.18) }}
+                  style={{ backgroundColor: withAlpha("#4a4a50", 0.18) }}
                 >
                   Show {spoilerTags.length} spoiler tags
                 </button>
               ) : null}
               {showSpoilers
                 ? spoilerTags.map((t) => (
-                    <Tag key={t.id} color="#5a4a4e">
+                    <Tag key={t.id} color="#4a4a50">
                       {t.name}
                       {t.rank ? (
                         <span className="opacity-60">{t.rank}%</span>
