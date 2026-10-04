@@ -28,22 +28,22 @@
   color-scheme: dark;
 
   /* --- Arkhime surfaces (warm near-black) --- */
-  --bg: #130e10;
-  --fg-surface: #1d1517;
-  --fg-grey: #181112;
-  --fg-grey-dark: #0d0a0b;
-  --bg-300: #33262a;
-  --bg-400: #5a4a4e;
-  --bg-500: #6e5d61;
+  --bg: #000000;
+  --fg-surface: #111113;
+  --fg-grey: #0b0b0c;
+  --fg-grey-dark: #000000;
+  --bg-300: #2a2a2e;
+  --bg-400: #4a4a50;
+  --bg-500: #6b6b72;
 
   /* --- Arkhime text ramp --- */
-  --text: #c9bec0;
-  --text-bright: #f2eaeb;
-  --text-light: #a19598;
-  --text-lighter: #b5a9ac;
+  --text: #e6e6e9;
+  --text-bright: #ffffff;
+  --text-light: #b4b4bb;
+  --text-lighter: #cfcfd4;
 
   /* --- Arkhime accent ramp (flat; keys kept from AniArk) --- */
-  --crimson: #5a4a4e;
+  --crimson: #4a4a50;
   --raspberry: #6f5a5f;
   --berry: #8a6f74;
   --plum: #c77dba;

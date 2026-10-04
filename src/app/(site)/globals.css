@@ -1,52 +1,21 @@
 /* Only scan the marketing site; the web app has its own stylesheet */
 @import "tailwindcss" source("./");
 
-/* Arkhime palette v2 (same as the Android app): rose accent, peach and amber highlights */
+/* Arkhime palette on true black, like the app: clear white text, rose accent */
 :root {
-  --background: #fff8f9;
-  --foreground: #201a1d;
-  --muted: #6a5c62;
-  --card: #ffffff;
-  --card-2: #f5ebee;
-  --border: #ecdfe4;
-  --accent: #c2102f;
-  --accent-solid: #e11d48;
-  --accent-2: #e8742f;
-  --accent-3: #c98a00;
-  --accent-contrast: #ffffff;
-  --glow: rgba(225, 29, 72, 0.18);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --background: #121013;
-    --foreground: #ede5ea;
-    --muted: #a99ca3;
-    --card: #1a171b;
-    --card-2: #231f24;
-    --border: #2f2a30;
-    --accent: #ff4f6d;
-    --accent-solid: #ff2d55;
-    --accent-2: #ffb59a;
-    --accent-3: #ffc768;
-    --accent-contrast: #ffffff;
-    --glow: rgba(255, 45, 85, 0.28);
-  }
-}
-
-:root[data-theme="dark"] {
-  --background: #121013;
-  --foreground: #ede5ea;
-  --muted: #a99ca3;
-  --card: #1a171b;
-  --card-2: #231f24;
-  --border: #2f2a30;
+  color-scheme: dark;
+  --background: #000000;
+  --foreground: #ffffff;
+  --muted: #b4b4bb;
+  --card: #0f0f11;
+  --card-2: #18181b;
+  --border: #26262b;
   --accent: #ff4f6d;
   --accent-solid: #ff2d55;
   --accent-2: #ffb59a;
   --accent-3: #ffc768;
   --accent-contrast: #ffffff;
-  --glow: rgba(255, 45, 85, 0.28);
+  --glow: rgba(255, 45, 85, 0.3);
 }
 
 @theme inline {

@@ -407,7 +407,7 @@ export function Select({
           style={{
             borderLeft: "5px solid transparent",
             borderRight: "5px solid transparent",
-            borderTop: `6px solid ${value ? accent : "#a19598"}`,
+            borderTop: `6px solid ${value ? accent : "#b4b4bb"}`,
           }}
         />
       </span>

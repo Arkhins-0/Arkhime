@@ -14,7 +14,7 @@ const config: Config = {
       colors: {
         /** Arkhime ramp (keys kept from AniArk): muted neutrals through brand red. */
         pal: {
-          crimson: "#5a4a4e",
+          crimson: "#4a4a50",
           raspberry: "#6f5a5f",
           berry: "#8a6f74",
           plum: "#c77dba",
@@ -32,22 +32,22 @@ const config: Config = {
          * grey-dark 6,12,19 · 300 30,42,56
          */
         bg: {
-          DEFAULT: "#130e10",
-          fg: "#1d1517",
-          grey: "#181112",
-          greyDark: "#0d0a0b",
-          300: "#33262a",
-          400: "#5a4a4e",
-          500: "#6e5d61",
+          DEFAULT: "#000000",
+          fg: "#111113",
+          grey: "#0b0b0c",
+          greyDark: "#000000",
+          300: "#2a2a2e",
+          400: "#4a4a50",
+          500: "#6b6b72",
         },
 
         /** AniList's dark-theme text ramp. */
         fg: {
-          DEFAULT: "#c9bec0",
-          bright: "#f2eaeb",
-          light: "#a19598",
-          lighter: "#b5a9ac",
-          dim: "#8a7d80",
+          DEFAULT: "#e6e6e9",
+          bright: "#ffffff",
+          light: "#b4b4bb",
+          lighter: "#cfcfd4",
+          dim: "#8e8e96",
         },
 
         /** List statuses, spaced along the Deep Ocean ramp. */
@@ -57,7 +57,7 @@ const config: Config = {
           planning: "#8b96a8",
           repeating: "#a98bd9",
           paused: "#8a6f74",
-          dropped: "#5a4a4e",
+          dropped: "#4a4a50",
         },
       },
 

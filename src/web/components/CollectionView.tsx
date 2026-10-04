@@ -420,7 +420,7 @@ function ToggleRow({
       <span
         className="flex h-4 w-4 flex-shrink-0 items-center justify-center rounded-sm"
         style={{
-          backgroundColor: checked ? "var(--accent)" : "#33262a",
+          backgroundColor: checked ? "var(--accent)" : "#2a2a2e",
         }}
       >
         {checked ? (
