@@ -26,6 +26,8 @@ import okhttp3.OkHttpClient
 
 class CommentNotificationTask : Task {
     override suspend fun execute(context: Context): Boolean {
+        // No comments server yet: nothing to check
+        if (!CommentsAPI.isConfigured) return true
         try {
             withContext(Dispatchers.IO) {
                 PrefManager.init(context) //make sure prefs are initialized

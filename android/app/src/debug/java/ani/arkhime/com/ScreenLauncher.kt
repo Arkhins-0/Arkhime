@@ -9,7 +9,13 @@ import ani.arkhime.com.media.SearchActivity
 import ani.arkhime.com.media.user.ListActivity
 import ani.arkhime.com.profile.ProfileActivity
 import ani.arkhime.com.profile.notification.NotificationActivity
+import ani.arkhime.com.parsers.ParserTestActivity
+import ani.arkhime.com.settings.ExtensionsActivity
+import ani.arkhime.com.settings.PlayerSettingsActivity
+import ani.arkhime.com.settings.ReaderSettingsActivity
 import ani.arkhime.com.settings.SettingsActivity
+import ani.arkhime.com.settings.SettingsAddonActivity
+import ani.arkhime.com.settings.SettingsExtensionsActivity
 import ani.arkhime.com.settings.SettingsNotificationActivity
 import ani.arkhime.com.settings.saving.PrefManager
 import ani.arkhime.com.settings.saving.PrefName
@@ -21,7 +27,8 @@ import ani.arkhime.com.settings.saving.PrefName
  *   adb shell am start -n ani.arkhime.com.beta/ani.arkhime.com.ScreenLauncher --es screen list --ez group true
  *
  * screen: home, list, manga-list, media (--ei id), updates, notifications, notification-settings,
- *         settings, profile, search (--es type ANIME|MANGA), calendar
+ *         settings, profile, search (--es type ANIME|MANGA), calendar,
+ *         extensions, extension-settings, addons, player-settings, reader-settings, parser-test
  */
 class ScreenLauncher : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,6 +55,12 @@ class ScreenLauncher : Activity() {
             "search" -> Intent(this, SearchActivity::class.java)
                 .putExtra("type", intent.getStringExtra("type") ?: "ANIME")
             "calendar" -> Intent(this, CalendarActivity::class.java)
+            "extensions" -> Intent(this, ExtensionsActivity::class.java)
+            "extension-settings" -> Intent(this, SettingsExtensionsActivity::class.java)
+            "addons" -> Intent(this, SettingsAddonActivity::class.java)
+            "player-settings" -> Intent(this, PlayerSettingsActivity::class.java)
+            "reader-settings" -> Intent(this, ReaderSettingsActivity::class.java)
+            "parser-test" -> Intent(this, ParserTestActivity::class.java)
             else -> Intent(this, MainActivity::class.java)
         }
         startActivity(target.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK))

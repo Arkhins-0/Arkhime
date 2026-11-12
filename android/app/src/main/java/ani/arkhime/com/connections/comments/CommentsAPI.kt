@@ -32,6 +32,8 @@ object CommentsAPI {
      * (api.dantotsu.app) belongs to the Dantotsu project and is not used by Arkhime.
      */
     private const val API_ADDRESS: String = ""
+    /** False until Arkhime's comments server address is set in [API_ADDRESS]. */
+    val isConfigured: Boolean get() = API_ADDRESS.isNotEmpty()
     private const val LOCAL_HOST: String = "https://127.0.0.1"
     private var isOnline: Boolean = true
     private var commentsEnabled =

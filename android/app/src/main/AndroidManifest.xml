@@ -389,6 +389,128 @@
             android:name=".widgets.upcoming.UpcomingRemoteViewsService"
             android:exported="true"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
+        <!-- Restored from Dantotsu: player, readers, extensions, downloads, Discord, torrent -->
+        <service
+            android:name="androidx.media3.exoplayer.scheduler.PlatformScheduler$PlatformSchedulerService"
+            android:exported="true"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+        <service
+            android:name=".addons.torrent.TorrentServerService"
+            android:exported="false"
+            android:foregroundServiceType="dataSync"
+            android:stopWithTask="true" />
+        <service
+            android:name=".connections.discord.DiscordService"
+            android:exported="false"
+            android:foregroundServiceType="dataSync" />
+        <activity
+            android:name=".connections.discord.Login"
+            android:configChanges="orientation|screenSize|layoutDirection"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:launchMode="singleTask">
+            <intent-filter android:label="Discord Login for Dantotsu">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="dantotsu" />
+                <data android:scheme="http" />
+                <data android:scheme="https" />
+                <data android:host="discord.dantotsu.com" />
+            </intent-filter>
+        </activity>
+        <service
+            android:name=".download.anime.AnimeDownloaderService"
+            android:exported="false"
+            android:foregroundServiceType="dataSync" />
+        <service
+            android:name=".download.manga.MangaDownloaderService"
+            android:exported="false"
+            android:foregroundServiceType="dataSync" />
+        <service
+            android:name=".download.novel.NovelDownloaderService"
+            android:exported="false"
+            android:foregroundServiceType="dataSync" />
+        <activity
+            android:name=".media.anime.ExoplayerView"
+            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout|keyboard|keyboardHidden|navigation"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:label="@string/video"
+            android:launchMode="singleTask"
+            android:supportsPictureInPicture="true"
+            tools:targetApi="n" />
+        <activity
+            android:name=".media.manga.mangareader.MangaReaderActivity"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:label="@string/manga"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".media.novel.novelreader.NovelReaderActivity"
+            android:configChanges="orientation|screenSize"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="application/epub+zip"/>
+                <data android:mimeType="application/x-mobipocket-ebook" />
+                <data android:mimeType="application/vnd.amazon.ebook" />
+                <data android:mimeType="application/fb2+zip" />
+                <data android:mimeType="application/vnd.comicbook+zip" />
+                <data android:pathPattern=".*\\.epub" />
+                <data android:pathPattern=".*\\.mobi" />
+                <data android:pathPattern=".*\\.kf8" />
+                <data android:pathPattern=".*\\.fb2" />
+                <data android:pathPattern=".*\\.cbz" />
+                <data android:scheme="content" />
+                <data android:scheme="file" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".others.webview.CookieCatcher"
+            android:configChanges="orientation|screenSize|layoutDirection"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:launchMode="singleTask">
+            <intent-filter android:label="Discord Login for Dantotsu">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="dantotsu" />
+                <data android:scheme="http" />
+                <data android:scheme="https" />
+                <data android:host="discord.dantotsu.com" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".settings.ExtensionsActivity"
+            android:parentActivityName=".MainActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity
+            android:name=".settings.SettingsAddonActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".settings.SettingsExtensionsActivity"
+            android:parentActivityName=".MainActivity"
+            android:windowSoftInputMode="adjustPan"/>
+        <activity
+            android:name="eu.kanade.tachiyomi.extension.util.ExtensionInstallActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat" />
+        <service
+            android:name="eu.kanade.tachiyomi.extension.util.ExtensionInstallService"
+            android:exported="false"
+            android:foregroundServiceType="dataSync" />
+
+        <meta-data
+            android:name="com.google.android.gms.cast.framework.OPTIONS_PROVIDER_CLASS_NAME"
+            android:value="androidx.media3.cast.DefaultCastOptionsProvider" />
     </application>
 
 </manifest>

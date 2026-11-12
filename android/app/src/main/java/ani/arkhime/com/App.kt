@@ -35,6 +35,15 @@ import logcat.LogcatLogger
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.addSingletonFactory
 import uy.kohesive.injekt.api.get
+import ani.arkhime.com.addons.download.DownloadAddonManager
+import ani.arkhime.com.addons.torrent.TorrentAddonManager
+import ani.arkhime.com.aniyomi.anime.custom.FeatureModule
+import ani.arkhime.com.parsers.AnimeSources
+import ani.arkhime.com.parsers.MangaSources
+import ani.arkhime.com.parsers.NovelSources
+import ani.arkhime.com.parsers.novel.NovelExtensionManager
+import eu.kanade.tachiyomi.extension.anime.AnimeExtensionManager
+import eu.kanade.tachiyomi.extension.manga.MangaExtensionManager
 
 
 @SuppressLint("StaticFieldLeak")
@@ -59,6 +68,8 @@ class App : Application(), GraphProvider<AppGraph> {
         PrefManager.init(this)
         graph.inject(this)
         Injekt.importModule(interopModule)
+        // Services for the features restored from Dantotsu
+        Injekt.importModule(FeatureModule(this))
 
         val crashlytics =
             ani.arkhime.com.connections.crashlytics.CrashlyticsFactory.createCrashlytics()
@@ -132,6 +143,30 @@ class App : Application(), GraphProvider<AppGraph> {
         }
 
         val applicationScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
+
+        // Load installed extensions and addons in the background (restored from Dantotsu)
+        applicationScope.launch(Dispatchers.IO) {
+            val manager: AnimeExtensionManager = Injekt.get()
+            manager.findAvailableExtensions()
+            Logger.log("Anime Extensions: ${manager.installedExtensionsFlow.first()}")
+            AnimeSources.init(manager.installedExtensionsFlow)
+        }
+        applicationScope.launch(Dispatchers.IO) {
+            val manager: MangaExtensionManager = Injekt.get()
+            manager.findAvailableExtensions()
+            Logger.log("Manga Extensions: ${manager.installedExtensionsFlow.first()}")
+            MangaSources.init(manager.installedExtensionsFlow)
+        }
+        applicationScope.launch(Dispatchers.IO) {
+            val manager: NovelExtensionManager = Injekt.get()
+            manager.findAvailableExtensions()
+            Logger.log("Novel Extensions: ${manager.installedExtensionsFlow.first()}")
+            NovelSources.init(manager.installedExtensionsFlow)
+        }
+        applicationScope.launch(Dispatchers.IO) {
+            Injekt.get<TorrentAddonManager>().init()
+            Injekt.get<DownloadAddonManager>().init()
+        }
         applicationScope.launch(Dispatchers.IO) {
             val useAlarmManager = PrefManager.getVal<Boolean>(PrefName.UseAlarmManager)
             val scheduler = TaskScheduler.create(this@App, useAlarmManager)
