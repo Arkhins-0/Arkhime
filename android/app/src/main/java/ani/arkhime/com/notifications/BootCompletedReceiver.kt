@@ -7,6 +7,7 @@ import android.content.Intent
 import android.os.Build
 import ani.arkhime.com.notifications.TaskScheduler.TaskType
 import ani.arkhime.com.notifications.anilist.AnilistNotificationWorker
+import ani.arkhime.com.notifications.comment.CommentNotificationWorker
 import ani.arkhime.com.settings.saving.PrefManager
 import ani.arkhime.com.settings.saving.PrefName
 import ani.arkhime.com.util.Logger
@@ -19,8 +20,14 @@ class BootCompletedReceiver : BroadcastReceiver() {
             Logger.init(context)
             Logger.log("Scheduling Arkhime notifications on boot")
             if (PrefManager.getVal(PrefName.UseAlarmManager)) {
+                val commentInterval =
+                    CommentNotificationWorker.checkIntervals[PrefManager.getVal(PrefName.CommentNotificationInterval)]
                 val anilistInterval =
                     AnilistNotificationWorker.checkIntervals[PrefManager.getVal(PrefName.AnilistNotificationInterval)]
+                scheduler.scheduleRepeatingTask(
+                    TaskType.COMMENT_NOTIFICATION,
+                    commentInterval
+                )
                 scheduler.scheduleRepeatingTask(
                     TaskType.ANILIST_NOTIFICATION,
                     anilistInterval

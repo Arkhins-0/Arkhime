@@ -26,6 +26,28 @@
         android:name="android.permission.READ_APP_SPECIFIC_LOCALES"
         tools:ignore="ProtectedPermissions" />
 
+    <!-- Restored from Dantotsu: player, downloads and extensions -->
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.REQUEST_DELETE_PACKAGES" />
+    <uses-permission android:name="android.permission.UPDATE_PACKAGES_WITHOUT_USER_ACTION" />
+    <!-- Lets the extension manager see installed extension APKs (and Shizuku) on Android 11+ -->
+    <uses-permission
+        android:name="android.permission.QUERY_ALL_PACKAGES"
+        tools:ignore="QueryAllPackagesPermission" />
+
+    <queries>
+        <!-- External download managers offered for downloads -->
+        <package android:name="idm.internet.download.manager.plus" />
+        <package android:name="idm.internet.download.manager" />
+        <package android:name="idm.internet.download.manager.adm.lite" />
+        <package android:name="com.dv.adm" />
+    </queries>
+
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -91,6 +113,9 @@
         <activity android:name=".forum.ThreadViewActivity" />
         <activity android:name=".settings.UserInterfaceSettingsActivity" />
         <activity android:name=".settings.FAQActivity" />
+        <activity android:name=".settings.PlayerSettingsActivity" />
+        <activity android:name=".settings.ReaderSettingsActivity" />
+        <activity android:name=".parsers.ParserTestActivity" />
         <activity
             android:name=".settings.data.SettingsDataActivity"
             android:parentActivityName=".settings.SettingsActivity" />
@@ -339,6 +364,8 @@
             </intent-filter>
         </receiver>
         <receiver android:name=".notifications.anilist.AnilistNotificationReceiver" />
+        <receiver android:name=".notifications.comment.CommentNotificationReceiver" />
+        <receiver android:name=".notifications.subscription.SubscriptionNotificationReceiver" />
         <receiver
             android:name=".notifications.updates.UpdateActionReceiver"
             android:exported="false" />

@@ -22,5 +22,10 @@ data class Anime(
     var nextAiringEpisode: Int? = null,
     var nextAiringEpisodeTime: Long? = null,
 
+    var selectedEpisode: String? = null,
+    var episodes: MutableMap<String, Episode>? = null,
     var slug: String? = null,
+    var kitsuEpisodes: Map<String, Episode>? = null,
+    var fillerEpisodes: Map<String, Episode>? = null,
+    var anifyEpisodes: Map<String, Episode>? = null,
 ) : Serializable

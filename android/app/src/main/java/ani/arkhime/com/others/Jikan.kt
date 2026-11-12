@@ -1,6 +1,7 @@
 package ani.arkhime.com.others
 
 import ani.arkhime.com.client
+import ani.arkhime.com.media.anime.Episode
 import ani.arkhime.com.tryWithSuspend
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -25,6 +26,23 @@ object Jikan {
             if (res != null) return res
         }
         return null
+    }
+
+    /** Episode titles and filler flags from MyAnimeList (restored from Dantotsu). */
+    suspend fun getEpisodes(malId: Int): Map<String, Episode> {
+        var hasNextPage = true
+        var page = 0
+        val eps = mutableMapOf<String, Episode>()
+        while (hasNextPage) {
+            page++
+            val res = query<EpisodeResponse>("anime/$malId/episodes?page=$page") ?: break
+            res.data?.forEach {
+                val ep = it.malID.toString()
+                eps[ep] = Episode(ep, title = it.title, filler = it.filler)
+            }
+            hasNextPage = res.pagination?.hasNextPage == true
+        }
+        return eps
     }
 
     @Serializable

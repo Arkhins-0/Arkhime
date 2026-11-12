@@ -1536,4 +1536,11 @@ Non quae tempore quo provident laudantium qui illo dolor vel quia dolor et exerc
     <string name="background_autostart_desc_other">Your phone may not have an autostart switch. This opens the app settings for Arkhime.</string>
     <string name="background_battery">Battery: no restrictions: %s</string>
     <string name="background_battery_desc">Choose No restrictions so the phone does not stop the background checks of Arkhime</string>
+    <!-- Restored from Dantotsu -->
+    <string name="discord_anilist_button">Display your AniList profile instead</string>
+    <string name="discord_arkhime_button">Display Arkhime in the second button</string>
+    <string name="discord_logout_success">Successfully Logged Out</string>
+    <string name="discord_nothing_button">Display only the first button</string>
+    <string name="discord_rich_presence">Discord Rich Presence</string>
+    <string name="discord_warning"><![CDATA[By logging in, your discord will now show what you are watching & reading on Arkhime\n\nIf you are on invisible mode, logging in will make you online, when you open Arkhime.\n\nThis does break the Discord TOS. \nAlthough Discord has never banned anyone for using Custom Rich Presence(what Arkhime uses), You have still been warned.\n\nArkhime is not responsible for anything that happens to your account.]]></string>
 </resources>

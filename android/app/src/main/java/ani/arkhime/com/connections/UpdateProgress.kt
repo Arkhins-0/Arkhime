@@ -17,6 +17,50 @@ import ani.arkhime.com.media.MediaType
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
 
+/**
+ * Saves episode/chapter progress after watching or reading (restored from Dantotsu).
+ * In rescue mode the update is queued in [PrefName.PendingProgressUpdates] and synced later
+ * by [syncPendingProgressUpdates], instead of being sent to AniList straight away.
+ */
+fun updateProgress(media: Media, number: String) {
+    val incognito: Boolean = PrefManager.getVal(PrefName.Incognito)
+    if (incognito) {
+        toast("Sneaky sneaky :3")
+        return
+    }
+    if (Anilist.userid == null) {
+        toast(currContext()?.getString(R.string.login_anilist_account))
+        return
+    }
+    val progress = number.toFloatOrNull()?.toInt() ?: return
+    if (progress <= (media.userProgress ?: -1)) return
+    val status = if (media.userStatus == "REPEATING") "REPEATING" else "CURRENT"
+    media.userProgress = progress
+    CoroutineScope(Dispatchers.IO).launch {
+        if (PrefManager.getVal<Boolean>(PrefName.RescueMode)) {
+            val pending = PendingProgressUpdate(
+                mediaId = media.id,
+                idMAL = media.idMAL,
+                isAnime = media.anime != null,
+                progress = progress,
+                status = status,
+                isPrivate = media.isListPrivate,
+            )
+            val existing: List<PendingProgressUpdate> =
+                PrefManager.getVal(PrefName.PendingProgressUpdates, listOf())
+            PrefManager.setVal(
+                PrefName.PendingProgressUpdates,
+                existing.filterNot { it.mediaId == media.id } + pending
+            )
+        } else {
+            Anilist.mutation.editList(media.id, progress, status = status)
+            MAL.query.editList(media.idMAL, media.anime != null, progress, null, status)
+        }
+        toast(currContext()?.getString(R.string.setting_progress, progress))
+        Refresh.all()
+    }
+}
+
 /** Sync all pending progress updates (cached during rescue mode) to AniList. */
 fun syncPendingProgressUpdates() {
 

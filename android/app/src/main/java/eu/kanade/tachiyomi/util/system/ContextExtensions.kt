@@ -181,3 +181,12 @@ fun Context.getApplicationIcon(pkgName: String): Drawable? {
         null
     }
 }
+
+/** True when the Shizuku app is installed, so extensions can be installed through it. */
+val Context.isShizukuInstalled: Boolean
+    get() = try {
+        packageManager.getPackageInfo("moe.shizuku.privileged.api", 0)
+        true
+    } catch (_: PackageManager.NameNotFoundException) {
+        false
+    }

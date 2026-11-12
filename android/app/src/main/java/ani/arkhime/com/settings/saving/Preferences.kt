@@ -7,6 +7,9 @@ import ani.arkhime.com.connections.mal.MAL
 import ani.arkhime.com.media.SearchHistory
 import ani.arkhime.com.settings.saving.internal.Location
 import ani.arkhime.com.settings.saving.internal.Pref
+import ani.arkhime.com.connections.comments.AuthResponse
+import ani.arkhime.com.notifications.comment.CommentStore
+import ani.arkhime.com.notifications.subscription.SubscriptionStore
 
 enum class PrefName(val data: Pref) {
     //General
@@ -297,4 +300,17 @@ enum class PrefName(val data: Pref) {
     TorrentBatterySaving(Pref(Location.Player, Boolean::class, false)),
     TorrentPort(Pref(Location.Player, Int::class, 0)),
     TorrentDisableUtp(Pref(Location.Player, Boolean::class, false)),
+
+    // Comments and Discord (restored from Dantotsu)
+    SubscriptionNotificationStore(Pref(Location.Irrelevant, List::class, listOf<SubscriptionStore>())),
+    rpcEnabled(Pref(Location.Irrelevant, Boolean::class, true)),
+    CommentAuthResponse(Pref(Location.Irrelevant, AuthResponse::class, "")),
+    CommentNotificationStore(Pref(Location.Irrelevant, List::class, listOf<CommentStore>())),
+    CommentTokenExpiry(Pref(Location.Irrelevant, Long::class, 0L)),
+    DiscordAvatar(Pref(Location.Protected, String::class, "")),
+    DiscordId(Pref(Location.Protected, String::class, "")),
+    DiscordStatus(Pref(Location.Irrelevant, String::class, "online")),
+    DiscordToken(Pref(Location.Protected, String::class, "")),
+    DiscordUserName(Pref(Location.Protected, String::class, "")),
+    ShowAniListIcon(Pref(Location.Irrelevant, Boolean::class, false)),
 }

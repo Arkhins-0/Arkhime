@@ -7,6 +7,8 @@ import android.content.Intent
 import android.os.Build
 import ani.arkhime.com.notifications.TaskScheduler.TaskType
 import ani.arkhime.com.notifications.anilist.AnilistNotificationReceiver
+import ani.arkhime.com.notifications.comment.CommentNotificationReceiver
+import ani.arkhime.com.notifications.subscription.SubscriptionNotificationReceiver
 import ani.arkhime.com.settings.saving.PrefManager
 import ani.arkhime.com.settings.saving.PrefName
 import java.util.concurrent.TimeUnit
@@ -20,8 +22,14 @@ class AlarmManagerScheduler(private val context: Context) : TaskScheduler {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
         val intent = when {
+            taskType == TaskType.COMMENT_NOTIFICATION && PrefManager.getVal<Int>(PrefName.CommentsEnabled) == 1 ->
+                Intent(context, CommentNotificationReceiver::class.java)
+
             taskType == TaskType.ANILIST_NOTIFICATION ->
                 Intent(context, AnilistNotificationReceiver::class.java)
+
+            taskType == TaskType.SUBSCRIPTION_NOTIFICATION ->
+                Intent(context, SubscriptionNotificationReceiver::class.java)
 
             else -> return
         }
@@ -55,8 +63,14 @@ class AlarmManagerScheduler(private val context: Context) : TaskScheduler {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
         val intent = when {
+            taskType == TaskType.COMMENT_NOTIFICATION && PrefManager.getVal<Int>(PrefName.CommentsEnabled) == 1 ->
+                Intent(context, CommentNotificationReceiver::class.java)
+
             taskType == TaskType.ANILIST_NOTIFICATION ->
                 Intent(context, AnilistNotificationReceiver::class.java)
+
+            taskType == TaskType.SUBSCRIPTION_NOTIFICATION ->
+                Intent(context, SubscriptionNotificationReceiver::class.java)
 
             else -> return
         }

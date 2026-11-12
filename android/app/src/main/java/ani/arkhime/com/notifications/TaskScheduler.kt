@@ -2,6 +2,8 @@ package ani.arkhime.com.notifications
 
 import android.content.Context
 import ani.arkhime.com.notifications.anilist.AnilistNotificationWorker
+import ani.arkhime.com.notifications.comment.CommentNotificationWorker
+import ani.arkhime.com.notifications.subscription.SubscriptionNotificationWorker
 import ani.arkhime.com.settings.saving.PrefManager
 import ani.arkhime.com.settings.saving.PrefName
 
@@ -18,8 +20,16 @@ interface TaskScheduler {
     fun scheduleAllTasks(context: Context) {
         for (taskType in TaskType.entries) {
             val interval = when (taskType) {
+                TaskType.COMMENT_NOTIFICATION -> CommentNotificationWorker.checkIntervals[PrefManager.getVal(
+                    PrefName.CommentNotificationInterval
+                )]
+
                 TaskType.ANILIST_NOTIFICATION -> AnilistNotificationWorker.checkIntervals[PrefManager.getVal(
                     PrefName.AnilistNotificationInterval
+                )]
+
+                TaskType.SUBSCRIPTION_NOTIFICATION -> SubscriptionNotificationWorker.checkIntervals[PrefManager.getVal(
+                    PrefName.SubscriptionNotificationInterval
                 )]
             }
             scheduleRepeatingTask(taskType, interval)
@@ -38,16 +48,30 @@ interface TaskScheduler {
         fun scheduleSingleWork(context: Context) {
             val workManager = androidx.work.WorkManager.getInstance(context)
             workManager.enqueueUniqueWork(
+                CommentNotificationWorker.WORK_NAME + "_single",
+                androidx.work.ExistingWorkPolicy.REPLACE,
+                androidx.work.OneTimeWorkRequest.Builder(CommentNotificationWorker::class.java)
+                    .build()
+            )
+            workManager.enqueueUniqueWork(
                 AnilistNotificationWorker.WORK_NAME + "_single",
                 androidx.work.ExistingWorkPolicy.REPLACE,
                 androidx.work.OneTimeWorkRequest.Builder(AnilistNotificationWorker::class.java)
+                    .build()
+            )
+            workManager.enqueueUniqueWork(
+                SubscriptionNotificationWorker.WORK_NAME + "_single",
+                androidx.work.ExistingWorkPolicy.REPLACE,
+                androidx.work.OneTimeWorkRequest.Builder(SubscriptionNotificationWorker::class.java)
                     .build()
             )
         }
     }
 
     enum class TaskType {
-        ANILIST_NOTIFICATION
+        COMMENT_NOTIFICATION,
+        ANILIST_NOTIFICATION,
+        SUBSCRIPTION_NOTIFICATION
     }
 }
 

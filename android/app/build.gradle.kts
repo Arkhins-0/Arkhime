@@ -215,6 +215,15 @@ dependencies {
     implementation(libs.subsampling)
     implementation(libs.dialogs)
     implementation(libs.charts)
+    implementation(libs.gesture)
+
+    // Player (restored from Dantotsu)
+    implementation(libs.bundles.media3)
+    implementation(libs.nextlib)
+    implementation(libs.mediarouter)
+
+    // Novel reader (restored from Dantotsu)
+    implementation(libs.ebookreader)
 
     implementation(libs.bundles.markwon)
     implementation(libs.bundles.groupie)

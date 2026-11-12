@@ -5,6 +5,9 @@ import androidx.work.Constraints
 import androidx.work.PeriodicWorkRequest
 import ani.arkhime.com.notifications.TaskScheduler.TaskType
 import ani.arkhime.com.notifications.anilist.AnilistNotificationWorker
+import ani.arkhime.com.notifications.comment.CommentNotificationWorker
+import ani.arkhime.com.notifications.subscription.SubscriptionNotificationWorker
+
 class WorkManagerScheduler(private val context: Context) : TaskScheduler {
     override fun scheduleRepeatingTask(taskType: TaskType, interval: Long) {
         if (java.util.concurrent.TimeUnit.MINUTES.toMillis(interval) < PeriodicWorkRequest.MIN_PERIODIC_INTERVAL_MILLIS) {
@@ -16,6 +19,23 @@ class WorkManagerScheduler(private val context: Context) : TaskScheduler {
             .build()
 
         when (taskType) {
+            TaskType.COMMENT_NOTIFICATION -> {
+                val recurringWork = PeriodicWorkRequest.Builder(
+                    CommentNotificationWorker::class.java,
+                    interval,
+                    java.util.concurrent.TimeUnit.MINUTES,
+                    PeriodicWorkRequest.MIN_PERIODIC_FLEX_MILLIS,
+                    java.util.concurrent.TimeUnit.MINUTES
+                )
+                    .setConstraints(constraints)
+                    .build()
+                androidx.work.WorkManager.getInstance(context).enqueueUniquePeriodicWork(
+                    CommentNotificationWorker.WORK_NAME,
+                    androidx.work.ExistingPeriodicWorkPolicy.UPDATE,
+                    recurringWork
+                )
+            }
+
             TaskType.ANILIST_NOTIFICATION -> {
                 val recurringWork = PeriodicWorkRequest.Builder(
                     AnilistNotificationWorker::class.java,
@@ -32,16 +52,42 @@ class WorkManagerScheduler(private val context: Context) : TaskScheduler {
                     recurringWork
                 )
             }
+
+            TaskType.SUBSCRIPTION_NOTIFICATION -> {
+                val recurringWork = PeriodicWorkRequest.Builder(
+                    SubscriptionNotificationWorker::class.java,
+                    interval,
+                    java.util.concurrent.TimeUnit.MINUTES,
+                    PeriodicWorkRequest.MIN_PERIODIC_FLEX_MILLIS,
+                    java.util.concurrent.TimeUnit.MINUTES
+                )
+                    .setConstraints(constraints)
+                    .build()
+                androidx.work.WorkManager.getInstance(context).enqueueUniquePeriodicWork(
+                    SubscriptionNotificationWorker.WORK_NAME,
+                    androidx.work.ExistingPeriodicWorkPolicy.UPDATE,
+                    recurringWork
+                )
+            }
         }
     }
 
     override fun cancelTask(taskType: TaskType) {
         when (taskType) {
+            TaskType.COMMENT_NOTIFICATION -> {
+                androidx.work.WorkManager.getInstance(context)
+                    .cancelUniqueWork(CommentNotificationWorker.WORK_NAME)
+            }
+
             TaskType.ANILIST_NOTIFICATION -> {
                 androidx.work.WorkManager.getInstance(context)
                     .cancelUniqueWork(AnilistNotificationWorker.WORK_NAME)
             }
 
+            TaskType.SUBSCRIPTION_NOTIFICATION -> {
+                androidx.work.WorkManager.getInstance(context)
+                    .cancelUniqueWork(SubscriptionNotificationWorker.WORK_NAME)
+            }
         }
     }
 }
