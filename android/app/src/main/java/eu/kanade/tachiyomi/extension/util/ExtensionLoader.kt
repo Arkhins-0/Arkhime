@@ -23,7 +23,6 @@ import eu.kanade.tachiyomi.extension.manga.model.MangaLoadResult
 import eu.kanade.tachiyomi.source.CatalogueSource
 import eu.kanade.tachiyomi.source.MangaSource
 import eu.kanade.tachiyomi.source.SourceFactory
-import eu.kanade.tachiyomi.util.lang.Hash
 import eu.kanade.tachiyomi.util.system.getApplicationIcon
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
@@ -74,231 +73,112 @@ internal object ExtensionLoader {
             (if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P)
                 PackageManager.GET_SIGNING_CERTIFICATES else 0)
 
+    // ============================== All installed ==============================
+
     /**
      * Return a list of all the installed extensions initialized concurrently.
      *
      * @param context The application context.
      */
-    fun loadAnimeExtensions(context: Context): List<AnimeLoadResult> {
+    fun loadAnimeExtensions(context: Context): List<AnimeLoadResult> =
+        loadAll(context, MediaType.ANIME) { loadAnimeExtension(context, it.packageName, it) }
+
+    fun loadMangaExtensions(context: Context): List<MangaLoadResult> =
+        loadAll(context, MediaType.MANGA) { loadMangaExtension(context, it.packageName, it) }
+
+    fun loadNovelExtensions(context: Context): List<NovelLoadResult> =
+        loadAll(context, MediaType.NOVEL) { loadNovelExtension(context, it.packageName, it) }
+
+    private fun <R> loadAll(context: Context, type: MediaType, load: (PackageInfo) -> R): List<R> {
         val pkgManager = context.packageManager
-
-
         val installedPkgs = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             pkgManager.getInstalledPackages(PackageManager.PackageInfoFlags.of(PACKAGE_FLAGS.toLong()))
         } else {
             pkgManager.getInstalledPackages(PACKAGE_FLAGS)
         }
 
-        val extPkgs = installedPkgs.filter { isPackageAnExtension(MediaType.ANIME, it) }
-
+        val extPkgs = installedPkgs.filter { isPackageAnExtension(type, it) }
         if (extPkgs.isEmpty()) return emptyList()
 
         // Load each extension concurrently and wait for completion
         return runBlocking {
-            val deferred = extPkgs.map {
-                async { loadAnimeExtension(context, it.packageName, it) }
-            }
-            deferred.map { it.await() }
+            extPkgs.map { async { load(it) } }.map { it.await() }
         }
     }
 
-    fun loadMangaExtensions(context: Context): List<MangaLoadResult> {
-        val pkgManager = context.packageManager
-
-        val installedPkgs = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            pkgManager.getInstalledPackages(PackageManager.PackageInfoFlags.of(PACKAGE_FLAGS.toLong()))
-        } else {
-            pkgManager.getInstalledPackages(PACKAGE_FLAGS)
-        }
-
-        val extPkgs = installedPkgs.filter { isPackageAnExtension(MediaType.MANGA, it) }
-
-        if (extPkgs.isEmpty()) return emptyList()
-
-        // Load each extension concurrently and wait for completion
-        return runBlocking {
-            val deferred = extPkgs.map {
-                async { loadMangaExtension(context, it.packageName, it) }
-            }
-            deferred.map { it.await() }
-        }
-    }
-
-    fun loadNovelExtensions(context: Context): List<NovelLoadResult> {
-        val pkgManager = context.packageManager
-
-        val installedPkgs = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            pkgManager.getInstalledPackages(PackageManager.PackageInfoFlags.of(PACKAGE_FLAGS.toLong()))
-        } else {
-            pkgManager.getInstalledPackages(PACKAGE_FLAGS)
-        }
-
-        val extPkgs = installedPkgs.filter { isPackageAnExtension(MediaType.NOVEL, it) }
-
-        if (extPkgs.isEmpty()) return emptyList()
-
-        // Load each extension concurrently and wait for completion
-        return runBlocking {
-            val deferred = extPkgs.map {
-                async { loadNovelExtension(context, it.packageName, it) }
-            }
-            deferred.map { it.await() }
-        }
-    }
+    // ============================== One package ==============================
 
     /**
      * Attempts to load an extension from the given package name. It checks if the extension
      * contains the required feature flag before trying to load it.
      */
-    fun loadAnimeExtensionFromPkgName(context: Context, pkgName: String): AnimeLoadResult {
+    fun loadAnimeExtensionFromPkgName(context: Context, pkgName: String): AnimeLoadResult =
+        extensionPackage(context, pkgName, MediaType.ANIME).getOrNull()
+            ?.let { loadAnimeExtension(context, pkgName, it) }
+            ?: AnimeLoadResult.Error
+
+    fun loadMangaExtensionFromPkgName(context: Context, pkgName: String): MangaLoadResult =
+        extensionPackage(context, pkgName, MediaType.MANGA).getOrNull()
+            ?.let { loadMangaExtension(context, pkgName, it) }
+            ?: MangaLoadResult.Error
+
+    fun loadNovelExtensionFromPkgName(context: Context, pkgName: String): NovelLoadResult =
+        extensionPackage(context, pkgName, MediaType.NOVEL).fold(
+            onSuccess = { loadNovelExtension(context, pkgName, it) },
+            onFailure = { NovelLoadResult.Error(it as? Exception ?: Exception(it)) },
+        )
+
+    /** The package's info, or a failure if it's gone or isn't an extension of [type]. */
+    private fun extensionPackage(context: Context, pkgName: String, type: MediaType): Result<PackageInfo> {
         val pkgInfo = try {
             context.packageManager.getPackageInfo(pkgName, PACKAGE_FLAGS)
         } catch (error: PackageManager.NameNotFoundException) {
             // Unlikely, but the package may have been uninstalled at this point
             Logger.log(error)
-            return AnimeLoadResult.Error
+            return Result.failure(error)
         }
-        if (!isPackageAnExtension(MediaType.ANIME, pkgInfo)) {
-            Logger.log("Tried to load a package that wasn't a extension ($pkgName)")
-            return AnimeLoadResult.Error
+        if (!isPackageAnExtension(type, pkgInfo)) {
+            val message = "Tried to load a package that wasn't a extension ($pkgName)"
+            Logger.log(message)
+            return Result.failure(Exception(message))
         }
-        return loadAnimeExtension(context, pkgName, pkgInfo)
+        return Result.success(pkgInfo)
     }
 
-    fun loadMangaExtensionFromPkgName(context: Context, pkgName: String): MangaLoadResult {
-        val pkgInfo = try {
-            context.packageManager.getPackageInfo(pkgName, PACKAGE_FLAGS)
-        } catch (error: PackageManager.NameNotFoundException) {
-            // Unlikely, but the package may have been uninstalled at this point
-            Logger.log(error)
-            return MangaLoadResult.Error
-        }
-        if (!isPackageAnExtension(MediaType.MANGA, pkgInfo)) {
-            Logger.log("Tried to load a package that wasn't a extension ($pkgName)")
-            return MangaLoadResult.Error
-        }
-        return loadMangaExtension(context, pkgName, pkgInfo)
-    }
+    // ============================== Anime and manga ==============================
 
-    fun loadNovelExtensionFromPkgName(context: Context, pkgName: String): NovelLoadResult {
-        val pkgInfo = try {
-            context.packageManager.getPackageInfo(pkgName, PACKAGE_FLAGS)
-        } catch (error: PackageManager.NameNotFoundException) {
-            // Unlikely, but the package may have been uninstalled at this point
-            Logger.log(error)
-            return NovelLoadResult.Error(error)
-        }
-        if (!isPackageAnExtension(MediaType.NOVEL, pkgInfo)) {
-            Logger.log("Tried to load a package that wasn't a extension ($pkgName)")
-            return NovelLoadResult.Error(Exception("Tried to load a package that wasn't a extension ($pkgName)"))
-        }
-        return loadNovelExtension(context, pkgName, pkgInfo)
-    }
-
-    /**
-     * Loads an extension given its package name.
-     *
-     * @param context The application context.
-     * @param pkgName The package name of the extension to load.
-     * @param pkgInfo The package info of the extension.
-     */
     private fun loadAnimeExtension(
         context: Context,
         pkgName: String,
         pkgInfo: PackageInfo
     ): AnimeLoadResult {
-        val pkgManager = context.packageManager
-
-        val appInfo = try {
-            pkgManager.getApplicationInfo(pkgName, PackageManager.GET_META_DATA)
-        } catch (error: PackageManager.NameNotFoundException) {
-            // Unlikely, but the package may have been uninstalled at this point
-            Logger.log(error)
-            return AnimeLoadResult.Error
-        }
-
-        val extName = pkgManager.getApplicationLabel(appInfo).toString().substringAfter("Aniyomi: ")
-        val versionName = pkgInfo.versionName
-        val versionCode = PackageInfoCompat.getLongVersionCode(pkgInfo)
-
-        if (versionName.isNullOrEmpty()) {
-            Logger.log("Missing versionName for extension $extName")
-            return AnimeLoadResult.Error
-        }
-
-        // Validate lib version
-        val libVersion = versionName.substringBeforeLast('.').toDoubleOrNull()
-        if (libVersion == null || libVersion < ANIME_LIB_VERSION_MIN || libVersion > ANIME_LIB_VERSION_MAX) {
-            Logger.log(
-                "Lib version is $libVersion, while only versions " +
-                        "$ANIME_LIB_VERSION_MIN to $ANIME_LIB_VERSION_MAX are allowed"
-            )
-            return AnimeLoadResult.Error
-        }
-
-        val isNsfw = appInfo.metaData.getInt("$ANIME_PACKAGE$XX_METADATA_NSFW") == 1
-        if (!loadNsfwSource && isNsfw) {
-            Logger.log("NSFW extension $pkgName not allowed")
-            return AnimeLoadResult.Error
-        }
-
-        val hasReadme = appInfo.metaData.getInt("$ANIME_PACKAGE$XX_METADATA_HAS_README", 0) == 1
-        val hasChangelog =
-            appInfo.metaData.getInt("$ANIME_PACKAGE$XX_METADATA_HAS_CHANGELOG", 0) == 1
-
-        val classLoader = try{
-            PathClassLoader(appInfo.sourceDir, null, context.classLoader)
-        } catch (e: Throwable) {
-            Logger.log("Extension load error: $extName")
-            Injekt.get<CrashlyticsInterface>().logException(e)
-            return AnimeLoadResult.Error
-        }
-
-        val sources = appInfo.metaData.getString("$ANIME_PACKAGE$XX_METADATA_SOURCE_CLASS")!!
-            .split(";")
-            .map {
-                val sourceClass = it.trim()
-                if (sourceClass.startsWith(".")) {
-                    pkgInfo.packageName + sourceClass
-                } else {
-                    sourceClass
-                }
+        val pkg = loadSourcePackage(
+            context, pkgName, pkgInfo,
+            feature = ANIME_PACKAGE,
+            labelPrefix = "Aniyomi: ",
+            minLib = ANIME_LIB_VERSION_MIN.toDouble(),
+            maxLib = ANIME_LIB_VERSION_MAX.toDouble(),
+        ) { obj ->
+            when (obj) {
+                is AnimeSource -> listOf(obj)
+                is AnimeSourceFactory -> obj.createSources()
+                else -> null
             }
-            .flatMap {
-                try {
-                    when (val obj = Class.forName(it, false, classLoader).getDeclaredConstructor()
-                        .newInstance()) {
-                        is AnimeSource -> listOf(obj)
-                        is AnimeSourceFactory -> obj.createSources()
-                        else -> throw Exception("Unknown source class type! ${obj.javaClass}")
-                    }
-                } catch (e: Throwable) {
-                    Logger.log("Extension load error: $extName ($it)")
-                    return AnimeLoadResult.Error
-                }
-            }
+        } ?: return AnimeLoadResult.Error
 
-        val langs = sources.filterIsInstance<AnimeCatalogueSource>()
-            .map { it.lang }
-            .toSet()
-        val lang = when (langs.size) {
-            0 -> ""
-            1 -> langs.first()
-            else -> "all"
-        }
-
+        val sources = pkg.sources.map { it as AnimeSource }
         val extension = AnimeExtension.Installed(
-            name = extName,
+            name = pkg.name,
             pkgName = pkgName,
-            versionName = versionName,
-            versionCode = versionCode,
-            libVersion = libVersion,
-            lang = lang,
-            isNsfw = isNsfw,
-            hasReadme = hasReadme,
-            hasChangelog = hasChangelog,
+            versionName = pkg.versionName,
+            versionCode = pkg.versionCode,
+            libVersion = pkg.libVersion,
+            lang = langOf(sources.filterIsInstance<AnimeCatalogueSource>().map { it.lang }),
+            isNsfw = pkg.isNsfw,
+            hasReadme = pkg.hasReadme,
+            hasChangelog = pkg.hasChangelog,
             sources = sources,
-            pkgFactory = appInfo.metaData.getString("$ANIME_PACKAGE$XX_METADATA_SOURCE_FACTORY"),
+            pkgFactory = pkg.pkgFactory,
             isUnofficial = true,
             icon = context.getApplicationIcon(pkgName),
         )
@@ -310,6 +190,72 @@ internal object ExtensionLoader {
         pkgName: String,
         pkgInfo: PackageInfo
     ): MangaLoadResult {
+        val pkg = loadSourcePackage(
+            context, pkgName, pkgInfo,
+            feature = MANGA_PACKAGE,
+            labelPrefix = "Tachiyomi: ",
+            minLib = MANGA_LIB_VERSION_MIN,
+            maxLib = MANGA_LIB_VERSION_MAX,
+        ) { obj ->
+            when (obj) {
+                is MangaSource -> listOf(obj)
+                is SourceFactory -> obj.createSources()
+                else -> null
+            }
+        } ?: return MangaLoadResult.Error
+
+        val sources = pkg.sources.map { it as MangaSource }
+        val extension = MangaExtension.Installed(
+            name = pkg.name,
+            pkgName = pkgName,
+            versionName = pkg.versionName,
+            versionCode = pkg.versionCode,
+            libVersion = pkg.libVersion,
+            lang = langOf(sources.filterIsInstance<CatalogueSource>().map { it.lang }),
+            isNsfw = pkg.isNsfw,
+            hasReadme = pkg.hasReadme,
+            hasChangelog = pkg.hasChangelog,
+            sources = sources,
+            pkgFactory = pkg.pkgFactory,
+            isUnofficial = true,
+            icon = context.getApplicationIcon(pkgName),
+        )
+        return MangaLoadResult.Success(extension)
+    }
+
+    /** What an anime or manga extension package declares, once it has passed the checks. */
+    private class SourcePackage(
+        val name: String,
+        val versionName: String,
+        val versionCode: Long,
+        val libVersion: Double,
+        val isNsfw: Boolean,
+        val hasReadme: Boolean,
+        val hasChangelog: Boolean,
+        val pkgFactory: String?,
+        val sources: List<Any>,
+    )
+
+    /**
+     * Reads an anime or manga extension package and instantiates its sources. Returns null, after
+     * logging why, if the package is gone, has no version, is outside [minLib]..[maxLib], is NSFW
+     * while NSFW sources are hidden, or a source class can't be created.
+     *
+     * @param feature the uses-feature name and metadata prefix, like "tachiyomi.extension".
+     * @param labelPrefix the prefix stripped from the app label, like "Tachiyomi: ".
+     * @param createSources turns an instantiated class into its sources, or null if it's neither
+     *   a source nor a source factory.
+     */
+    private fun loadSourcePackage(
+        context: Context,
+        pkgName: String,
+        pkgInfo: PackageInfo,
+        feature: String,
+        labelPrefix: String,
+        minLib: Double,
+        maxLib: Double,
+        createSources: (Any) -> List<Any>?,
+    ): SourcePackage? {
         val pkgManager = context.packageManager
 
         val appInfo = try {
@@ -317,48 +263,46 @@ internal object ExtensionLoader {
         } catch (error: PackageManager.NameNotFoundException) {
             // Unlikely, but the package may have been uninstalled at this point
             Logger.log(error)
-            return MangaLoadResult.Error
+            return null
         }
 
-        val extName =
-            pkgManager.getApplicationLabel(appInfo).toString().substringAfter("Tachiyomi: ")
+        val extName = pkgManager.getApplicationLabel(appInfo).toString().substringAfter(labelPrefix)
         val versionName = pkgInfo.versionName
         val versionCode = PackageInfoCompat.getLongVersionCode(pkgInfo)
 
         if (versionName.isNullOrEmpty()) {
             Logger.log("Missing versionName for extension $extName")
-            return MangaLoadResult.Error
+            return null
         }
 
         // Validate lib version
         val libVersion = versionName.substringBeforeLast('.').toDoubleOrNull()
-        if (libVersion == null || libVersion < MANGA_LIB_VERSION_MIN || libVersion > MANGA_LIB_VERSION_MAX) {
+        if (libVersion == null || libVersion < minLib || libVersion > maxLib) {
             Logger.log(
                 "Lib version is $libVersion, while only versions " +
-                        "$MANGA_LIB_VERSION_MIN to $MANGA_LIB_VERSION_MAX are allowed"
+                        "${minLib.trimmed()} to ${maxLib.trimmed()} are allowed"
             )
-            return MangaLoadResult.Error
+            return null
         }
 
-        val isNsfw = appInfo.metaData.getInt("$MANGA_PACKAGE$XX_METADATA_NSFW") == 1
+        val isNsfw = appInfo.metaData.getInt("$feature$XX_METADATA_NSFW") == 1
         if (!loadNsfwSource && isNsfw) {
             Logger.log("NSFW extension $pkgName not allowed")
-            return MangaLoadResult.Error
+            return null
         }
 
-        val hasReadme = appInfo.metaData.getInt("$MANGA_PACKAGE$XX_METADATA_HAS_README", 0) == 1
-        val hasChangelog =
-            appInfo.metaData.getInt("$MANGA_PACKAGE$XX_METADATA_HAS_CHANGELOG", 0) == 1
+        val hasReadme = appInfo.metaData.getInt("$feature$XX_METADATA_HAS_README", 0) == 1
+        val hasChangelog = appInfo.metaData.getInt("$feature$XX_METADATA_HAS_CHANGELOG", 0) == 1
 
-        val classLoader = try{
+        val classLoader = try {
             PathClassLoader(appInfo.sourceDir, null, context.classLoader)
         } catch (e: Throwable) {
             Logger.log("Extension load error: $extName")
             Injekt.get<CrashlyticsInterface>().logException(e)
-            return MangaLoadResult.Error
+            return null
         }
 
-        val sources = appInfo.metaData.getString("$MANGA_PACKAGE$XX_METADATA_SOURCE_CLASS")!!
+        val sources = appInfo.metaData.getString("$feature$XX_METADATA_SOURCE_CLASS")!!
             .split(";")
             .map {
                 val sourceClass = it.trim()
@@ -370,44 +314,40 @@ internal object ExtensionLoader {
             }
             .flatMap {
                 try {
-                    when (val obj = Class.forName(it, false, classLoader)
-                        .getDeclaredConstructor().newInstance()) {
-                        is MangaSource -> listOf(obj)
-                        is SourceFactory -> obj.createSources()
-                        else -> throw Exception("Unknown source class type! ${obj.javaClass}")
-                    }
+                    val obj = Class.forName(it, false, classLoader).getDeclaredConstructor().newInstance()
+                    createSources(obj) ?: throw Exception("Unknown source class type! ${obj.javaClass}")
                 } catch (e: Throwable) {
                     Logger.log("Extension load error: $extName ($it)")
-                    return MangaLoadResult.Error
+                    return null
                 }
             }
 
-        val langs = sources.filterIsInstance<CatalogueSource>()
-            .map { it.lang }
-            .toSet()
-        val lang = when (langs.size) {
-            0 -> ""
-            1 -> langs.first()
-            else -> "all"
-        }
-
-        val extension = MangaExtension.Installed(
+        return SourcePackage(
             name = extName,
-            pkgName = pkgName,
             versionName = versionName,
             versionCode = versionCode,
             libVersion = libVersion,
-            lang = lang,
             isNsfw = isNsfw,
             hasReadme = hasReadme,
             hasChangelog = hasChangelog,
+            pkgFactory = appInfo.metaData.getString("$feature$XX_METADATA_SOURCE_FACTORY"),
             sources = sources,
-            pkgFactory = appInfo.metaData.getString("$MANGA_PACKAGE$XX_METADATA_SOURCE_FACTORY"),
-            isUnofficial = true,
-            icon = context.getApplicationIcon(pkgName),
         )
-        return MangaLoadResult.Success(extension)
     }
+
+    /** "12" for 12.0, so the log reads as it did when the anime limits were Ints. */
+    private fun Double.trimmed(): String = if (this % 1.0 == 0.0) toLong().toString() else toString()
+
+    private fun langOf(langs: List<String>): String {
+        val distinct = langs.toSet()
+        return when (distinct.size) {
+            0 -> ""
+            1 -> distinct.first()
+            else -> "all"
+        }
+    }
+
+    // ============================== Novel ==============================
 
     private fun loadNovelExtension(
         context: Context,
@@ -471,7 +411,6 @@ internal object ExtensionLoader {
         )
         return NovelLoadResult.Success(extension)
     }
-
 
     /**
      * Returns true if the given package is an extension.
