@@ -102,11 +102,6 @@ class NovelExtensionPagingSource(
         } else {
             availableExtensions.filter { it.name.contains(query, ignoreCase = true) }
         }
-        /*val filternfsw = if(isNsfwEnabled) {  currently not implemented
-            filteredExtensions
-        } else {
-            filteredExtensions.filterNot { it.isNsfw }
-        }*/
         return try {
             val sublist = filteredExtensions.subList(
                 fromIndex = position,

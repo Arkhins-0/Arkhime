@@ -53,13 +53,6 @@ class Query {
             val page: com.arkhins.arkhime.connections.anilist.api.Page?
         )
     }
-//    data class AiringSchedule(
-//        val data : Data?
-//    ){
-//        data class Data(
-//            val AiringSchedule: com.arkhins.arkhime.connections.anilist.api.AiringSchedule?
-//        )
-//    }
 
     @Serializable
     data class Character(
@@ -98,14 +91,6 @@ class Query {
             val author: Staff?
         )
     }
-
-    //    data class MediaList(
-//        val data: Data?
-//    ){
-//        data class Data(
-//            val MediaList: com.arkhins.arkhime.connections.anilist.api.MediaList?
-//        )
-//    }
 
     @Serializable
     data class MediaListCollection(
@@ -798,46 +783,3 @@ class Query {
     ) : java.io.Serializable
 
 }
-
-//data class WhaData(
-//    val Studio: Studio?,
-//
-//    // Follow query
-//    val Following: User?,
-//
-//    // Follow query
-//    val Follower: User?,
-//
-//    // Thread query
-//    val Thread: Thread?,
-//
-//    // Recommendation query
-//    val Recommendation: Recommendation?,
-//
-//    // Like query
-//    val Like: User?,
-
-//    // Review query
-//    val Review: Review?,
-//
-//    // Activity query
-//    val Activity: ActivityUnion?,
-//
-//    // Activity reply query
-//    val ActivityReply: ActivityReply?,
-
-//    // CommentNotificationWorker query
-//    val ThreadComment: List<ThreadComment>?,
-
-//    // Notification query
-//    val Notification: NotificationUnion?,
-
-//    // Media Trend query
-//    val MediaTrend: MediaTrend?,
-
-//    // Provide AniList markdown to be converted to html (Requires auth)
-//    val Markdown: ParsedMarkdown?,
-
-//    // SiteStatistics: SiteStatistics
-//    val AniChartUser: AniChartUser?,
-//)

@@ -669,7 +669,6 @@ class ExoplayerView :
                 }
                 dialog.findViewById<Slider>(R.id.seekbar).addOnChangeListener { _, value, _ ->
                     skipTime = value.toInt()
-                    // saveData(player, settings)
                     PrefManager.setVal(PrefName.SkipTime, skipTime)
                     playerView.findViewById<TextView>(R.id.exo_skip_time).text =
                         skipTime.toString()
@@ -1845,7 +1844,6 @@ class ExoplayerView :
                 .setRendererDisabled(TRACK_TYPE_AUDIO, false)
                 .setRendererDisabled(TRACK_TYPE_TEXT, false)
                 .setMaxVideoSize(1, 1)
-        // .setOverrideForType(TrackSelectionOverride(trackSelector, TRACK_TYPE_VIDEO))
         if (PrefManager.getVal(PrefName.SettingsPreferDub)) {
             parameters.setPreferredAudioLanguage(Locale.getDefault().language)
         }

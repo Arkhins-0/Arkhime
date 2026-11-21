@@ -171,18 +171,6 @@ data class UserStatistics(
     @SerialName("episodesWatched") var episodesWatched: Int?,
     @SerialName("chaptersRead") var chaptersRead: Int?,
     @SerialName("volumesRead") var volumesRead: Int?,
-    //    @SerialName("formats") var formats: List<UserFormatStatistic>?,
-    //    @SerialName("statuses") var statuses: List<UserStatusStatistic>?,
-    //    @SerialName("scores") var scores: List<UserScoreStatistic>?,
-    //    @SerialName("lengths") var lengths: List<UserLengthStatistic>?,
-    //    @SerialName("releaseYears") var releaseYears: List<UserReleaseYearStatistic>?,
-    //    @SerialName("startYears") var startYears: List<UserStartYearStatistic>?,
-    //    @SerialName("genres") var genres: List<UserGenreStatistic>?,
-    //    @SerialName("tags") var tags: List<UserTagStatistic>?,
-    //    @SerialName("countries") var countries: List<UserCountryStatistic>?,
-    //    @SerialName("voiceActors") var voiceActors: List<UserVoiceActorStatistic>?,
-    //    @SerialName("staff") var staff: List<UserStaffStatistic>?,
-    //    @SerialName("studios") var studios: List<UserStudioStatistic>?,
 )
 
 @Serializable

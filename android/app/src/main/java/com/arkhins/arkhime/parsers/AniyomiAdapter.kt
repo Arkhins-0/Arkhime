@@ -571,11 +571,6 @@ class VideoServerPassthrough(private val videoServer: VideoServer) : VideoExtrac
                 val fileName = queryPairs.find { it.first == "file" }?.second ?: ""
 
                 format = getVideoType(fileName)
-                // this solves a problem no one has, so I'm commenting it out for now
-                //if (format == null) {
-                //    val networkHelper = Injekt.get<NetworkHelper>()
-                //    format = headRequest(videoUrl, networkHelper)
-                //}
             }
 
             // If the format is still undetermined, log an error

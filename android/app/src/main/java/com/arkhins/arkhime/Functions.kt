@@ -1387,25 +1387,6 @@ fun brightnessConverter(it: Float, fromLog: Boolean) =
         else it, 0.001f, 1f
     )
 
-// NOTE:Unused legacy function
-
-//fun checkCountry(context: Context): Boolean {
-//    val telMgr = context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-//    return when (telMgr.simState) {
-//        TelephonyManager.SIM_STATE_ABSENT -> {
-//            val tz = TimeZone.getDefault().id
-//            tz.equals("Asia/Kolkata", ignoreCase = true)
-//        }
-//
-//        TelephonyManager.SIM_STATE_READY -> {
-//            val countryCodeValue = telMgr.networkCountryIso
-//            countryCodeValue.equals("in", ignoreCase = true)
-//        }
-//
-//        else -> false
-//    }
-//}
-
 const val INCOGNITO_CHANNEL_ID = 26
 
 @SuppressLint("LaunchActivityFromNotification")
