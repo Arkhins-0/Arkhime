@@ -1,0 +1,1191 @@
+{
+  "name": "Arkhime Manga",
+  "badgeLabel": "ARK",
+  "signingKey": "",
+  "contact": {
+    "website": "https://github.com/Arkhins-0/Arkhime"
+  },
+  "extensionList": {
+    "extensions": [
+      {
+        "name": "3Hentai",
+        "packageName": "eu.kanade.tachiyomi.extension.all.hentai3",
+        "resources": {
+          "apkUrl": "https://github.com/keiyoushi/extensions/releases/download/b035310-0/tachiyomi-all.hentai3-v1.6.7.apk",
+          "iconUrl": "https://cdn.jsdelivr.net/gh/keiyoushi/extensions-source@main/src/all/hentai3/res/mipmap-xhdpi/ic_launcher.png"
+        },
+        "extensionLib": "1.6",
+        "versionCode": "106007",
+        "versionName": "1.6.7",
+        "contentWarning": "CONTENT_WARNING_NSFW",
+        "sources": [
+          {
+            "id": "6915411826598362561",
+            "name": "3Hentai",
+            "language": "all",
+            "homeUrl": "https://3hentai.net"
+          },
+          {
+            "id": "7819216870104067677",
+            "name": "3Hentai",
+            "language": "en",
+            "homeUrl": "https://3hentai.net"
+          },
+          {
+            "id": "2859097949969075077",
+            "name": "3Hentai",
+            "language": "ja",
+            "homeUrl": "https://3hentai.net"
+          },
+          {
+            "id": "1633661983859923604",
+            "name": "3Hentai",
+            "language": "ko",
+            "homeUrl": "https://3hentai.net"
+          },
+          {
+            "id": "6260479722543828095",
+            "name": "3Hentai",
+            "language": "zh",
+            "homeUrl": "https://3hentai.net"
+          },
+          {
+            "id": "373755159908438683",
+            "name": "3Hentai",
+            "language": "es",
+            "homeUrl": "https://3hentai.net"
+          },
+          {
+            "id": "1132983959765816866",
+            "name": "3Hentai",
+            "language": "pt",
+            "homeUrl": "https://3hentai.net"
+          },
+          {
+            "id": "49558592523574241",
+            "name": "3Hentai",
+            "language": "id",
+            "homeUrl": "https://3hentai.net"
+          },
+          {
+            "id": "7615826761003926053",
+            "name": "3Hentai",
+            "language": "jv",
+            "homeUrl": "https://3hentai.net"
+          },
+          {
+            "id": "3940534831604021485",
+            "name": "3Hentai",
+            "language": "tl",
+            "homeUrl": "https://3hentai.net"
+          },
+          {
+            "id": "6096870058125388335",
+            "name": "3Hentai",
+            "language": "vi",
+            "homeUrl": "https://3hentai.net"
+          },
+          {
+            "id": "3039466073711396152",
+            "name": "3Hentai",
+            "language": "th",
+            "homeUrl": "https://3hentai.net"
+          },
+          {
+            "id": "3523364768003208635",
+            "name": "3Hentai",
+            "language": "my",
+            "homeUrl": "https://3hentai.net"
+          },
+          {
+            "id": "359674482170560410",
+            "name": "3Hentai",
+            "language": "tr",
+            "homeUrl": "https://3hentai.net"
+          },
+          {
+            "id": "4917651850397277037",
+            "name": "3Hentai",
+            "language": "ru",
+            "homeUrl": "https://3hentai.net"
+          },
+          {
+            "id": "3501213105339612791",
+            "name": "3Hentai",
+            "language": "uk",
+            "homeUrl": "https://3hentai.net"
+          },
+          {
+            "id": "7940950215101782907",
+            "name": "3Hentai",
+            "language": "pl",
+            "homeUrl": "https://3hentai.net"
+          },
+          {
+            "id": "7057309244033446342",
+            "name": "3Hentai",
+            "language": "de",
+            "homeUrl": "https://3hentai.net"
+          },
+          {
+            "id": "419728421305339582",
+            "name": "3Hentai",
+            "language": "it",
+            "homeUrl": "https://3hentai.net"
+          },
+          {
+            "id": "4290439286788644779",
+            "name": "3Hentai",
+            "language": "fr",
+            "homeUrl": "https://3hentai.net"
+          },
+          {
+            "id": "7640863230103182507",
+            "name": "3Hentai",
+            "language": "nl",
+            "homeUrl": "https://3hentai.net"
+          },
+          {
+            "id": "3862668659803323645",
+            "name": "3Hentai",
+            "language": "cs",
+            "homeUrl": "https://3hentai.net"
+          },
+          {
+            "id": "8643172240389130297",
+            "name": "3Hentai",
+            "language": "hu",
+            "homeUrl": "https://3hentai.net"
+          },
+          {
+            "id": "2158865776377405902",
+            "name": "3Hentai",
+            "language": "bg",
+            "homeUrl": "https://3hentai.net"
+          },
+          {
+            "id": "8884989104958593922",
+            "name": "3Hentai",
+            "language": "is",
+            "homeUrl": "https://3hentai.net"
+          },
+          {
+            "id": "5003216810967182175",
+            "name": "3Hentai",
+            "language": "la",
+            "homeUrl": "https://3hentai.net"
+          },
+          {
+            "id": "1533969146563051444",
+            "name": "3Hentai",
+            "language": "ar",
+            "homeUrl": "https://3hentai.net"
+          }
+        ]
+      },
+      {
+        "name": "Asura Scans",
+        "packageName": "eu.kanade.tachiyomi.extension.en.asurascans",
+        "resources": {
+          "apkUrl": "https://github.com/keiyoushi/extensions/releases/download/d0478bb/tachiyomi-en.asurascans-v1.6.72.apk",
+          "iconUrl": "https://cdn.jsdelivr.net/gh/keiyoushi/extensions-source@main/src/en/asurascans/res/mipmap-xhdpi/ic_launcher.png"
+        },
+        "extensionLib": "1.6",
+        "versionCode": "106072",
+        "versionName": "1.6.72",
+        "contentWarning": "CONTENT_WARNING_SAFE",
+        "sources": [
+          {
+            "id": "6247824327199706550",
+            "name": "Asura Scans",
+            "language": "en",
+            "homeUrl": "https://asurascans.com"
+          }
+        ]
+      },
+      {
+        "name": "Bbato",
+        "packageName": "eu.kanade.tachiyomi.extension.en.bbato",
+        "resources": {
+          "apkUrl": "https://github.com/keiyoushi/extensions/releases/download/80af09c/tachiyomi-en.bbato-v1.6.4.apk",
+          "iconUrl": "https://cdn.jsdelivr.net/gh/keiyoushi/extensions-source@main/src/en/bbato/res/mipmap-xhdpi/ic_launcher.png"
+        },
+        "extensionLib": "1.6",
+        "versionCode": "106004",
+        "versionName": "1.6.4",
+        "contentWarning": "CONTENT_WARNING_MIXED",
+        "sources": [
+          {
+            "id": "1678128543826757763",
+            "name": "Bbato",
+            "language": "en",
+            "homeUrl": "https://bato1.com"
+          }
+        ]
+      },
+      {
+        "name": "ComicsKingdom",
+        "packageName": "eu.kanade.tachiyomi.extension.all.comicskingdom",
+        "resources": {
+          "apkUrl": "https://github.com/keiyoushi/extensions/releases/download/b035310-0/tachiyomi-all.comicskingdom-v1.6.1.apk",
+          "iconUrl": "https://cdn.jsdelivr.net/gh/keiyoushi/extensions-source@main/src/all/comicskingdom/res/mipmap-xhdpi/ic_launcher.png"
+        },
+        "extensionLib": "1.6",
+        "versionCode": "106001",
+        "versionName": "1.6.1",
+        "contentWarning": "CONTENT_WARNING_SAFE",
+        "sources": [
+          {
+            "id": "3350274514125477391",
+            "name": "Comics Kingdom",
+            "language": "en",
+            "homeUrl": "https://wp.comicskingdom.com"
+          },
+          {
+            "id": "6467305425630534148",
+            "name": "Comics Kingdom",
+            "language": "es",
+            "homeUrl": "https://wp.comicskingdom.com"
+          }
+        ]
+      },
+      {
+        "name": "HentaiEra",
+        "packageName": "eu.kanade.tachiyomi.extension.all.hentaiera",
+        "resources": {
+          "apkUrl": "https://github.com/keiyoushi/extensions/releases/download/b035310-0/tachiyomi-all.hentaiera-v1.6.14.apk",
+          "iconUrl": "https://cdn.jsdelivr.net/gh/keiyoushi/extensions-source@main/src/all/hentaiera/res/mipmap-xhdpi/ic_launcher.png"
+        },
+        "extensionLib": "1.6",
+        "versionCode": "106014",
+        "versionName": "1.6.14",
+        "contentWarning": "CONTENT_WARNING_NSFW",
+        "sources": [
+          {
+            "id": "647637185891033517",
+            "name": "HentaiEra",
+            "language": "en",
+            "homeUrl": "https://hentaiera.com"
+          },
+          {
+            "id": "2492666945996599997",
+            "name": "HentaiEra",
+            "language": "ja",
+            "homeUrl": "https://hentaiera.com"
+          },
+          {
+            "id": "1720815810677381837",
+            "name": "HentaiEra",
+            "language": "es",
+            "homeUrl": "https://hentaiera.com"
+          },
+          {
+            "id": "6887659515539839354",
+            "name": "HentaiEra",
+            "language": "fr",
+            "homeUrl": "https://hentaiera.com"
+          },
+          {
+            "id": "5930644847758440964",
+            "name": "HentaiEra",
+            "language": "ko",
+            "homeUrl": "https://hentaiera.com"
+          },
+          {
+            "id": "1901100795183424105",
+            "name": "HentaiEra",
+            "language": "de",
+            "homeUrl": "https://hentaiera.com"
+          },
+          {
+            "id": "4966955732363898584",
+            "name": "HentaiEra",
+            "language": "ru",
+            "homeUrl": "https://hentaiera.com"
+          },
+          {
+            "id": "5238899243957092391",
+            "name": "HentaiEra",
+            "language": "all",
+            "homeUrl": "https://hentaiera.com"
+          }
+        ]
+      },
+      {
+        "name": "HentaiFox",
+        "packageName": "eu.kanade.tachiyomi.extension.all.hentaifox",
+        "resources": {
+          "apkUrl": "https://github.com/keiyoushi/extensions/releases/download/b035310-0/tachiyomi-all.hentaifox-v1.6.22.apk",
+          "iconUrl": "https://cdn.jsdelivr.net/gh/keiyoushi/extensions-source@main/src/all/hentaifox/res/mipmap-xhdpi/ic_launcher.png"
+        },
+        "extensionLib": "1.6",
+        "versionCode": "106022",
+        "versionName": "1.6.22",
+        "contentWarning": "CONTENT_WARNING_NSFW",
+        "sources": [
+          {
+            "id": "7945033982379409892",
+            "name": "HentaiFox",
+            "language": "en",
+            "homeUrl": "https://hentaifox.com"
+          },
+          {
+            "id": "8640201438684762638",
+            "name": "HentaiFox",
+            "language": "ja",
+            "homeUrl": "https://hentaifox.com"
+          },
+          {
+            "id": "3252050349835097844",
+            "name": "HentaiFox",
+            "language": "zh",
+            "homeUrl": "https://hentaifox.com"
+          },
+          {
+            "id": "2146024794445748144",
+            "name": "HentaiFox",
+            "language": "ko",
+            "homeUrl": "https://hentaifox.com"
+          },
+          {
+            "id": "2697587119837846427",
+            "name": "HentaiFox",
+            "language": "all",
+            "homeUrl": "https://hentaifox.com"
+          }
+        ]
+      },
+      {
+        "name": "HentaiNexus",
+        "packageName": "eu.kanade.tachiyomi.extension.en.hentainexus",
+        "resources": {
+          "apkUrl": "https://github.com/keiyoushi/extensions/releases/download/b035310-0/tachiyomi-en.hentainexus-v1.6.22.apk",
+          "iconUrl": "https://cdn.jsdelivr.net/gh/keiyoushi/extensions-source@main/src/en/hentainexus/res/mipmap-xhdpi/ic_launcher.png"
+        },
+        "extensionLib": "1.6",
+        "versionCode": "106022",
+        "versionName": "1.6.22",
+        "contentWarning": "CONTENT_WARNING_NSFW",
+        "sources": [
+          {
+            "id": "7719798645438596394",
+            "name": "HentaiNexus",
+            "language": "en",
+            "homeUrl": "https://hentainexus.com"
+          }
+        ]
+      },
+      {
+        "name": "HentaiRead",
+        "packageName": "eu.kanade.tachiyomi.extension.en.hentairead",
+        "resources": {
+          "apkUrl": "https://github.com/keiyoushi/extensions/releases/download/5849bd5/tachiyomi-en.hentairead-v1.6.4.apk",
+          "iconUrl": "https://cdn.jsdelivr.net/gh/keiyoushi/extensions-source@main/src/en/hentairead/res/mipmap-xhdpi/ic_launcher.png"
+        },
+        "extensionLib": "1.6",
+        "versionCode": "106004",
+        "versionName": "1.6.4",
+        "contentWarning": "CONTENT_WARNING_NSFW",
+        "sources": [
+          {
+            "id": "2299981010822511979",
+            "name": "HentaiRead",
+            "language": "en",
+            "homeUrl": "https://hentairead.com"
+          }
+        ]
+      },
+      {
+        "name": "IMHentai",
+        "packageName": "eu.kanade.tachiyomi.extension.all.imhentai",
+        "resources": {
+          "apkUrl": "https://github.com/keiyoushi/extensions/releases/download/b035310-0/tachiyomi-all.imhentai-v1.6.28.apk",
+          "iconUrl": "https://cdn.jsdelivr.net/gh/keiyoushi/extensions-source@main/src/all/imhentai/res/mipmap-xhdpi/ic_launcher.png"
+        },
+        "extensionLib": "1.6",
+        "versionCode": "106028",
+        "versionName": "1.6.28",
+        "contentWarning": "CONTENT_WARNING_NSFW",
+        "sources": [
+          {
+            "id": "1797754663718263026",
+            "name": "IMHentai",
+            "language": "en",
+            "homeUrl": "https://imhentai.xxx"
+          },
+          {
+            "id": "2843704102372436364",
+            "name": "IMHentai",
+            "language": "ja",
+            "homeUrl": "https://imhentai.xxx"
+          },
+          {
+            "id": "1600533831542201953",
+            "name": "IMHentai",
+            "language": "es",
+            "homeUrl": "https://imhentai.xxx"
+          },
+          {
+            "id": "6518732459102419415",
+            "name": "IMHentai",
+            "language": "fr",
+            "homeUrl": "https://imhentai.xxx"
+          },
+          {
+            "id": "520535890722709208",
+            "name": "IMHentai",
+            "language": "ko",
+            "homeUrl": "https://imhentai.xxx"
+          },
+          {
+            "id": "341676138799608238",
+            "name": "IMHentai",
+            "language": "de",
+            "homeUrl": "https://imhentai.xxx"
+          },
+          {
+            "id": "7505608677115153818",
+            "name": "IMHentai",
+            "language": "ru",
+            "homeUrl": "https://imhentai.xxx"
+          },
+          {
+            "id": "3395462671769287908",
+            "name": "IMHentai",
+            "language": "all",
+            "homeUrl": "https://imhentai.xxx"
+          }
+        ]
+      },
+      {
+        "name": "Luscious",
+        "packageName": "eu.kanade.tachiyomi.extension.all.luscious",
+        "resources": {
+          "apkUrl": "https://github.com/keiyoushi/extensions/releases/download/2137e82/tachiyomi-all.luscious-v1.6.3.apk",
+          "iconUrl": "https://cdn.jsdelivr.net/gh/keiyoushi/extensions-source@main/src/all/luscious/res/mipmap-xhdpi/ic_launcher.png"
+        },
+        "extensionLib": "1.6",
+        "versionCode": "106003",
+        "versionName": "1.6.3",
+        "contentWarning": "CONTENT_WARNING_NSFW",
+        "sources": [
+          {
+            "id": "2774395484485436593",
+            "name": "Luscious",
+            "language": "en",
+            "homeUrl": "https://www.luscious.net",
+            "mirrorUrls": [
+              "https://www.luscious.net",
+              "https://members.luscious.net"
+            ]
+          },
+          {
+            "id": "356192691213044104",
+            "name": "Luscious",
+            "language": "ja",
+            "homeUrl": "https://www.luscious.net",
+            "mirrorUrls": [
+              "https://www.luscious.net",
+              "https://members.luscious.net"
+            ]
+          },
+          {
+            "id": "4290611657061143259",
+            "name": "Luscious",
+            "language": "es",
+            "homeUrl": "https://www.luscious.net",
+            "mirrorUrls": [
+              "https://www.luscious.net",
+              "https://members.luscious.net"
+            ]
+          },
+          {
+            "id": "80965277100704155",
+            "name": "Luscious",
+            "language": "it",
+            "homeUrl": "https://www.luscious.net",
+            "mirrorUrls": [
+              "https://www.luscious.net",
+              "https://members.luscious.net"
+            ]
+          },
+          {
+            "id": "5185485787190542529",
+            "name": "Luscious",
+            "language": "de",
+            "homeUrl": "https://www.luscious.net",
+            "mirrorUrls": [
+              "https://www.luscious.net",
+              "https://members.luscious.net"
+            ]
+          },
+          {
+            "id": "151111346668901230",
+            "name": "Luscious",
+            "language": "fr",
+            "homeUrl": "https://www.luscious.net",
+            "mirrorUrls": [
+              "https://www.luscious.net",
+              "https://members.luscious.net"
+            ]
+          },
+          {
+            "id": "5200417794129414472",
+            "name": "Luscious",
+            "language": "zh",
+            "homeUrl": "https://www.luscious.net",
+            "mirrorUrls": [
+              "https://www.luscious.net",
+              "https://members.luscious.net"
+            ]
+          },
+          {
+            "id": "264934399418113929",
+            "name": "Luscious",
+            "language": "ko",
+            "homeUrl": "https://www.luscious.net",
+            "mirrorUrls": [
+              "https://www.luscious.net",
+              "https://members.luscious.net"
+            ]
+          },
+          {
+            "id": "1383462828430089842",
+            "name": "Luscious",
+            "language": "other",
+            "homeUrl": "https://www.luscious.net",
+            "mirrorUrls": [
+              "https://www.luscious.net",
+              "https://members.luscious.net"
+            ]
+          },
+          {
+            "id": "2638955581892699679",
+            "name": "Luscious",
+            "language": "th",
+            "homeUrl": "https://www.luscious.net",
+            "mirrorUrls": [
+              "https://www.luscious.net",
+              "https://members.luscious.net"
+            ]
+          },
+          {
+            "id": "4625881812440927464",
+            "name": "Luscious",
+            "language": "all",
+            "homeUrl": "https://www.luscious.net",
+            "mirrorUrls": [
+              "https://www.luscious.net",
+              "https://members.luscious.net"
+            ]
+          },
+          {
+            "id": "5826725746643311801",
+            "name": "Luscious",
+            "language": "pt-BR",
+            "homeUrl": "https://www.luscious.net",
+            "mirrorUrls": [
+              "https://www.luscious.net",
+              "https://members.luscious.net"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "MangaDex",
+        "packageName": "eu.kanade.tachiyomi.extension.all.mangadex",
+        "resources": {
+          "apkUrl": "https://github.com/keiyoushi/extensions/releases/download/d9420cd/tachiyomi-all.mangadex-v1.6.4.apk",
+          "iconUrl": "https://cdn.jsdelivr.net/gh/keiyoushi/extensions-source@main/src/all/mangadex/res/mipmap-xhdpi/ic_launcher.png"
+        },
+        "extensionLib": "1.6",
+        "versionCode": "106004",
+        "versionName": "1.6.4",
+        "contentWarning": "CONTENT_WARNING_MIXED",
+        "sources": [
+          {
+            "id": "6404943692147160087",
+            "name": "MangaDex",
+            "language": "all",
+            "homeUrl": "https://mangadex.org"
+          },
+          {
+            "id": "4638673959522768501",
+            "name": "MangaDex",
+            "language": "af",
+            "homeUrl": "https://mangadex.org"
+          },
+          {
+            "id": "987803387023224960",
+            "name": "MangaDex",
+            "language": "sq",
+            "homeUrl": "https://mangadex.org"
+          },
+          {
+            "id": "3339599426223341161",
+            "name": "MangaDex",
+            "language": "ar",
+            "homeUrl": "https://mangadex.org"
+          },
+          {
+            "id": "9127464796236242233",
+            "name": "MangaDex",
+            "language": "az",
+            "homeUrl": "https://mangadex.org"
+          },
+          {
+            "id": "1553736397938752611",
+            "name": "MangaDex",
+            "language": "eu",
+            "homeUrl": "https://mangadex.org"
+          },
+          {
+            "id": "3601180820582582605",
+            "name": "MangaDex",
+            "language": "be",
+            "homeUrl": "https://mangadex.org"
+          },
+          {
+            "id": "4150470519566206911",
+            "name": "MangaDex",
+            "language": "bn",
+            "homeUrl": "https://mangadex.org"
+          },
+          {
+            "id": "5463447640980279236",
+            "name": "MangaDex",
+            "language": "bg",
+            "homeUrl": "https://mangadex.org"
+          },
+          {
+            "id": "1347402746269051958",
+            "name": "MangaDex",
+            "language": "my",
+            "homeUrl": "https://mangadex.org"
+          },
+          {
+            "id": "5860541308324630662",
+            "name": "MangaDex",
+            "language": "ca",
+            "homeUrl": "https://mangadex.org"
+          },
+          {
+            "id": "5148895169070562838",
+            "name": "MangaDex",
+            "language": "zh-Hans",
+            "homeUrl": "https://mangadex.org"
+          },
+          {
+            "id": "1493666528525752601",
+            "name": "MangaDex",
+            "language": "zh-Hant",
+            "homeUrl": "https://mangadex.org"
+          },
+          {
+            "id": "2072928884077964642",
+            "name": "MangaDex",
+            "language": "cv",
+            "homeUrl": "https://mangadex.org"
+          },
+          {
+            "id": "8548374501079910130",
+            "name": "MangaDex",
+            "language": "hr",
+            "homeUrl": "https://mangadex.org"
+          },
+          {
+            "id": "3578612018159256808",
+            "name": "MangaDex",
+            "language": "cs",
+            "homeUrl": "https://mangadex.org"
+          },
+          {
+            "id": "425785191804166217",
+            "name": "MangaDex",
+            "language": "da",
+            "homeUrl": "https://mangadex.org"
+          },
+          {
+            "id": "6750440049024086587",
+            "name": "MangaDex",
+            "language": "nl",
+            "homeUrl": "https://mangadex.org"
+          },
+          {
+            "id": "2499283573021220255",
+            "name": "MangaDex",
+            "language": "en",
+            "homeUrl": "https://mangadex.org"
+          },
+          {
+            "id": "2819252027406613931",
+            "name": "MangaDex",
+            "language": "eo",
+            "homeUrl": "https://mangadex.org"
+          },
+          {
+            "id": "8773024089257004344",
+            "name": "MangaDex",
+            "language": "et",
+            "homeUrl": "https://mangadex.org"
+          },
+          {
+            "id": "8578871918181236609",
+            "name": "MangaDex",
+            "language": "fil",
+            "homeUrl": "https://mangadex.org"
+          },
+          {
+            "id": "8254121249433835847",
+            "name": "MangaDex",
+            "language": "fi",
+            "homeUrl": "https://mangadex.org"
+          },
+          {
+            "id": "4505830566611664829",
+            "name": "MangaDex",
+            "language": "fr",
+            "homeUrl": "https://mangadex.org"
+          },
+          {
+            "id": "8952567078513962586",
+            "name": "MangaDex",
+            "language": "ka",
+            "homeUrl": "https://mangadex.org"
+          },
+          {
+            "id": "5098537545549490547",
+            "name": "MangaDex",
+            "language": "de",
+            "homeUrl": "https://mangadex.org"
+          },
+          {
+            "id": "3260701926561129943",
+            "name": "MangaDex",
+            "language": "el",
+            "homeUrl": "https://mangadex.org"
+          },
+          {
+            "id": "1424273154577029558",
+            "name": "MangaDex",
+            "language": "he",
+            "homeUrl": "https://mangadex.org"
+          },
+          {
+            "id": "6840513937945146538",
+            "name": "MangaDex",
+            "language": "hi",
+            "homeUrl": "https://mangadex.org"
+          },
+          {
+            "id": "4284949320785450865",
+            "name": "MangaDex",
+            "language": "hu",
+            "homeUrl": "https://mangadex.org"
+          },
+          {
+            "id": "3686775439235747344",
+            "name": "MangaDex",
+            "language": "ga",
+            "homeUrl": "https://mangadex.org"
+          },
+          {
+            "id": "3807502156582598786",
+            "name": "MangaDex",
+            "language": "id",
+            "homeUrl": "https://mangadex.org"
+          },
+          {
+            "id": "1952071260038453057",
+            "name": "MangaDex",
+            "language": "it",
+            "homeUrl": "https://mangadex.org"
+          },
+          {
+            "id": "1411768577036936240",
+            "name": "MangaDex",
+            "language": "ja",
+            "homeUrl": "https://mangadex.org"
+          },
+          {
+            "id": "1573550798452063564",
+            "name": "MangaDex",
+            "language": "jv",
+            "homeUrl": "https://mangadex.org"
+          },
+          {
+            "id": "8884149958776527952",
+            "name": "MangaDex",
+            "language": "kk",
+            "homeUrl": "https://mangadex.org"
+          },
+          {
+            "id": "3285208643537017688",
+            "name": "MangaDex",
+            "language": "ko",
+            "homeUrl": "https://mangadex.org"
+          },
+          {
+            "id": "764587568075398530",
+            "name": "MangaDex",
+            "language": "la",
+            "homeUrl": "https://mangadex.org"
+          },
+          {
+            "id": "737986167355114438",
+            "name": "MangaDex",
+            "language": "lt",
+            "homeUrl": "https://mangadex.org"
+          },
+          {
+            "id": "1471784905273036181",
+            "name": "MangaDex",
+            "language": "ms",
+            "homeUrl": "https://mangadex.org"
+          },
+          {
+            "id": "5967745367608513818",
+            "name": "MangaDex",
+            "language": "mn",
+            "homeUrl": "https://mangadex.org"
+          },
+          {
+            "id": "954368055061084457",
+            "name": "MangaDex",
+            "language": "ne",
+            "homeUrl": "https://mangadex.org"
+          },
+          {
+            "id": "4872213291993424667",
+            "name": "MangaDex",
+            "language": "no",
+            "homeUrl": "https://mangadex.org"
+          },
+          {
+            "id": "3781216447842245147",
+            "name": "MangaDex",
+            "language": "fa",
+            "homeUrl": "https://mangadex.org"
+          },
+          {
+            "id": "8033579885162383068",
+            "name": "MangaDex",
+            "language": "pl",
+            "homeUrl": "https://mangadex.org"
+          },
+          {
+            "id": "2655149515337070132",
+            "name": "MangaDex",
+            "language": "pt-BR",
+            "homeUrl": "https://mangadex.org"
+          },
+          {
+            "id": "5189216366882819742",
+            "name": "MangaDex",
+            "language": "pt",
+            "homeUrl": "https://mangadex.org"
+          },
+          {
+            "id": "4774459486579224459",
+            "name": "MangaDex",
+            "language": "ro",
+            "homeUrl": "https://mangadex.org"
+          },
+          {
+            "id": "2098905203823335614",
+            "name": "MangaDex",
+            "language": "ru",
+            "homeUrl": "https://mangadex.org"
+          },
+          {
+            "id": "3507378005483435886",
+            "name": "MangaDex",
+            "language": "sr",
+            "homeUrl": "https://mangadex.org"
+          },
+          {
+            "id": "2875503798326600410",
+            "name": "MangaDex",
+            "language": "sk",
+            "homeUrl": "https://mangadex.org"
+          },
+          {
+            "id": "4938773340256184018",
+            "name": "MangaDex",
+            "language": "es-419",
+            "homeUrl": "https://mangadex.org"
+          },
+          {
+            "id": "6400665728063187402",
+            "name": "MangaDex",
+            "language": "es",
+            "homeUrl": "https://mangadex.org"
+          },
+          {
+            "id": "1145824452519314725",
+            "name": "MangaDex",
+            "language": "sv",
+            "homeUrl": "https://mangadex.org"
+          },
+          {
+            "id": "4273071356706429527",
+            "name": "MangaDex",
+            "language": "ta",
+            "homeUrl": "https://mangadex.org"
+          },
+          {
+            "id": "6886894829142702925",
+            "name": "MangaDex",
+            "language": "te",
+            "homeUrl": "https://mangadex.org"
+          },
+          {
+            "id": "1713554459881080228",
+            "name": "MangaDex",
+            "language": "th",
+            "homeUrl": "https://mangadex.org"
+          },
+          {
+            "id": "3846770256925560569",
+            "name": "MangaDex",
+            "language": "tr",
+            "homeUrl": "https://mangadex.org"
+          },
+          {
+            "id": "5779037855201976894",
+            "name": "MangaDex",
+            "language": "uk",
+            "homeUrl": "https://mangadex.org"
+          },
+          {
+            "id": "72800122520214493",
+            "name": "MangaDex",
+            "language": "ur",
+            "homeUrl": "https://mangadex.org"
+          },
+          {
+            "id": "2838715564514827672",
+            "name": "MangaDex",
+            "language": "uz",
+            "homeUrl": "https://mangadex.org"
+          },
+          {
+            "id": "9194073792736219759",
+            "name": "MangaDex",
+            "language": "vi",
+            "homeUrl": "https://mangadex.org"
+          }
+        ]
+      },
+      {
+        "name": "MangaFire",
+        "packageName": "eu.kanade.tachiyomi.extension.all.mangafire",
+        "resources": {
+          "apkUrl": "https://github.com/keiyoushi/extensions/releases/download/02402ef/tachiyomi-all.mangafire-v1.6.38.apk",
+          "iconUrl": "https://cdn.jsdelivr.net/gh/keiyoushi/extensions-source@main/src/all/mangafire/res/mipmap-xhdpi/ic_launcher.png"
+        },
+        "extensionLib": "1.6",
+        "versionCode": "106038",
+        "versionName": "1.6.38",
+        "contentWarning": "CONTENT_WARNING_MIXED",
+        "sources": [
+          {
+            "id": "6084907896154116083",
+            "name": "MangaFire",
+            "language": "en",
+            "homeUrl": "https://mangafire.to"
+          },
+          {
+            "id": "8098539940032331958",
+            "name": "MangaFire",
+            "language": "es",
+            "homeUrl": "https://mangafire.to"
+          },
+          {
+            "id": "3849324770075062403",
+            "name": "MangaFire",
+            "language": "es-419",
+            "homeUrl": "https://mangafire.to"
+          },
+          {
+            "id": "6228021941803932286",
+            "name": "MangaFire",
+            "language": "fr",
+            "homeUrl": "https://mangafire.to"
+          },
+          {
+            "id": "524110931382140732",
+            "name": "MangaFire",
+            "language": "ja",
+            "homeUrl": "https://mangafire.to"
+          },
+          {
+            "id": "758400875161895515",
+            "name": "MangaFire",
+            "language": "pt",
+            "homeUrl": "https://mangafire.to"
+          },
+          {
+            "id": "7842137233968841729",
+            "name": "MangaFire",
+            "language": "pt-BR",
+            "homeUrl": "https://mangafire.to"
+          }
+        ]
+      },
+      {
+        "name": "Mangakakalot",
+        "packageName": "eu.kanade.tachiyomi.extension.en.mangakakalot",
+        "resources": {
+          "apkUrl": "https://github.com/keiyoushi/extensions/releases/download/293eb3c/tachiyomi-en.mangakakalot-v1.6.29.apk",
+          "iconUrl": "https://cdn.jsdelivr.net/gh/keiyoushi/extensions-source@main/src/en/mangakakalot/res/mipmap-xhdpi/ic_launcher.png"
+        },
+        "extensionLib": "1.6",
+        "versionCode": "106029",
+        "versionName": "1.6.29",
+        "contentWarning": "CONTENT_WARNING_MIXED",
+        "sources": [
+          {
+            "id": "2528986671771677900",
+            "name": "Mangakakalot",
+            "language": "en",
+            "homeUrl": "https://www.katamanga.com",
+            "mirrorUrls": [
+              "https://www.katamanga.com",
+              "https://www.mangakakalove.com"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "MangaKatana",
+        "packageName": "eu.kanade.tachiyomi.extension.en.mangakatana",
+        "resources": {
+          "apkUrl": "https://github.com/keiyoushi/extensions/releases/download/b035310-1/tachiyomi-en.mangakatana-v1.6.2.apk",
+          "iconUrl": "https://cdn.jsdelivr.net/gh/keiyoushi/extensions-source@main/src/en/mangakatana/res/mipmap-xhdpi/ic_launcher.png"
+        },
+        "extensionLib": "1.6",
+        "versionCode": "106002",
+        "versionName": "1.6.2",
+        "contentWarning": "CONTENT_WARNING_MIXED",
+        "sources": [
+          {
+            "id": "3170561626848540385",
+            "name": "MangaKatana",
+            "language": "en",
+            "homeUrl": "https://mangakatana.com"
+          }
+        ]
+      },
+      {
+        "name": "Manganato",
+        "packageName": "eu.kanade.tachiyomi.extension.en.manganelo",
+        "resources": {
+          "apkUrl": "https://github.com/keiyoushi/extensions/releases/download/293eb3c/tachiyomi-en.manganelo-v1.6.26.apk",
+          "iconUrl": "https://cdn.jsdelivr.net/gh/keiyoushi/extensions-source@main/src/en/manganelo/res/mipmap-xhdpi/ic_launcher.png"
+        },
+        "extensionLib": "1.6",
+        "versionCode": "106026",
+        "versionName": "1.6.26",
+        "contentWarning": "CONTENT_WARNING_MIXED",
+        "sources": [
+          {
+            "id": "1024627298672457456",
+            "name": "Manganato",
+            "language": "en",
+            "homeUrl": "https://www.natomanga.com",
+            "mirrorUrls": [
+              "https://www.natomanga.com",
+              "https://www.nelomanga.net",
+              "https://www.manganato.gg"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "MangaPill",
+        "packageName": "eu.kanade.tachiyomi.extension.en.mangapill",
+        "resources": {
+          "apkUrl": "https://github.com/keiyoushi/extensions/releases/download/b035310-1/tachiyomi-en.mangapill-v1.6.1.apk",
+          "iconUrl": "https://cdn.jsdelivr.net/gh/keiyoushi/extensions-source@main/src/en/mangapill/res/mipmap-xhdpi/ic_launcher.png"
+        },
+        "extensionLib": "1.6",
+        "versionCode": "106001",
+        "versionName": "1.6.1",
+        "contentWarning": "CONTENT_WARNING_MIXED",
+        "sources": [
+          {
+            "id": "8448310129093543312",
+            "name": "MangaPill",
+            "language": "en",
+            "homeUrl": "https://mangapill.com"
+          }
+        ]
+      },
+      {
+        "name": "NHentai.to",
+        "packageName": "eu.kanade.tachiyomi.extension.all.nhentaito",
+        "resources": {
+          "apkUrl": "https://github.com/keiyoushi/extensions/releases/download/b035310-0/tachiyomi-all.nhentaito-v1.6.12.apk",
+          "iconUrl": "https://cdn.jsdelivr.net/gh/keiyoushi/extensions-source@main/lib-multisrc/galleryadults/res/mipmap-xhdpi/ic_launcher.png"
+        },
+        "extensionLib": "1.6",
+        "versionCode": "106012",
+        "versionName": "1.6.12",
+        "contentWarning": "CONTENT_WARNING_NSFW",
+        "sources": [
+          {
+            "id": "1911624300824763845",
+            "name": "NHentai.to",
+            "language": "en",
+            "homeUrl": "https://nhentai.to"
+          },
+          {
+            "id": "2472948389653215607",
+            "name": "NHentai.to",
+            "language": "ja",
+            "homeUrl": "https://nhentai.to"
+          },
+          {
+            "id": "79691962210322609",
+            "name": "NHentai.to",
+            "language": "zh",
+            "homeUrl": "https://nhentai.to"
+          },
+          {
+            "id": "874357157692405334",
+            "name": "NHentai.to",
+            "language": "ko",
+            "homeUrl": "https://nhentai.to"
+          },
+          {
+            "id": "7910220811455615939",
+            "name": "NHentai.to",
+            "language": "all",
+            "homeUrl": "https://nhentai.to"
+          }
+        ]
+      },
+      {
+        "name": "Weeb Central",
+        "packageName": "eu.kanade.tachiyomi.extension.en.weebcentral",
+        "resources": {
+          "apkUrl": "https://github.com/keiyoushi/extensions/releases/download/3cf15bc/tachiyomi-en.weebcentral-v1.6.27.apk",
+          "iconUrl": "https://cdn.jsdelivr.net/gh/keiyoushi/extensions-source@main/src/en/weebcentral/res/mipmap-xhdpi/ic_launcher.png"
+        },
+        "extensionLib": "1.6",
+        "versionCode": "106027",
+        "versionName": "1.6.27",
+        "contentWarning": "CONTENT_WARNING_MIXED",
+        "sources": [
+          {
+            "id": "2131019126180322627",
+            "name": "Weeb Central",
+            "language": "en",
+            "homeUrl": "https://weebcentral.com"
+          }
+        ]
+      }
+    ]
+  }
+}

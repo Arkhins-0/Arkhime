@@ -1,0 +1,172 @@
+{
+  "name": "Arkhime Anime",
+  "badgeLabel": "ARK",
+  "signingKey": "",
+  "contact": {
+    "website": "https://github.com/Arkhins-0/Arkhime"
+  },
+  "extensionList": {
+    "extensions": [
+      {
+        "name": "123Anime",
+        "packageName": "eu.kanade.tachiyomi.animeextension.en.onetwothreeanime",
+        "resources": {
+          "apkUrl": "https://raw.githubusercontent.com/yuzono/anime-repo/repo/apk/aniyomi-en.onetwothreeanime-v14.5.apk",
+          "iconUrl": "https://raw.githubusercontent.com/yuzono/anime-repo/repo/icon/eu.kanade.tachiyomi.animeextension.en.onetwothreeanime.png"
+        },
+        "extensionLib": "14",
+        "versionCode": "5",
+        "versionName": "14.5",
+        "contentWarning": "CONTENT_WARNING_SAFE",
+        "sources": [
+          {
+            "id": "9168084761765988435",
+            "name": "123Anime",
+            "language": "en",
+            "homeUrl": "https://123animehub.cc"
+          }
+        ]
+      },
+      {
+        "name": "Anikage",
+        "packageName": "eu.kanade.tachiyomi.animeextension.en.anikage",
+        "resources": {
+          "apkUrl": "https://raw.githubusercontent.com/yuzono/anime-repo/repo/apk/aniyomi-en.anikage-v14.10.apk",
+          "iconUrl": "https://raw.githubusercontent.com/yuzono/anime-repo/repo/icon/eu.kanade.tachiyomi.animeextension.en.anikage.png"
+        },
+        "extensionLib": "14",
+        "versionCode": "10",
+        "versionName": "14.10",
+        "contentWarning": "CONTENT_WARNING_NSFW",
+        "sources": [
+          {
+            "id": "975930199828232260",
+            "name": "Anikage",
+            "language": "en",
+            "homeUrl": "https://anikage.cc"
+          }
+        ]
+      },
+      {
+        "name": "AnimeGG",
+        "packageName": "eu.kanade.tachiyomi.animeextension.en.animegg",
+        "resources": {
+          "apkUrl": "https://raw.githubusercontent.com/yuzono/anime-repo/repo/apk/aniyomi-en.animegg-v14.3.apk",
+          "iconUrl": "https://raw.githubusercontent.com/yuzono/anime-repo/repo/icon/eu.kanade.tachiyomi.animeextension.en.animegg.png"
+        },
+        "extensionLib": "14",
+        "versionCode": "3",
+        "versionName": "14.3",
+        "contentWarning": "CONTENT_WARNING_SAFE",
+        "sources": [
+          {
+            "id": "2247987965040486818",
+            "name": "AnimeGG",
+            "language": "en",
+            "homeUrl": "https://www.animegg.org"
+          }
+        ]
+      },
+      {
+        "name": "Animenosub",
+        "packageName": "eu.kanade.tachiyomi.animeextension.en.animenosub",
+        "resources": {
+          "apkUrl": "https://raw.githubusercontent.com/yuzono/anime-repo/repo/apk/aniyomi-en.animenosub-v14.33.apk",
+          "iconUrl": "https://raw.githubusercontent.com/yuzono/anime-repo/repo/icon/eu.kanade.tachiyomi.animeextension.en.animenosub.png"
+        },
+        "extensionLib": "14",
+        "versionCode": "33",
+        "versionName": "14.33",
+        "contentWarning": "CONTENT_WARNING_NSFW",
+        "sources": [
+          {
+            "id": "6722573244246256733",
+            "name": "Animenosub",
+            "language": "en",
+            "homeUrl": "https://animenosub.to"
+          }
+        ]
+      },
+      {
+        "name": "Kayoanime",
+        "packageName": "eu.kanade.tachiyomi.animeextension.en.kayoanime",
+        "resources": {
+          "apkUrl": "https://raw.githubusercontent.com/yuzono/anime-repo/repo/apk/aniyomi-en.kayoanime-v14.14.apk",
+          "iconUrl": "https://raw.githubusercontent.com/yuzono/anime-repo/repo/icon/eu.kanade.tachiyomi.animeextension.en.kayoanime.png"
+        },
+        "extensionLib": "14",
+        "versionCode": "14",
+        "versionName": "14.14",
+        "contentWarning": "CONTENT_WARNING_SAFE",
+        "sources": [
+          {
+            "id": "203922289858257167",
+            "name": "Kayoanime",
+            "language": "en",
+            "homeUrl": "https://kayoanime.com"
+          }
+        ]
+      },
+      {
+        "name": "KickAssAnime",
+        "packageName": "eu.kanade.tachiyomi.animeextension.en.kickassanime",
+        "resources": {
+          "apkUrl": "https://raw.githubusercontent.com/yuzono/anime-repo/repo/apk/aniyomi-en.kickassanime-v14.64.apk",
+          "iconUrl": "https://raw.githubusercontent.com/yuzono/anime-repo/repo/icon/eu.kanade.tachiyomi.animeextension.en.kickassanime.png"
+        },
+        "extensionLib": "14",
+        "versionCode": "64",
+        "versionName": "14.64",
+        "contentWarning": "CONTENT_WARNING_SAFE",
+        "sources": [
+          {
+            "id": "2081771513481539599",
+            "name": "KickAssAnime",
+            "language": "en",
+            "homeUrl": "https://kaa.lt"
+          }
+        ]
+      },
+      {
+        "name": "Wcofun",
+        "packageName": "eu.kanade.tachiyomi.animeextension.en.wcofun",
+        "resources": {
+          "apkUrl": "https://raw.githubusercontent.com/yuzono/anime-repo/repo/apk/aniyomi-en.wcofun-v14.25.apk",
+          "iconUrl": "https://raw.githubusercontent.com/yuzono/anime-repo/repo/icon/eu.kanade.tachiyomi.animeextension.en.wcofun.png"
+        },
+        "extensionLib": "14",
+        "versionCode": "25",
+        "versionName": "14.25",
+        "contentWarning": "CONTENT_WARNING_SAFE",
+        "sources": [
+          {
+            "id": "1677488626877212634",
+            "name": "Wcofun",
+            "language": "en",
+            "homeUrl": "https://www.wcoflix.tv"
+          }
+        ]
+      },
+      {
+        "name": "WCOStream",
+        "packageName": "eu.kanade.tachiyomi.animeextension.en.wcostream",
+        "resources": {
+          "apkUrl": "https://raw.githubusercontent.com/yuzono/anime-repo/repo/apk/aniyomi-en.wcostream-v14.16.apk",
+          "iconUrl": "https://raw.githubusercontent.com/yuzono/anime-repo/repo/icon/eu.kanade.tachiyomi.animeextension.en.wcostream.png"
+        },
+        "extensionLib": "14",
+        "versionCode": "16",
+        "versionName": "14.16",
+        "contentWarning": "CONTENT_WARNING_SAFE",
+        "sources": [
+          {
+            "id": "4144024127778211557",
+            "name": "WCOStream",
+            "language": "en",
+            "homeUrl": "https://www.wcostream.tv"
+          }
+        ]
+      }
+    ]
+  }
+}
