@@ -1,6 +1,10 @@
 package com.arkhins.arkhime.media.manga
 
 import android.Manifest
+import com.arkhins.arkhime.download.manga.CbzImporter
+import androidx.appcompat.app.AlertDialog
+import androidx.activity.result.contract.ActivityResultContracts
+import android.net.Uri
 import android.annotation.SuppressLint
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -340,6 +344,74 @@ open class MangaReadFragment : Fragment(), ScanlatorSelectionListener {
         selected.scanlators = list
         model.saveSelected(media.id, selected)
         media.selected = selected
+    }
+
+    private val cbzPicker =
+        registerForActivityResult(ActivityResultContracts.OpenMultipleDocuments()) { uris ->
+            if (uris.isNotEmpty()) importCbzFiles(uris)
+        }
+
+    /** Picks CBZ/ZIP files and imports them into this manga's Downloaded chapters. */
+    fun importCbz() {
+        val activity = requireActivity() as MediaDetailsActivity
+        activity.accessAlertDialog(activity.launcher) { granted ->
+            if (granted) {
+                cbzPicker.launch(arrayOf("application/vnd.comicbook+zip", "application/x-cbz", "application/zip", "application/octet-stream", "*/*"))
+            } else {
+                snackString(getString(R.string.download_permission_required))
+            }
+        }
+    }
+
+    private fun importCbzFiles(uris: List<Uri>) {
+        val context = requireContext()
+        val dialog = AlertDialog.Builder(context)
+            .setTitle(R.string.import_cbz_title)
+            .setMessage("Reading ${uris.size} file(s)…")
+            .setCancelable(false)
+            .show()
+        lifecycleScope.launch {
+            val result = CbzImporter.import(context, media, downloadManager, uris) { p ->
+                withContext(Dispatchers.Main) {
+                    dialog.setMessage(
+                        "File ${p.fileIndex + 1} of ${p.fileCount}: ${p.fileName}\n" +
+                            "${p.chapter ?: ""}  ·  page ${p.page} of ${p.pages}"
+                    )
+                }
+            }
+            dialog.dismiss()
+            val message = buildString {
+                append("Imported ${result.chapters.size} chapter(s)")
+                if (result.failures.isNotEmpty()) {
+                    append("\n\nCouldn't import:\n")
+                    append(result.failures.joinToString("\n"))
+                }
+            }
+            // Mark the new chapters as downloaded, so they get the delete button.
+            result.chapters.forEach { chapterAdapter.stopDownload("$it-${CbzImporter.SCANLATOR}") }
+            val originals = result.importedFiles
+            val resultDialog = AlertDialog.Builder(context)
+                .setTitle(R.string.import_cbz)
+            if (originals.isEmpty()) {
+                resultDialog.setMessage(message).setPositiveButton(R.string.ok, null)
+            } else {
+                // Offer to remove the picked CBZ files, now that their pages are in the app.
+                resultDialog
+                    .setMessage("$message\n\nDelete the ${originals.size} original file(s) you picked?")
+                    .setPositiveButton("Delete") { _, _ ->
+                        lifecycleScope.launch(Dispatchers.IO) {
+                            val failed = CbzImporter.deleteOriginals(context, originals)
+                            snackString(
+                                if (failed == 0) "Deleted ${originals.size} file(s)"
+                                else "Couldn't delete $failed of ${originals.size} file(s)"
+                            )
+                        }
+                    }
+                    .setNegativeButton("Keep", null)
+            }
+            resultDialog.show()
+            media.selected?.let { loadChapters(it.sourceIndex, true) }
+        }
     }
 
     fun loadChapters(i: Int, invalidate: Boolean) {

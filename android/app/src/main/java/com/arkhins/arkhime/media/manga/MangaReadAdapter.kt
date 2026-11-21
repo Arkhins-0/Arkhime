@@ -143,7 +143,10 @@ class MangaReadAdapter(
             )
         )
         binding.mediaSourceTitle.isSelected = true
+        showImportButton(source)
+        binding.mediaSourceImport.setOnClickListener { fragment.importCbz() }
         binding.mediaSource.setOnItemClickListener { _, _, i, _ ->
+            showImportButton(i)
             fragment.onSourceChange(i).apply {
                 binding.mediaSourceTitle.text = showUserText
                 showUserTextListener = { MainScope().launch { binding.mediaSourceTitle.text = it } }
@@ -402,6 +405,13 @@ class MangaReadAdapter(
         }
         // Chapter Handling
         handleChapters()
+    }
+
+    /** Import CBZ is offered only while the Downloaded source is selected. */
+    private fun showImportButton(source: Int) {
+        val binding = _binding ?: return
+        binding.mediaSourceImport.isVisible = source in mangaReadSources.names.indices &&
+            mangaReadSources[source] is OfflineMangaParser
     }
 
     fun subscribeButton(enabled: Boolean) {
