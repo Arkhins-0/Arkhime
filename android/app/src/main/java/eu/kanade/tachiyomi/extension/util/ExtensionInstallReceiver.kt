@@ -185,57 +185,31 @@ internal class ExtensionInstallReceiver : BroadcastReceiver() {
      * @param context The application context.
      * @param intent The intent containing the package name of the extension.
      */
-    @OptIn(DelicateCoroutinesApi::class)
-    private suspend fun getAnimeExtensionFromIntent(
-        context: Context,
-        intent: Intent?
-    ): AnimeLoadResult {
-        val pkgName = getPackageNameFromIntent(intent)
-        if (pkgName == null) {
-            Logger.log("Package name not found")
-            return AnimeLoadResult.Error
+    private suspend fun getAnimeExtensionFromIntent(context: Context, intent: Intent?) =
+        loadFromIntent<AnimeLoadResult>(intent, AnimeLoadResult.Error) {
+            ExtensionLoader.loadAnimeExtensionFromPkgName(context, it)
         }
-        return GlobalScope.async(Dispatchers.Default, CoroutineStart.DEFAULT) {
-            ExtensionLoader.loadAnimeExtensionFromPkgName(
-                context,
-                pkgName,
-            )
-        }.await()
-    }
 
-    @OptIn(DelicateCoroutinesApi::class)
-    private suspend fun getMangaExtensionFromIntent(
-        context: Context,
-        intent: Intent?
-    ): MangaLoadResult {
-        val pkgName = getPackageNameFromIntent(intent)
-        if (pkgName == null) {
-            Logger.log("Package name not found")
-            return MangaLoadResult.Error
+    private suspend fun getMangaExtensionFromIntent(context: Context, intent: Intent?) =
+        loadFromIntent<MangaLoadResult>(intent, MangaLoadResult.Error) {
+            ExtensionLoader.loadMangaExtensionFromPkgName(context, it)
         }
-        return GlobalScope.async(Dispatchers.Default, CoroutineStart.DEFAULT) {
-            ExtensionLoader.loadMangaExtensionFromPkgName(
-                context,
-                pkgName,
-            )
-        }.await()
-    }
 
+    private suspend fun getNovelExtensionFromIntent(context: Context, intent: Intent?) =
+        loadFromIntent<NovelLoadResult>(intent, NovelLoadResult.Error(Exception("Package name not found"))) {
+            ExtensionLoader.loadNovelExtensionFromPkgName(context, it)
+        }
+
+    /** Loads the intent's package off the main thread, or returns [missing] if it names none. */
     @OptIn(DelicateCoroutinesApi::class)
-    private suspend fun getNovelExtensionFromIntent(
-        context: Context,
-        intent: Intent?
-    ): NovelLoadResult {
+    private suspend fun <R> loadFromIntent(intent: Intent?, missing: R, load: (String) -> R): R {
         val pkgName = getPackageNameFromIntent(intent)
         if (pkgName == null) {
             Logger.log("Package name not found")
-            return NovelLoadResult.Error(Exception("Package name not found"))
+            return missing
         }
         return GlobalScope.async(Dispatchers.Default, CoroutineStart.DEFAULT) {
-            ExtensionLoader.loadNovelExtensionFromPkgName(
-                context,
-                pkgName,
-            )
+            load(pkgName)
         }.await()
     }
 
