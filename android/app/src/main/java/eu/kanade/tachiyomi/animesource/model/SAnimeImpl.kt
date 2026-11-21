@@ -1,7 +1,5 @@
 package eu.kanade.tachiyomi.animesource.model
 
-import eu.kanade.tachiyomi.source.model.UpdateStrategy
-
 class SAnimeImpl : SAnime {
 
     override lateinit var url: String
@@ -22,5 +20,19 @@ class SAnimeImpl : SAnime {
 
     override var initialized: Boolean = false
 
-    override var update_strategy: UpdateStrategy = UpdateStrategy.ALWAYS_UPDATE
+    // Stored under its own name: anime saved before this used the manga UpdateStrategy type for
+    // update_strategy, and reading that back skips the old field and leaves this null.
+    private var updateStrategy: AnimeUpdateStrategy? = null
+
+    override var update_strategy: AnimeUpdateStrategy
+        get() = updateStrategy ?: AnimeUpdateStrategy.ALWAYS_UPDATE
+        set(value) {
+            updateStrategy = value
+        }
+
+    companion object {
+        // Pinned to the value from before update_strategy changed type, so anime saved with Java
+        // serialization still read back.
+        private const val serialVersionUID = 2758411142803207100L
+    }
 }
