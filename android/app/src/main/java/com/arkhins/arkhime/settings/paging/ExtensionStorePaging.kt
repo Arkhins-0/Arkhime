@@ -22,8 +22,6 @@ import com.arkhins.arkhime.others.LanguageMapper
 import com.arkhins.arkhime.settings.saving.PrefManager
 import com.arkhins.arkhime.settings.saving.PrefName
 import com.bumptech.glide.Glide
-import eu.kanade.tachiyomi.extension.anime.AnimeExtensionManager
-import eu.kanade.tachiyomi.extension.anime.model.AnimeExtension
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -37,21 +35,41 @@ import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+/*
+ * The extension store list, shared by the anime and manga "Available" tabs. It pages through the
+ * store's extensions, leaving out installed ones and filtering by search, language and the NSFW
+ * setting. Each tab says how to read its extension type through [StoreItem].
+ */
+
+/** What the store list shows for one available extension. */
+class StoreItem(
+    val name: String,
+    val pkgName: String,
+    val lang: String,
+    val versionName: String,
+    val isNsfw: Boolean,
+    val iconUrl: String,
+)
+
 @Suppress("UNCHECKED_CAST")
-class AnimeExtensionsViewModelFactory(
-    private val animeExtensionManager: AnimeExtensionManager
+class ExtensionStoreViewModelFactory<A : Any>(
+    private val available: Flow<List<A>>,
+    private val installedPackages: Flow<List<String>>,
+    private val item: (A) -> StoreItem,
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return AnimeExtensionsViewModel(animeExtensionManager) as T
+        return ExtensionStoreViewModel(available, installedPackages, item) as T
     }
 }
 
-
-class AnimeExtensionsViewModel(
-    animeExtensionManager: AnimeExtensionManager
+class ExtensionStoreViewModel<A : Any>(
+    available: Flow<List<A>>,
+    installedPackages: Flow<List<String>>,
+    private val item: (A) -> StoreItem,
 ) : ViewModel() {
     private val searchQuery = MutableStateFlow("")
-    private var currentPagingSource: AnimeExtensionPagingSource? = null
+    private var currentPagingSource: ExtensionStorePagingSource<A>? = null
+
     fun setSearchQuery(query: String) {
         searchQuery.value = query
     }
@@ -61,13 +79,13 @@ class AnimeExtensionsViewModel(
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    val pagerFlow: Flow<PagingData<AnimeExtension.Available>> = combine(
-        animeExtensionManager.availableExtensionsFlow,
-        animeExtensionManager.installedExtensionsFlow,
+    val pagerFlow: Flow<PagingData<A>> = combine(
+        available,
+        installedPackages,
         searchQuery
-    ) { available, installed, query ->
-        Triple(available, installed, query)
-    }.flatMapLatest { (available, installed, query) ->
+    ) { availableList, installed, query ->
+        Triple(availableList, installed, query)
+    }.flatMapLatest { (availableList, installed, query) ->
         Pager(
             PagingConfig(
                 pageSize = 15,
@@ -75,36 +93,33 @@ class AnimeExtensionsViewModel(
                 prefetchDistance = 15
             )
         ) {
-            val aEPS = AnimeExtensionPagingSource(available, installed, query)
-            currentPagingSource = aEPS
-            aEPS
+            ExtensionStorePagingSource(availableList, installed.toSet(), query, item)
+                .also { currentPagingSource = it }
         }.flow
     }.cachedIn(viewModelScope)
 }
 
-class AnimeExtensionPagingSource(
-    private val availableExtensionsFlow: List<AnimeExtension.Available>,
-    private val installedExtensionsFlow: List<AnimeExtension.Installed>,
-    private val searchQuery: String
-) : PagingSource<Int, AnimeExtension.Available>() {
+class ExtensionStorePagingSource<A : Any>(
+    private val available: List<A>,
+    private val installedPackages: Set<String>,
+    private val searchQuery: String,
+    private val item: (A) -> StoreItem,
+) : PagingSource<Int, A>() {
 
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, AnimeExtension.Available> {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, A> {
         val position = params.key ?: 0
-        val installedExtensions = installedExtensionsFlow.map { it.pkgName }.toSet()
-        val availableExtensions =
-            availableExtensionsFlow.filterNot { it.pkgName in installedExtensions }
-        val query = searchQuery
+        val availableExtensions = available.filterNot { item(it).pkgName in installedPackages }
         val isNsfwEnabled: Boolean = PrefManager.getVal(PrefName.NSFWExtension)
 
-        val filteredExtensions = if (query.isEmpty()) {
+        val filteredExtensions = if (searchQuery.isEmpty()) {
             availableExtensions
         } else {
-            availableExtensions.filter { it.name.contains(query, ignoreCase = true) }
+            availableExtensions.filter { item(it).name.contains(searchQuery, ignoreCase = true) }
         }
         val lang: String = PrefManager.getVal(PrefName.LangSort)
         val langFilter =
-            if (lang != "all") filteredExtensions.filter { it.lang == lang } else filteredExtensions
-        val filternfsw = if (isNsfwEnabled) langFilter else langFilter.filterNot { it.isNsfw }
+            if (lang != "all") filteredExtensions.filter { item(it).lang == lang } else filteredExtensions
+        val filternfsw = if (isNsfwEnabled) langFilter else langFilter.filterNot { item(it).isNsfw }
         return try {
             val sublist = filternfsw.subList(
                 fromIndex = position,
@@ -120,57 +135,37 @@ class AnimeExtensionPagingSource(
         }
     }
 
-    override fun getRefreshKey(state: PagingState<Int, AnimeExtension.Available>): Int? {
+    override fun getRefreshKey(state: PagingState<Int, A>): Int? {
         return null
     }
 }
 
-class AnimeExtensionAdapter(private val clickListener: OnAnimeInstallClickListener) :
-    PagingDataAdapter<AnimeExtension.Available, AnimeExtensionAdapter.AnimeExtensionViewHolder>(
-        DIFF_CALLBACK
-    ) {
+class ExtensionStoreAdapter<A : Any>(
+    private val item: (A) -> StoreItem,
+    private val onInstallClick: (A) -> Unit,
+) : PagingDataAdapter<A, ExtensionStoreAdapter<A>.ViewHolder>(diffCallback(item)) {
 
     private val skipIcons: Boolean = PrefManager.getVal(PrefName.SkipExtensionIcons)
 
-    companion object {
-        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<AnimeExtension.Available>() {
-            override fun areItemsTheSame(
-                oldItem: AnimeExtension.Available,
-                newItem: AnimeExtension.Available
-            ): Boolean {
-                // Your logic here
-                return oldItem.pkgName == newItem.pkgName
-            }
-
-            override fun areContentsTheSame(
-                oldItem: AnimeExtension.Available,
-                newItem: AnimeExtension.Available
-            ): Boolean {
-                // Your logic here
-                return oldItem == newItem
-            }
-        }
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AnimeExtensionViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding =
             ItemExtensionAllBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return AnimeExtensionViewHolder(binding)
+        return ViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: AnimeExtensionViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val extension = getItem(position)
         if (extension != null) {
             if (!skipIcons) {
                 Glide.with(holder.itemView.context)
-                    .load(extension.iconUrl)
+                    .load(item(extension).iconUrl)
                     .into(holder.extensionIconImageView)
             }
             holder.bind(extension)
         }
     }
 
-    inner class AnimeExtensionViewHolder(private val binding: ItemExtensionAllBinding) :
+    inner class ViewHolder(private val binding: ItemExtensionAllBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         private val job = Job()
@@ -181,7 +176,7 @@ class AnimeExtensionAdapter(private val clickListener: OnAnimeInstallClickListen
                 if (bindingAdapterPosition == RecyclerView.NO_POSITION) return@setOnClickListener
                 val extension = getItem(bindingAdapterPosition)
                 if (extension != null) {
-                    clickListener.onInstallClick(extension)
+                    onInstallClick(extension)
                     binding.closeTextView.setImageResource(R.drawable.ic_sync)
                     scope.launch {
                         while (isActive) {
@@ -201,11 +196,12 @@ class AnimeExtensionAdapter(private val clickListener: OnAnimeInstallClickListen
 
         val extensionIconImageView: ImageView = binding.extensionIconImageView
 
-        fun bind(extension: AnimeExtension.Available) {
-            val nsfw = if (extension.isNsfw) "(18+)" else ""
-            val lang = LanguageMapper.getLanguageName(extension.lang)
-            binding.extensionNameTextView.text = extension.name
-            val versionText = "$lang ${extension.versionName} $nsfw"
+        fun bind(extension: A) {
+            val info = item(extension)
+            val nsfw = if (info.isNsfw) "(18+)" else ""
+            val lang = LanguageMapper.getLanguageName(info.lang)
+            binding.extensionNameTextView.text = info.name
+            val versionText = "$lang ${info.versionName} $nsfw"
             binding.extensionVersionTextView.text = versionText
         }
 
@@ -214,12 +210,18 @@ class AnimeExtensionAdapter(private val clickListener: OnAnimeInstallClickListen
         }
     }
 
-    override fun onViewRecycled(holder: AnimeExtensionViewHolder) {
+    override fun onViewRecycled(holder: ViewHolder) {
         super.onViewRecycled(holder)
         holder.clear()
     }
-}
 
-interface OnAnimeInstallClickListener {
-    fun onInstallClick(pkg: AnimeExtension.Available)
+    companion object {
+        fun <A : Any> diffCallback(item: (A) -> StoreItem) = object : DiffUtil.ItemCallback<A>() {
+            override fun areItemsTheSame(oldItem: A, newItem: A): Boolean =
+                item(oldItem).pkgName == item(newItem).pkgName
+
+            // The extension models are data classes, so this compares their contents.
+            override fun areContentsTheSame(oldItem: A, newItem: A): Boolean = oldItem == newItem
+        }
+    }
 }
