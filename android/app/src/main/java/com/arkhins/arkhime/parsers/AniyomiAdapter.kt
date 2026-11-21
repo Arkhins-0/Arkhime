@@ -134,18 +134,20 @@ class DynamicAnimeParser(extension: AnimeExtension.Installed) : AnimeParser() {
         return false
     }
 
+    /** The selected source; an index left over from a removed language falls back to the first. */
+    private fun currentSource() = try {
+        extension.sources[sourceLanguage]
+    } catch (e: Exception) {
+        sourceLanguage = 0
+        extension.sources[sourceLanguage]
+    }
+
     override suspend fun loadEpisodes(
         animeLink: String,
         extra: Map<String, String>?,
         sAnime: SAnime
     ): List<Episode> {
-        val source = try {
-            extension.sources[sourceLanguage]
-        } catch (e: Exception) {
-            sourceLanguage = 0
-            extension.sources[sourceLanguage]
-        } as? AnimeHttpSource ?: (extension.sources[sourceLanguage] as? AnimeCatalogueSource
-            ?: return emptyList())
+        val source = currentSource() as? AnimeCatalogueSource ?: return emptyList()
         try {
             val res = source.getEpisodeList(sAnime)
 
@@ -216,13 +218,7 @@ class DynamicAnimeParser(extension: AnimeExtension.Installed) : AnimeParser() {
         extra: Map<String, String>?,
         sEpisode: SEpisode
     ): List<VideoServer> {
-        val source = try {
-            extension.sources[sourceLanguage]
-        } catch (e: Exception) {
-            sourceLanguage = 0
-            extension.sources[sourceLanguage]
-        } as? AnimeHttpSource ?: (extension.sources[sourceLanguage] as? AnimeCatalogueSource
-            ?: return emptyList())
+        val source = currentSource() as? AnimeCatalogueSource ?: return emptyList()
 
         return try {
             val videos = source.getVideoList(sEpisode)
@@ -239,13 +235,7 @@ class DynamicAnimeParser(extension: AnimeExtension.Installed) : AnimeParser() {
     }
 
     override suspend fun search(query: String): List<ShowResponse> {
-        val source = try {
-            extension.sources[sourceLanguage]
-        } catch (e: Exception) {
-            sourceLanguage = 0
-            extension.sources[sourceLanguage]
-        } as? AnimeHttpSource ?: (extension.sources[sourceLanguage] as? AnimeCatalogueSource
-            ?: return emptyList())
+        val source = currentSource() as? AnimeCatalogueSource ?: return emptyList()
         return try {
             val res = source.getSearchAnime(1, query, source.getFilterList())
             Logger.log("query: $query")
@@ -331,17 +321,20 @@ class DynamicMangaParser(extension: MangaExtension.Installed) : MangaParser() {
     override val isNSFW = extension.isNsfw
     override val icon = extension.icon
 
+    /** The selected source; an index left over from a removed language falls back to the first. */
+    private fun currentSource() = try {
+        extension.sources[sourceLanguage]
+    } catch (e: Exception) {
+        sourceLanguage = 0
+        extension.sources[sourceLanguage]
+    }
+
     override suspend fun loadChapters(
         mangaLink: String,
         extra: Map<String, String>?,
         sManga: SManga
     ): List<MangaChapter> {
-        val source = try {
-            extension.sources[sourceLanguage]
-        } catch (e: Exception) {
-            sourceLanguage = 0
-            extension.sources[sourceLanguage]
-        } as? HttpSource ?: return emptyList()
+        val source = currentSource() as? HttpSource ?: return emptyList()
 
         return try {
             // getMangaUpdate is the lib 1.6 entry point; for older extensions it falls back to
@@ -363,12 +356,7 @@ class DynamicMangaParser(extension: MangaExtension.Installed) : MangaParser() {
 
 
     override suspend fun loadImages(chapterLink: String, sChapter: SChapter): List<MangaImage> {
-        val source = try {
-            extension.sources[sourceLanguage]
-        } catch (e: Exception) {
-            sourceLanguage = 0
-            extension.sources[sourceLanguage]
-        } as? HttpSource ?: return emptyList()
+        val source = currentSource() as? HttpSource ?: return emptyList()
         val imageDataList: MutableList<ImageData> = mutableListOf()
         val ret = coroutineScope {
             try {
@@ -399,12 +387,7 @@ class DynamicMangaParser(extension: MangaExtension.Installed) : MangaParser() {
     }
 
     suspend fun imageList(sChapter: SChapter): List<ImageData> {
-        val source = try {
-            extension.sources[sourceLanguage]
-        } catch (e: Exception) {
-            sourceLanguage = 0
-            extension.sources[sourceLanguage]
-        } as? HttpSource ?: return emptyList()
+        val source = currentSource() as? HttpSource ?: return emptyList()
 
         return coroutineScope {
             try {
@@ -433,12 +416,7 @@ class DynamicMangaParser(extension: MangaExtension.Installed) : MangaParser() {
     }
 
     override suspend fun search(query: String): List<ShowResponse> {
-        val source = try {
-            extension.sources[sourceLanguage]
-        } catch (e: Exception) {
-            sourceLanguage = 0
-            extension.sources[sourceLanguage]
-        } as? HttpSource ?: return emptyList()
+        val source = currentSource() as? HttpSource ?: return emptyList()
 
         return try {
             val res = source.getSearchManga(1, query, source.getFilterList())
