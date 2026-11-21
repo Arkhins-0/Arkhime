@@ -579,23 +579,6 @@ fun isOnline(context: Context): Boolean {
     } ?: false
 }
 
-fun isWifiConnected(context: Context): Boolean {
-    val connectivityManager =
-        context.getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager ?: return false
-    return tryWith {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            val network = connectivityManager.activeNetwork ?: return@tryWith false
-            val cap = connectivityManager.getNetworkCapabilities(network) ?: return@tryWith false
-            cap.hasTransport(TRANSPORT_WIFI) || cap.hasTransport(TRANSPORT_ETHERNET) || cap.hasTransport(TRANSPORT_WIFI_AWARE)
-        } else {
-            @Suppress("DEPRECATION")
-            connectivityManager.activeNetworkInfo?.run {
-                isConnected && (type == ConnectivityManager.TYPE_WIFI || type == ConnectivityManager.TYPE_ETHERNET)
-            } ?: false
-        }
-    } ?: false
-}
-
 fun startMainActivity(activity: Activity, bundle: Bundle? = null) {
     activity.finishAffinity()
     activity.startActivity(
@@ -743,50 +726,6 @@ class FadingEdgeRecyclerView : RecyclerView {
     override fun getBottomPaddingOffset(): Int {
         return if (clipToPadding) 0 else paddingBottom
     }
-}
-
-fun levenshtein(lhs: CharSequence, rhs: CharSequence): Int {
-    if (lhs == rhs) {
-        return 0
-    }
-    if (lhs.isEmpty()) {
-        return rhs.length
-    }
-    if (rhs.isEmpty()) {
-        return lhs.length
-    }
-
-    val lhsLength = lhs.length + 1
-    val rhsLength = rhs.length + 1
-
-    var cost = IntArray(lhsLength) { it }
-    var newCost = IntArray(lhsLength)
-
-    for (i in 1 until rhsLength) {
-        newCost[0] = i
-        val rhsChar = rhs[i - 1]
-
-        for (j in 1 until lhsLength) {
-            val match = if (lhs[j - 1] == rhsChar) 0 else 1
-
-            val costReplace = cost[j - 1] + match
-            val costInsert = cost[j] + 1
-            val costDelete = newCost[j - 1] + 1
-
-            newCost[j] = min(min(costInsert, costDelete), costReplace)
-        }
-
-        val swap = cost
-        cost = newCost
-        newCost = swap
-    }
-
-    return cost[lhsLength - 1]
-}
-
-fun String.findBetween(a: String, b: String): String? {
-    val string = substringAfter(a, "").substringBefore(b, "")
-    return string.ifEmpty { null }
 }
 
 fun ImageView.loadImage(url: String?, size: Int = 0) {
@@ -1412,22 +1351,6 @@ class SpinnerNoSwipe : androidx.appcompat.widget.AppCompatSpinner {
     }
 }
 
-@SuppressLint("RestrictedApi")
-class CustomBottomNavBar @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null
-) : BottomNavigationView(context, attrs) {
-    init {
-        ViewUtils.doOnApplyWindowInsets(
-            this
-        ) { view, insets, initialPadding ->
-            initialPadding.bottom = 0
-            updateLayoutParams<MarginLayoutParams> { bottomMargin = navBarHeight }
-            initialPadding.applyToView(view)
-            insets
-        }
-    }
-}
-
 fun getCurrentBrightnessValue(context: Context): Float {
     fun getMax(): Int {
         val powerManager = context.getSystemService(Context.POWER_SERVICE) as PowerManager
@@ -1749,14 +1672,4 @@ fun getLanguageName(language: String): String? {
         }
     }
     return null
-}
-
-@OptIn(ExperimentalEncodingApi::class)
-fun String.decodeBase64ToString(): String {
-    return try {
-        String(Base64.decode(this), Charsets.UTF_8)
-    } catch (e: Exception) {
-        Logger.log(e)
-        ""
-    }
 }

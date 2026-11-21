@@ -120,19 +120,6 @@ class Query {
     }
 
     @Serializable
-    data class CombinedMediaListResponse(
-        @SerialName("data")
-        val data: Data?
-    ) {
-        @Serializable
-        data class Data(
-            @SerialName("current") val current: com.arkhins.arkhime.connections.anilist.api.MediaListCollection?,
-            @SerialName("planned") val planned: com.arkhins.arkhime.connections.anilist.api.MediaListCollection?,
-            @SerialName("repeating") val repeating: com.arkhins.arkhime.connections.anilist.api.MediaListCollection?,
-        )
-    }
-
-    @Serializable
     data class HomePageMedia(
         @SerialName("data")
         val data: Data?

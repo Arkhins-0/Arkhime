@@ -8,8 +8,6 @@ import eu.kanade.tachiyomi.network.NetworkHelper
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
 
-class NovelAdapter
-
 class DynamicNovelParser(extension: NovelExtension.Installed) : NovelParser() {
     override val volumeRegex =
         Regex("vol\\.? (\\d+(\\.\\d+)?)|volume (\\d+(\\.\\d+)?)", RegexOption.IGNORE_CASE)

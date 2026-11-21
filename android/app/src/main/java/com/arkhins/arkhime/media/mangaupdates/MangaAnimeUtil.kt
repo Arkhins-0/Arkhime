@@ -29,8 +29,6 @@ object MangaAnimeUtil {
 
     private val json = Json { ignoreUnknownKeys = true }
     private val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.US)
-    private val displayFormat = SimpleDateFormat("d MMMM", Locale.US)
-
     @Serializable
     data class MangaBakaResponse(val data: MangaBakaData? = null)
 

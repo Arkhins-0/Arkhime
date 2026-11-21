@@ -41,8 +41,6 @@ object Discord {
         }
     }
 
-    private var rpc: RPC? = null
-
 
     fun warning(context: Context) = CustomBottomDialog().apply {
         title = context.getString(R.string.warning)

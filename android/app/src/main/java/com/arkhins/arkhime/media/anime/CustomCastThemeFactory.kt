@@ -10,12 +10,6 @@ import androidx.mediarouter.app.MediaRouteControllerDialogFragment
 import androidx.mediarouter.app.MediaRouteDialogFactory
 import com.arkhins.arkhime.R
 
-class CustomCastProvider(context: Context) : MediaRouteActionProvider(context) {
-    init {
-        dialogFactory = CustomCastThemeFactory()
-    }
-}
-
 class CustomCastThemeFactory : MediaRouteDialogFactory() {
     override fun onCreateChooserDialogFragment(): MediaRouteChooserDialogFragment {
         return CustomMediaRouterChooserDialogFragment()

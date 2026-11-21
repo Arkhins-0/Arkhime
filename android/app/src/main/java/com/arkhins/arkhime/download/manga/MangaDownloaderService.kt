@@ -386,13 +386,6 @@ class MangaDownloaderService : Service() {
             }
         }
 
-    private fun broadcastDownloadStarted(chapterNumber: String) {
-        val intent = Intent(ACTION_DOWNLOAD_STARTED).apply {
-            putExtra(EXTRA_CHAPTER_NUMBER, chapterNumber)
-        }
-        sendBroadcast(intent)
-    }
-
     private fun broadcastDownloadFinished(chapterNumber: String) {
         val intent = Intent(ACTION_DOWNLOAD_FINISHED).apply {
             putExtra(EXTRA_CHAPTER_NUMBER, chapterNumber)

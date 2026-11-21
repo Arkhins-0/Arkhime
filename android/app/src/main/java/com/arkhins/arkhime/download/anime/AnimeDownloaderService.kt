@@ -524,13 +524,6 @@ class AnimeDownloaderService : Service() {
             }
         }
 
-    private fun broadcastDownloadStarted(episodeNumber: String) {
-        val intent = Intent(AnimeWatchFragment.ACTION_DOWNLOAD_STARTED).apply {
-            putExtra(AnimeWatchFragment.EXTRA_EPISODE_NUMBER, episodeNumber)
-        }
-        sendBroadcast(intent)
-    }
-
     private fun broadcastDownloadFinished(episodeNumber: String) {
         val intent = Intent(AnimeWatchFragment.ACTION_DOWNLOAD_FINISHED).apply {
             putExtra(AnimeWatchFragment.EXTRA_EPISODE_NUMBER, episodeNumber)
