@@ -58,8 +58,8 @@
 # Core App / Extensions
 #############################################
 
--keep class ani.arkhime.com.** { *; }
--keep class ani.arkhime.com.download.DownloadsManager { *; }
+-keep class com.arkhins.arkhime.** { *; }
+-keep class com.arkhins.arkhime.download.DownloadsManager { *; }
 
 -keep class eu.kanade.** { *; }
 -keep class uy.kohesive.injekt.** { *; }
@@ -173,3 +173,13 @@
 -dontwarn com.google.mlkit.vision.**
 -keep class com.google.android.gms.internal.mlkit_vision_text** { *; }
 -dontwarn com.google.android.gms.internal.mlkit_vision_text**
+
+# Extensions are compiled against these libraries but don't bundle them: they call the app's copy by
+# name, so R8 must not rename or strip their public API (same list Mihon keeps).
+-keep,allowoptimization class kotlinx.coroutines.** { public protected *; }
+-keep,allowoptimization class rx.** { public protected *; }
+-keep,allowoptimization class kotlin.time.** { public protected *; }
+-keep,allowoptimization class kotlinx.datetime.** { public protected *; }
+# Novel extensions get the app's nicehttp Requests and call it.
+-keep class com.lagradost.nicehttp.** { *; }
+-dontwarn com.lagradost.nicehttp.**

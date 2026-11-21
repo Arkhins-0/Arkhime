@@ -3,7 +3,10 @@ package eu.kanade.tachiyomi.source
 import eu.kanade.tachiyomi.source.model.Page
 import eu.kanade.tachiyomi.source.model.SChapter
 import eu.kanade.tachiyomi.source.model.SManga
+import eu.kanade.tachiyomi.source.model.SMangaUpdate
 import eu.kanade.tachiyomi.util.lang.awaitSingle
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
 import rx.Observable
 
 /**
@@ -83,5 +86,29 @@ interface MangaSource {
     @Suppress("DEPRECATION")
     suspend fun getPageList(chapter: SChapter): List<Page> {
         return fetchPageList(chapter).awaitSingle()
+    }
+
+    /**
+     * Fetches a manga's details, its chapters, or both. Values not asked for may come back as
+     * passed in.
+     *
+     * Extensions on lib 1.6 override this and drop [getMangaDetails] and [getChapterList], so
+     * the app should call this. The default keeps older extensions working by calling those.
+     *
+     * @since tachiyomix 1.6
+     * @param manga the manga to fetch.
+     * @param chapters the chapters the app already has.
+     * @param fetchDetails whether to fetch the manga's details.
+     * @param fetchChapters whether to fetch its chapters.
+     */
+    suspend fun getMangaUpdate(
+        manga: SManga,
+        chapters: List<SChapter>,
+        fetchDetails: Boolean,
+        fetchChapters: Boolean,
+    ): SMangaUpdate = coroutineScope {
+        val details = if (fetchDetails) async { getMangaDetails(manga) } else null
+        val chapterList = if (fetchChapters) async { getChapterList(manga) } else null
+        SMangaUpdate(details?.await() ?: manga, chapterList?.await() ?: chapters)
     }
 }

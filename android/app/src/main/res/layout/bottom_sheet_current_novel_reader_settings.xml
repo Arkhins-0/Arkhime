@@ -36,7 +36,7 @@
                 android:fontFamily="@font/jakarta_bold"
                 android:text="@string/theme" />
 
-            <ani.arkhime.com.SpinnerNoSwipe
+            <com.arkhins.arkhime.SpinnerNoSwipe
                 android:id="@+id/themeSelect"
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"

@@ -1,5 +1,6 @@
 package eu.kanade.tachiyomi.source.model
 
+import kotlinx.serialization.json.JsonObject
 import java.io.Serializable
 
 interface SChapter : Serializable {
@@ -14,12 +15,25 @@ interface SChapter : Serializable {
 
     var scanlator: String?
 
+    /**
+     * Extra metadata a source keeps with the chapter. Not shown to users.
+     *
+     * Has a default so a chapter class from an older extension, which doesn't implement it,
+     * still works.
+     *
+     * @since tachiyomix 1.6
+     */
+    var memo: JsonObject
+        get() = EMPTY_MEMO
+        set(@Suppress("UNUSED_PARAMETER") value) {}
+
     fun copyFrom(other: SChapter) {
         name = other.name
         url = other.url
         date_upload = other.date_upload
         chapter_number = other.chapter_number
         scanlator = other.scanlator
+        memo = other.memo
     }
 
     companion object {

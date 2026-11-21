@@ -1,6 +1,6 @@
 import { GITHUB_REPO } from "@/lib/site";
 
-// Shape the app's AppUpdater.FallbackResponse expects
+// Latest GitHub release, for the version badge on the home page and the /download redirect
 export type UpdateInfo = { version: string; changelog: string; downloadUrl: string | null };
 
 type Release = {
@@ -52,14 +52,4 @@ export async function latest(channel: Channel): Promise<UpdateInfo | null> {
     .filter((r) => (channel === "beta" ? r.prerelease : !r.prerelease))
     .sort(newestFirst);
   return candidates[0] ? toInfo(candidates[0]) : null;
-}
-
-export async function byVersion(version: string): Promise<UpdateInfo | null> {
-  const wanted = version.replace(/^v/, "");
-  const release = (await releases()).find((r) => !r.draft && r.tag_name.replace(/^v/, "") === wanted);
-  return release ? toInfo(release) : null;
-}
-
-export function isChannel(value: string): value is Channel {
-  return value === "stable" || value === "beta";
 }

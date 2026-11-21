@@ -2,13 +2,12 @@
 
 import { useEffect, useMemo, useSyncExternalStore } from "react";
 import { APP_SCHEME } from "@/lib/site";
-import { WEB_LOGIN_KEY, WEB_LOGIN_TTL_MS } from "@/web/lib/config";
 
 /*
  * https://arkhime.arkhins.com is registered as the OAuth redirect URL.
  *   AniList (implicit grant) lands here with  #access_token=...&token_type=Bearer&...
  *   MyAnimeList (PKCE)       lands here with  ?code=...&state=...
- * Both are handed to the app through its custom scheme; the app parses them in
+ * Both are handed to the Android app through its custom scheme; the app parses them in
  * connections/anilist/Login.kt and connections/mal/Login.kt.
  */
 
@@ -38,16 +37,6 @@ function parse(href: string): Forward | null {
   return null;
 }
 
-function takeWebLoginMarker(): boolean {
-  try {
-    const started = Number(localStorage.getItem(WEB_LOGIN_KEY));
-    localStorage.removeItem(WEB_LOGIN_KEY);
-    return Number.isFinite(started) && started > 0 && Date.now() - started < WEB_LOGIN_TTL_MS;
-  } catch {
-    return false;
-  }
-}
-
 // Capture the landing URL once: the effect below strips the token from the address bar,
 // and the overlay must keep showing the original result after that.
 let landingHref: string | null = null;
@@ -61,15 +50,10 @@ export default function AuthRedirect() {
 
   useEffect(() => {
     if (!forward) return;
-    // A login started from the web app (marker set moments ago) goes back to /app
-    if (forward.kind === "anilist" && takeWebLoginMarker()) {
-      window.location.replace("/app" + new URL(href!).hash);
-      return;
-    }
     // keep the token out of history and anything the page might share later
     window.history.replaceState(null, "", window.location.pathname);
     if (forward.kind !== "error") window.location.href = forward.url;
-  }, [forward, href]);
+  }, [forward]);
 
   if (!forward) return null;
 

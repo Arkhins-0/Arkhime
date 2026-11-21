@@ -5,11 +5,11 @@ import android.os.Bundle
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import ani.arkhime.com.addons.download.DownloadAddonManager
-import ani.arkhime.com.addons.torrent.TorrentAddonManager
-import ani.arkhime.com.media.AddonType
-import ani.arkhime.com.media.MediaType
-import ani.arkhime.com.parsers.novel.NovelExtensionManager
+import com.arkhins.arkhime.addons.download.DownloadAddonManager
+import com.arkhins.arkhime.addons.torrent.TorrentAddonManager
+import com.arkhins.arkhime.media.AddonType
+import com.arkhins.arkhime.media.MediaType
+import com.arkhins.arkhime.parsers.novel.NovelExtensionManager
 import eu.kanade.tachiyomi.extension.InstallStep
 import eu.kanade.tachiyomi.extension.anime.AnimeExtensionManager
 import eu.kanade.tachiyomi.extension.manga.MangaExtensionManager

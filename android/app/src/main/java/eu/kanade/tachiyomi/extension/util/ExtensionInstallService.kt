@@ -7,11 +7,11 @@ import android.content.pm.ServiceInfo
 import android.net.Uri
 import android.os.Build
 import android.os.IBinder
-import ani.arkhime.com.R
-import ani.arkhime.com.media.AddonType
-import ani.arkhime.com.media.MediaType
-import ani.arkhime.com.media.Type
-import ani.arkhime.com.util.Logger
+import com.arkhins.arkhime.R
+import com.arkhins.arkhime.media.AddonType
+import com.arkhins.arkhime.media.MediaType
+import com.arkhins.arkhime.media.Type
+import com.arkhins.arkhime.util.Logger
 import eu.kanade.domain.base.BasePreferences
 import eu.kanade.tachiyomi.data.notification.Notifications
 import eu.kanade.tachiyomi.extension.installer.Installer

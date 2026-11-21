@@ -10,10 +10,10 @@ import android.content.pm.PackageInstaller
 import android.os.Build
 import androidx.core.content.ContextCompat
 import androidx.core.content.IntentSanitizer
-import ani.arkhime.com.R
-import ani.arkhime.com.snackString
-import ani.arkhime.com.toast
-import ani.arkhime.com.util.Logger
+import com.arkhins.arkhime.R
+import com.arkhins.arkhime.snackString
+import com.arkhins.arkhime.toast
+import com.arkhins.arkhime.util.Logger
 import eu.kanade.tachiyomi.extension.InstallStep
 import eu.kanade.tachiyomi.util.lang.use
 import eu.kanade.tachiyomi.util.system.getParcelableExtraCompat

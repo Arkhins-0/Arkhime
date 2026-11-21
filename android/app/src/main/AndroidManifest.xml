@@ -111,6 +111,8 @@
         <activity android:name=".settings.AnilistSettingsActivity"/>
         <activity android:name=".forum.ForumActivity" />
         <activity android:name=".forum.ThreadViewActivity" />
+        <activity android:name=".feeds.FeedHostActivity" android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".feeds.TrackedFeedsActivity" />
         <activity android:name=".settings.UserInterfaceSettingsActivity" />
         <activity android:name=".settings.FAQActivity" />
         <activity android:name=".settings.PlayerSettingsActivity" />

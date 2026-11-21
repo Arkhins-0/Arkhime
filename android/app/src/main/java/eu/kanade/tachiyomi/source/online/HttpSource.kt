@@ -12,6 +12,7 @@ import eu.kanade.tachiyomi.source.model.MangasPage
 import eu.kanade.tachiyomi.source.model.Page
 import eu.kanade.tachiyomi.source.model.SChapter
 import eu.kanade.tachiyomi.source.model.SManga
+import eu.kanade.tachiyomi.util.lang.awaitSingle
 import okhttp3.Headers
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -38,6 +39,13 @@ abstract class HttpSource : CatalogueSource {
     abstract val baseUrl: String
 
     /**
+     * The website's home page, opened by "Open in WebView" from the browse screen.
+     *
+     * @since tachiyomix 1.6
+     */
+    open fun getHomeUrl(): String = baseUrl
+
+    /**
      * Version id used to generate the source id. If the site completely changes and urls are
      * incompatible, you may increase this value and it'll be considered as a new source.
      */
@@ -48,10 +56,20 @@ abstract class HttpSource : CatalogueSource {
      * of the MD5 of the string: sourcename/language/versionId
      * Note the generated id sets the sign bit to 0.
      */
-    override val id by lazy {
+    override val id by lazy { generateId(name, lang, versionId) }
+
+    /**
+     * Makes a source id from the first 16 characters (64 bits) of the MD5 of
+     * `"${name.lowercase()}/$lang/$versionId"`, with the sign bit set to 0. Sources use it to keep
+     * an old id after changing their name or language.
+     *
+     * @since extensions-lib 1.5
+     */
+    @Suppress("MemberVisibilityCanBePrivate")
+    protected fun generateId(name: String, lang: String, versionId: Int): Long {
         val key = "${name.lowercase()}/$lang/$versionId"
         val bytes = MessageDigest.getInstance("MD5").digest(key.toByteArray())
-        (0..7).map { bytes[it].toLong() and 0xff shl 8 * (7 - it) }
+        return (0..7).map { bytes[it].toLong() and 0xff shl 8 * (7 - it) }
             .reduce(Long::or) and Long.MAX_VALUE
     }
 
@@ -97,14 +115,16 @@ abstract class HttpSource : CatalogueSource {
      *
      * @param page the page number to retrieve.
      */
-    protected abstract fun popularMangaRequest(page: Int): Request
+    protected open fun popularMangaRequest(page: Int): Request =
+        throw UnsupportedOperationException()
 
     /**
      * Parses the response from the site and returns a [MangasPage] object.
      *
      * @param response the response from the site.
      */
-    protected abstract fun popularMangaParse(response: Response): MangasPage
+    protected open fun popularMangaParse(response: Response): MangasPage =
+        throw UnsupportedOperationException()
 
     /**
      * Returns an observable containing a page with a list of manga. Normally it's not needed to
@@ -140,18 +160,20 @@ abstract class HttpSource : CatalogueSource {
      * @param query the search query.
      * @param filters the list of filters to apply.
      */
-    protected abstract fun searchMangaRequest(
+    protected open fun searchMangaRequest(
         page: Int,
         query: String,
         filters: FilterList
-    ): Request
+    ): Request =
+        throw UnsupportedOperationException()
 
     /**
      * Parses the response from the site and returns a [MangasPage] object.
      *
      * @param response the response from the site.
      */
-    protected abstract fun searchMangaParse(response: Response): MangasPage
+    protected open fun searchMangaParse(response: Response): MangasPage =
+        throw UnsupportedOperationException()
 
     /**
      * Returns an observable containing a page with a list of latest manga updates.
@@ -171,14 +193,16 @@ abstract class HttpSource : CatalogueSource {
      *
      * @param page the page number to retrieve.
      */
-    protected abstract fun latestUpdatesRequest(page: Int): Request
+    protected open fun latestUpdatesRequest(page: Int): Request =
+        throw UnsupportedOperationException()
 
     /**
      * Parses the response from the site and returns a [MangasPage] object.
      *
      * @param response the response from the site.
      */
-    protected abstract fun latestUpdatesParse(response: Response): MangasPage
+    protected open fun latestUpdatesParse(response: Response): MangasPage =
+        throw UnsupportedOperationException()
 
     /**
      * Returns an observable with the updated details for a manga. Normally it's not needed to
@@ -209,7 +233,8 @@ abstract class HttpSource : CatalogueSource {
      *
      * @param response the response from the site.
      */
-    protected abstract fun mangaDetailsParse(response: Response): SManga
+    protected open fun mangaDetailsParse(response: Response): SManga =
+        throw UnsupportedOperationException()
 
     /**
      * Returns an observable with the updated chapter list for a manga. Normally it's not needed to
@@ -244,7 +269,8 @@ abstract class HttpSource : CatalogueSource {
      *
      * @param response the response from the site.
      */
-    protected abstract fun chapterListParse(response: Response): List<SChapter>
+    protected open fun chapterListParse(response: Response): List<SChapter> =
+        throw UnsupportedOperationException()
 
     /**
      * Returns an observable with the page list for a chapter.
@@ -274,7 +300,8 @@ abstract class HttpSource : CatalogueSource {
      *
      * @param response the response from the site.
      */
-    protected abstract fun pageListParse(response: Response): List<Page>
+    protected open fun pageListParse(response: Response): List<Page> =
+        throw UnsupportedOperationException()
 
     /**
      * Returns an observable with the page containing the source url of the image. If there's any
@@ -287,6 +314,14 @@ abstract class HttpSource : CatalogueSource {
             .asObservableSuccess()
             .map { imageUrlParse(it) }
     }
+
+    /**
+     * Returns the image url for [page]. Only called when [Page.imageUrl] is null.
+     *
+     * @since tachiyomix 1.6
+     */
+    @Suppress("DEPRECATION")
+    open suspend fun getImageUrl(page: Page): String = fetchImageUrl(page).awaitSingle()
 
     /**
      * Returns the request for getting the url to the source image. Override only if it's needed to
@@ -303,7 +338,8 @@ abstract class HttpSource : CatalogueSource {
      *
      * @param response the response from the site.
      */
-    protected abstract fun imageUrlParse(response: Response): String
+    protected open fun imageUrlParse(response: Response): String =
+        throw UnsupportedOperationException()
 
     /**
      * Returns an observable with the response of the source image.

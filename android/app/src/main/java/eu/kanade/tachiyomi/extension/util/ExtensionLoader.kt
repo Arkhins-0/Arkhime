@@ -5,12 +5,12 @@ import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.os.Build
 import androidx.core.content.pm.PackageInfoCompat
-import ani.arkhime.com.connections.crashlytics.CrashlyticsInterface
-import ani.arkhime.com.media.MediaType
-import ani.arkhime.com.parsers.NovelInterface
-import ani.arkhime.com.parsers.novel.NovelExtension
-import ani.arkhime.com.parsers.novel.NovelLoadResult
-import ani.arkhime.com.util.Logger
+import com.arkhins.arkhime.connections.crashlytics.CrashlyticsInterface
+import com.arkhins.arkhime.media.MediaType
+import com.arkhins.arkhime.parsers.ForeignNovelInterface
+import com.arkhins.arkhime.parsers.novel.NovelExtension
+import com.arkhins.arkhime.parsers.novel.NovelLoadResult
+import com.arkhins.arkhime.util.Logger
 import dalvik.system.PathClassLoader
 import eu.kanade.domain.source.service.SourcePreferences
 import eu.kanade.tachiyomi.animesource.AnimeCatalogueSource
@@ -65,7 +65,8 @@ internal object ExtensionLoader {
     const val ANIME_LIB_VERSION_MAX = 15
 
     const val MANGA_LIB_VERSION_MIN = 1.2
-    const val MANGA_LIB_VERSION_MAX = 1.5
+    // 1.6 is the lib Keiyoushi builds against (Mihon 0.20+): suspend API, getMangaUpdate, memo.
+    const val MANGA_LIB_VERSION_MAX = 1.6
 
     val PACKAGE_FLAGS = PackageManager.GET_CONFIGURATIONS or
             PackageManager.GET_META_DATA or
@@ -436,14 +437,27 @@ internal object ExtensionLoader {
         val classLoader = PathClassLoader(appInfo.sourceDir, null, context.classLoader)
         val novelInterfaceInstance = try {
             val className = appInfo.loadLabel(context.packageManager).toString()
-            val extensionClassName =
-                "some.random.novelextensions.${className.lowercase(Locale.getDefault())}.$className"
-            val loadedClass = classLoader.loadClass(extensionClassName)
+            // Older repos name the class some.random.novelextensions.<label>.<Label>;
+            // Dantotsu-Novels puts it at <package>.<Label>.
+            val candidates = listOf(
+                "some.random.novelextensions.${className.lowercase(Locale.getDefault())}.$className",
+                "$pkgName.$className",
+            )
+            val loadedClass = candidates.firstNotNullOfOrNull {
+                try {
+                    classLoader.loadClass(it)
+                } catch (_: ClassNotFoundException) {
+                    null
+                }
+            } ?: throw ClassNotFoundException("No novel class in $pkgName (tried $candidates)")
             val instance = loadedClass.getDeclaredConstructor().newInstance()
-            instance as? NovelInterface
+            // These extensions bundle their own copy of the parser types, so they are wrapped
+            // rather than cast.
+            ForeignNovelInterface.wrap(instance)
         } catch (e: Throwable) {
             Logger.log("Extension load error: $extName")
-            return NovelLoadResult.Error(e as Exception)
+            Logger.log(e)
+            return NovelLoadResult.Error(e as? Exception ?: Exception(e))
         }
 
         val extension = NovelExtension.Installed(
@@ -467,7 +481,8 @@ internal object ExtensionLoader {
     private fun isPackageAnExtension(type: MediaType, pkgInfo: PackageInfo): Boolean {
 
         return if (type == MediaType.NOVEL) {
-            pkgInfo.packageName.startsWith("some.random")
+            pkgInfo.packageName.startsWith("some.random") ||
+                pkgInfo.packageName.startsWith("ani.dantotsu.extension.novel.")
         } else {
             pkgInfo.reqFeatures.orEmpty().any {
                 it.name == when (type) {

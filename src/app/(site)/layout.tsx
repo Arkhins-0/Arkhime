@@ -12,11 +12,11 @@ const jakarta = Plus_Jakarta_Sans({
 export const metadata: Metadata = {
   metadataBase: new URL("https://arkhime.arkhins.com"),
   title: {
-    default: "Arkhime: your AniList, everywhere",
+    default: "Arkhime: your AniList on Android",
     template: "%s · Arkhime",
   },
   description:
-    "Arkhime is an AniList tracker for Android and the web: series grouped together, batch editing, and alerts for new seasons, episodes and finales.",
+    "Arkhime is an AniList tracker for Android: series grouped together, batch editing, and alerts for new seasons, episodes and finales.",
 };
 
 export const viewport: Viewport = {
@@ -44,9 +44,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
               <a href={GITHUB_URL} className="hidden rounded-full px-3 py-2 text-muted hover:text-foreground sm:inline">
                 GitHub
               </a>
-              <Link href="/login" className="rounded-full px-3 py-2 font-medium text-foreground hover:bg-card-2">
-                Log in
-              </Link>
               <a
                 href="/download"
                 className="rounded-full bg-accent-solid px-4 py-2 font-semibold text-accent-contrast shadow-[0_6px_20px_-6px_var(--glow)] hover:opacity-90"
@@ -66,13 +63,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
                 Ark<span className="text-accent">hime</span>
               </p>
               <p className="mt-2 max-w-md">
-                An AniList tracker for Android and the web. Open source under the UPL (GPLv3). Arkhime hosts no media.
+                An AniList tracker for Android. Open source under the UPL (GPLv3). Arkhime hosts no media.
               </p>
             </div>
             <div className="flex flex-wrap items-start gap-x-6 gap-y-2">
-              <Link href="/app" className="hover:text-foreground">Web app</Link>
               <a href="/download" className="hover:text-foreground">Download</a>
               <Link href="/privacy" className="hover:text-foreground">Privacy</Link>
+              <Link href="/terms" className="hover:text-foreground">Terms</Link>
               <a href={GITHUB_URL} className="hover:text-foreground">Source</a>
             </div>
           </div>

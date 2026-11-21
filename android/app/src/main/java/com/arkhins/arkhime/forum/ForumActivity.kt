@@ -1,0 +1,170 @@
+package com.arkhins.arkhime.forum
+
+import android.content.Intent
+import android.os.Bundle
+import android.view.View
+import android.widget.EditText
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.core.view.updateLayoutParams
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.arkhins.arkhime.R
+import com.arkhins.arkhime.connections.anilist.Anilist
+import com.arkhins.arkhime.databinding.ActivityForumBinding
+import com.arkhins.arkhime.initActivity
+import com.arkhins.arkhime.navBarHeight
+import com.arkhins.arkhime.statusBarHeight
+import com.arkhins.arkhime.themes.ThemeManager
+import com.arkhins.arkhime.util.ActivityMarkdownCreator
+import com.arkhins.arkhime.util.customAlertDialog
+import com.xwray.groupie.GroupieAdapter
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+
+class ForumActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityForumBinding
+    private val adapter = GroupieAdapter()
+    private var currentPage = 1
+    private var hasNextPage = true
+    private var isLoading = false
+    private var selectedCategoryId: Int? = null
+    private var currentSearch: String? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        ThemeManager(this).applyTheme()
+        binding = ActivityForumBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        initActivity(this)
+
+        binding.forumAppBar.updateLayoutParams<android.view.ViewGroup.MarginLayoutParams> {
+            topMargin += statusBarHeight
+        }
+        binding.forumRecyclerView.updateLayoutParams<android.view.ViewGroup.MarginLayoutParams> {
+            bottomMargin += navBarHeight
+        }
+
+        binding.forumBack.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
+
+        binding.forumRecyclerView.adapter = adapter
+        binding.forumRecyclerView.layoutManager = LinearLayoutManager(this)
+
+        binding.forumRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+                if (hasNextPage && !isLoading && layoutManager.findLastVisibleItemPosition() >= adapter.itemCount - 4) {
+                    loadThreads(false)
+                }
+            }
+        })
+
+        binding.forumSwipeRefresh.setOnRefreshListener {
+            loadThreads(true)
+        }
+
+        binding.forumCategoryChips.setOnCheckedStateChangeListener { _, checkedIds ->
+            selectedCategoryId = when (checkedIds.firstOrNull()) {
+                // AniList's forum category ids
+                R.id.chipGeneral -> 7
+                R.id.chipAnime -> 1
+                R.id.chipManga -> 2
+                R.id.chipRelease -> 5
+                R.id.chipNews -> 8
+                else -> null
+            }
+            loadThreads(true)
+        }
+
+        binding.forumSearch.setOnClickListener {
+            val input = EditText(this).apply {
+                hint = "Search threads..."
+                setText(currentSearch ?: "")
+            }
+            customAlertDialog().apply {
+                setTitle(R.string.search)
+                setCustomView(input)
+                setPosButton(R.string.search) {
+                    currentSearch = input.text.toString().trim().ifBlank { null }
+                    loadThreads(true)
+                }
+                setNeutralButton("Clear") {
+                    currentSearch = null
+                    loadThreads(true)
+                }
+                setNegButton(R.string.cancel)
+                show()
+            }
+        }
+
+        binding.forumCreateThreadFab.visibility =
+            if (Anilist.token != null) View.VISIBLE else View.GONE
+        binding.forumCreateThreadFab.setOnClickListener {
+            startActivity(
+                Intent(this, ActivityMarkdownCreator::class.java).apply {
+                    putExtra("type", "thread")
+                    putIntegerArrayListExtra(
+                        "categories",
+                        arrayListOf(selectedCategoryId ?: 7)
+                    )
+                }
+            )
+        }
+
+        loadThreads(true)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (adapter.itemCount == 0) {
+            loadThreads(true)
+        }
+    }
+
+    private fun loadThreads(refresh: Boolean) {
+        if (isLoading) return
+        isLoading = true
+        if (refresh) {
+            currentPage = 1
+            hasNextPage = true
+            binding.forumProgressBar.visibility = View.VISIBLE
+            binding.forumEmptyText.visibility = View.GONE
+        }
+
+        lifecycleScope.launch(Dispatchers.IO) {
+            val res = Anilist.query.getThreads(
+                categoryId = selectedCategoryId,
+                search = currentSearch,
+                page = currentPage
+            )
+
+            withContext(Dispatchers.Main) {
+                binding.forumProgressBar.visibility = View.GONE
+                binding.forumSwipeRefresh.isRefreshing = false
+                isLoading = false
+
+                val threads = res?.data?.page?.threads ?: emptyList()
+                hasNextPage = res?.data?.page?.pageInfo?.hasNextPage ?: false
+
+                if (refresh) {
+                    adapter.clear()
+                }
+
+                if (threads.isNotEmpty()) {
+                    val items = threads.map { ForumThreadItem(it, this@ForumActivity) }
+                    adapter.addAll(items)
+                    currentPage++
+                }
+
+                binding.forumEmptyText.visibility =
+                    if (adapter.itemCount == 0) View.VISIBLE else View.GONE
+            }
+        }
+    }
+}

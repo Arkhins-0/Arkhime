@@ -1,5 +1,6 @@
 package eu.kanade.tachiyomi.source.model
 
+import kotlinx.serialization.json.JsonObject
 import java.io.Serializable
 
 interface SManga : Serializable {
@@ -23,6 +24,18 @@ interface SManga : Serializable {
     var update_strategy: UpdateStrategy
 
     var initialized: Boolean
+
+    /**
+     * Extra metadata a source keeps with the manga. Not shown to users.
+     *
+     * Has a default so a manga class from an older extension, which doesn't implement it,
+     * still works.
+     *
+     * @since tachiyomix 1.6
+     */
+    var memo: JsonObject
+        get() = EMPTY_MEMO
+        set(@Suppress("UNUSED_PARAMETER") value) {}
 
     fun getGenres(): List<String>? {
         if (genre.isNullOrBlank()) return null
@@ -57,6 +70,8 @@ interface SManga : Serializable {
         if (!initialized) {
             initialized = other.initialized
         }
+
+        memo = other.memo
     }
 
     fun copy() = create().also {
@@ -70,6 +85,7 @@ interface SManga : Serializable {
         it.thumbnail_url = thumbnail_url
         it.update_strategy = update_strategy
         it.initialized = initialized
+        it.memo = memo
     }
 
     companion object {

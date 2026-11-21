@@ -1,6 +1,6 @@
 # Privacy Policy
 
-Last Updated: Dec 30, 2024
+Last Updated: Nov 12, 2026
 
 ## Introduction
 This Privacy Policy describes how we collect, use, and handle your information when you use Arkhime. We are committed to protecting your privacy and ensuring transparency about our data practices.
@@ -30,13 +30,13 @@ While we facilitate these connections, we do not store your login credentials. A
 - [AniList Privacy Policy Link](https://anilist.co/terms)
 - [MyAnimeList Privacy Policy Link](https://myanimelist.net/about/privacy_policy)
 
-### Comments System
-Arkhime's own comments API (hosted at arkhime.arkhins.com) uses your AniList authentication token once, to confirm with AniList which account you are. The token is never stored on our servers. We only store:
-- Your AniList ID and username (for authentication)
-- Profile picture URL
-- Comments you post
-- Your upvotes and downvotes on comments
-- Reports you submit about comments
+### Other services the app contacts
+Some features load data straight from other websites. Your phone talks to them directly; nothing passes through our servers:
+- **nyaa.si and sukebei.nyaa.si**: torrent searches, torrent details and tracked keyword feeds
+- **Crunchyroll**: episode links open in the Crunchyroll app or website
+- **GitHub**: checking for and downloading app updates
+
+These sites see the same things any website sees, such as your IP address. Your tracked keywords are stored only on your device.
 
 We do not track or store:
 - Your AniList authentication token
@@ -59,16 +59,9 @@ You can control your privacy preferences:
 - Anonymize crash reports through app settings
 - Control app permissions through your device settings
 
-### Comments System
-We use comment data to:
-- Display your comments to other users
-- Show upvote counts
-- Associate comments with your profile
-
 ## Data Storage and Security
-- Authentication tokens are stored locally on your device
-- Comment data is stored securely on our servers
-- We implement appropriate security measures to protect your information
+- Authentication tokens, settings and tracked feeds are stored only on your device
+- Arkhime has no account system or database of its own
 
 ## Data Sharing
 We do not sell or share your personal information with third parties except:
@@ -76,11 +69,7 @@ We do not sell or share your personal information with third parties except:
 - To provide the core functionality of the app through our integrated services
 
 ## Your Rights and Data Protection
-Under the General Data Protection Regulation (GDPR) and other data protection laws, you have certain rights regarding your personal data. You can:
-- Access your comment data
-- Request deletion of your comments and associated data
-
-To exercise these rights or request deletion of your comment data, contact the developer:
+Under the General Data Protection Regulation (GDPR) and other data protection laws, you have certain rights regarding your personal data. You can ask for the crash reports linked to your AniList username to be deleted. Contact the developer:
 - On Telegram: [@arkhins](https://t.me/arkhins)
 
 While we don't have an automated process for data deletion, we will process your request manually as soon as possible.

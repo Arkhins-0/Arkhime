@@ -2,7 +2,7 @@ package eu.kanade.tachiyomi.util.system
 
 import android.annotation.SuppressLint
 import android.os.Build
-import ani.arkhime.com.util.Logger
+import com.arkhins.arkhime.util.Logger
 
 object DeviceUtil {
 

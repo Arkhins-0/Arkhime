@@ -1,7 +1,7 @@
 name: Publish Release
 
-# Push a tag like v1.0.0 (or v1.1.0-beta1 for a pre-release) to build the signed APKs and publish
-# them as a GitHub release. The app's updater reads these releases and offers the update in-app.
+# Push a tag like v1.0.0 to build the signed APKs and publish them as a GitHub release. The release app's
+# updater reads these and offers the update in-app. Betas have their own workflow and tags (beta.yml, beta-v1.2.0).
 on:
   push:
     tags:
@@ -73,7 +73,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           TAG: ${{ github.ref_name }}
         run: |
-          # A tag with a dash (v1.1.0-beta1) becomes a pre-release, which only beta builds follow
+          # A tag with a dash (v1.1.0-rc1) becomes a pre-release: no app installs it automatically
           PRE=""
           case "$TAG" in *-*) PRE="--prerelease" ;; esac
           gh release create "$TAG" dist/*.apk --title "Arkhime $TAG" --generate-notes $PRE

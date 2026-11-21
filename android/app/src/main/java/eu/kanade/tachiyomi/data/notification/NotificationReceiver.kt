@@ -4,7 +4,7 @@ import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import ani.arkhime.com.MainActivity
+import com.arkhins.arkhime.MainActivity
 import eu.kanade.tachiyomi.core.Constants
 
 /**

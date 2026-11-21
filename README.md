@@ -6,14 +6,13 @@
 <br />
 
 <a href="https://arkhime.arkhins.com/download"><img src="https://img.shields.io/github/v/release/Arkhins-0/Arkhime?label=Download&style=for-the-badge&color=ff2d55&labelColor=1a171b" alt="Latest release" /></a>
-<a href="https://arkhime.arkhins.com/login"><img src="https://img.shields.io/badge/Web_app-open-ffb59a?style=for-the-badge&labelColor=1a171b" alt="Open the web app" /></a>
 <a href="https://github.com/Arkhins-0/Arkhime/releases"><img src="https://img.shields.io/github/downloads/Arkhins-0/Arkhime/total?label=Downloads&style=for-the-badge&color=ffc768&labelColor=1a171b" alt="Downloads" /></a>
 <a href="LICENSE.md"><img src="https://img.shields.io/badge/License-UPL_(GPLv3)-a98bd9?style=for-the-badge&labelColor=1a171b" alt="License" /></a>
 
-**An AniList tracker for Android and the web.**
+**An AniList tracker for Android.**
 Your list grouped by series, edited in batches, with an alert the moment something is announced, airs or finishes.
 
-[Website](https://arkhime.arkhins.com) · [Download](https://arkhime.arkhins.com/download) · [Web app](https://arkhime.arkhins.com/login) · [Privacy](privacy_policy.md)
+[Website](https://arkhime.arkhins.com) · [Download](https://arkhime.arkhins.com/download) · [Privacy](privacy_policy.md) · [Terms](terms.md)
 
 </div>
 
@@ -32,10 +31,6 @@ Your list grouped by series, edited in batches, with an alert the moment somethi
 | **Everything AniList** | Info pages, search, browse, profiles, activity, notifications and home-screen widgets. |
 | **Updates itself** | New versions download in the app and install in a tap. No store needed. |
 
-### Web app
-
-Sign in at [arkhime.arkhins.com/login](https://arkhime.arkhins.com/login) for a big-screen view of your list. It shows your collection grouped into series, with filters and sorting, and mass edits that save straight back to AniList. Everything else lives in the Android app.
-
 ## Install
 
 1. Download the latest APK from **[arkhime.arkhins.com/download](https://arkhime.arkhins.com/download)** or the [releases page](https://github.com/Arkhins-0/Arkhime/releases).
@@ -52,9 +47,8 @@ Arkhime needs Android 8.0 or newer. Later updates show up inside the app.
 | Path | What it is |
 |---|---|
 | [`android/`](android) | The Android app (Kotlin). Open this folder in Android Studio. |
-| [`src/app/(site)`](src/app/(site)) | The website: landing page, privacy policy and the OAuth redirect for the app |
-| [`src/app/(web)`](src/app/(web)), [`src/web`](src/web) | The web app (`/login`, `/app`) |
-| [`src/app/api`](src/app/api), [`src/app/download`](src/app/download) | Update feed for the app (`/api/updates/*`) and the latest-APK redirect (`/download`) |
+| [`src/app/(site)`](src/app/(site)) | The website: landing page, privacy policy, terms and the OAuth redirect for the app |
+| [`src/app/download`](src/app/download) | Redirect to the latest APK (`/download`) |
 | [`.github/workflows`](.github/workflows) | Release and test builds |
 
 ## Development
@@ -68,13 +62,14 @@ npm run dev             # http://localhost:3000
 npm run build
 ```
 
-The site root is also the OAuth redirect URL for AniList and MyAnimeList. It hands the result to the Android app through `arkhime://anilist` / `arkhime://mal`, or to the web app when the login started there.
+The site root is also the OAuth redirect URL for AniList and MyAnimeList. It hands the result to the Android app through `arkhime://anilist` / `arkhime://mal`.
 
 ### Android app
 
 ```bash
 cd android
-./gradlew assembleGoogleDebug      # test build, installs next to the release as "Arkhime β"
+./gradlew installGoogleDebug       # Alpha: this PC's build, installs next to the others as "Arkhime α"
+./gradlew assembleGoogleBeta       # Beta: optimised, signed like the release, "Arkhime β"
 ./gradlew assembleGoogleRelease    # signed release build
 ```
 
@@ -96,9 +91,22 @@ git tag v1.0.2
 git push origin v1.0.2
 ```
 
-The **Publish Release** workflow builds signed APKs (one per CPU type, plus a universal one) and publishes them as a GitHub release. The app then offers the update and `/download` serves the new APK. A tag with a suffix, like `v1.1.0-beta1`, becomes a pre-release that only test builds follow.
+The **Publish Release** workflow builds signed APKs (one per CPU type, plus a universal one) and publishes them as a GitHub release. The app then offers the update and `/download` serves the new APK.
 
-Required repository secrets: `KEYSTORE_FILE` (the keystore, base64-encoded), `KEYSTORE_PASSWORD`, `KEY_ALIAS` and `KEY_PASSWORD`. The optional `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID` let the test-build workflow post each build to Telegram.
+Arkhime comes as three separate apps, each updating only from its own releases:
+
+| App | Package | Published by | Updates from |
+|---|---|---|---|
+| Arkhime | `com.arkhins.arkhime` | tag `v1.2.0` (**Publish Release**) | full releases |
+| Arkhime β | `com.arkhins.arkhime.beta` | tag `beta-v1.2.0` (**Publish Beta**, a pre-release) | beta pre-releases only |
+| Arkhime α | `com.arkhins.arkhime.alpha` | never; built and installed from your PC | nothing (reinstall from the PC) |
+
+```bash
+git tag beta-v1.0.3
+git push origin beta-v1.0.3
+```
+
+Required repository secrets: `KEYSTORE_FILE` (the keystore, base64-encoded), `KEYSTORE_PASSWORD`, `KEY_ALIAS` and `KEY_PASSWORD`. The optional `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID` let the beta workflow post each beta to Telegram.
 
 ## Contributing
 

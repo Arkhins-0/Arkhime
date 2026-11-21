@@ -1,6 +1,6 @@
 package eu.kanade.tachiyomi.network.interceptor
 
-import ani.arkhime.com.util.Logger
+import com.arkhins.arkhime.util.Logger
 import okhttp3.Interceptor
 import okhttp3.Response
 import java.io.IOException

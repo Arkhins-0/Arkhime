@@ -66,7 +66,7 @@ fun Context.notificationBuilder(
     block: (NotificationCompat.Builder.() -> Unit)? = null
 ): NotificationCompat.Builder {
     val builder = NotificationCompat.Builder(this, channelId)
-        .setColor(ContextCompat.getColor(this, ani.arkhime.com.R.color.arkhime_red))
+        .setColor(ContextCompat.getColor(this, com.arkhins.arkhime.R.color.arkhime_red))
     if (block != null) {
         builder.block()
     }

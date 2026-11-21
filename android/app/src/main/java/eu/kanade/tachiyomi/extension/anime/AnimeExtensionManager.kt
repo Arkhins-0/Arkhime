@@ -2,9 +2,9 @@ package eu.kanade.tachiyomi.extension.anime
 
 import android.content.Context
 import android.graphics.drawable.Drawable
-import ani.arkhime.com.media.MediaType
-import ani.arkhime.com.snackString
-import ani.arkhime.com.util.Logger
+import com.arkhins.arkhime.media.MediaType
+import com.arkhins.arkhime.snackString
+import com.arkhins.arkhime.util.Logger
 import eu.kanade.domain.source.service.SourcePreferences
 import eu.kanade.tachiyomi.extension.InstallStep
 import eu.kanade.tachiyomi.extension.anime.model.AnimeExtension

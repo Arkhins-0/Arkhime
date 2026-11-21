@@ -55,7 +55,7 @@
 
     </androidx.media3.ui.SubtitleView>
 
-    <ani.arkhime.com.others.Xubtitle
+    <com.arkhins.arkhime.others.Xubtitle
         android:id="@+id/customSubtitleView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

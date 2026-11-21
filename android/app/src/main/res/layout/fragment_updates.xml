@@ -32,7 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ani.arkhime.com.FadingEdgeRecyclerView
+            <com.arkhins.arkhime.FadingEdgeRecyclerView
                 android:id="@+id/updatesRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

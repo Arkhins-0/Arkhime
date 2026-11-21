@@ -64,7 +64,7 @@ export default async function Home() {
           <div>
             <p className="inline-flex items-center gap-2 rounded-full border border-border bg-card/70 px-3 py-1 text-xs font-semibold text-muted backdrop-blur">
               <span className="h-1.5 w-1.5 rounded-full bg-accent" />
-              {release ? `Version ${release.version} is out` : "For Android and the web"}
+              {release ? `Version ${release.version} is out` : "For Android"}
             </p>
             <h1 className="mt-6 text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-6xl">
               Track every season.
@@ -86,10 +86,10 @@ export default async function Home() {
                 Download for Android
               </a>
               <Link
-                href="/login"
+                href="/#features"
                 className="inline-flex items-center rounded-full border border-border bg-card/60 px-6 py-3.5 font-semibold backdrop-blur transition hover:bg-card-2"
               >
-                Open on the web
+                See features
               </Link>
             </div>
             <p className="mt-4 text-sm text-muted">
@@ -119,40 +119,6 @@ export default async function Home() {
                 <p className="mt-2 leading-relaxed text-muted">{f.body}</p>
               </div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Two ways in */}
-      <section className="border-t border-border bg-card/40">
-        <div className="mx-auto grid max-w-6xl gap-4 px-4 py-20 sm:px-6 md:grid-cols-2">
-          <div className="rounded-3xl border border-border bg-card p-8">
-            <p className="text-sm font-semibold text-accent">Android</p>
-            <h3 className="mt-2 text-2xl font-extrabold tracking-tight">The full app, in your pocket</h3>
-            <p className="mt-3 text-muted">
-              Lists, release alerts with artwork, the updates feed, widgets and in-app updates.
-            </p>
-            <a
-              href="/download"
-              className="mt-6 inline-flex items-center gap-2 rounded-full bg-accent-solid px-5 py-3 font-semibold text-accent-contrast hover:opacity-90"
-            >
-              <DownloadIcon />
-              Download the APK
-            </a>
-          </div>
-          <div className="rounded-3xl border border-border bg-card p-8">
-            <p className="text-sm font-semibold text-accent-2">Web</p>
-            <h3 className="mt-2 text-2xl font-extrabold tracking-tight">Mass edit on a big screen</h3>
-            <p className="mt-3 text-muted">
-              Your whole list grouped into series, with filters and sort, and batch editing that saves straight to
-              AniList. Everything else is in the Android app.
-            </p>
-            <Link
-              href="/login"
-              className="mt-6 inline-flex items-center rounded-full border border-border px-5 py-3 font-semibold hover:bg-card-2"
-            >
-              Log in with AniList
-            </Link>
           </div>
         </div>
       </section>

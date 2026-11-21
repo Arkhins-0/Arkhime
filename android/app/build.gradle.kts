@@ -53,7 +53,7 @@ fun signingProperty(key: String): String? =
     localProperties.getProperty(key) ?: System.getenv(key)
 
 android {
-    namespace = "ani.arkhime.com"
+    namespace = "com.arkhins.arkhime"
     compileSdk = 37
 
     signingConfigs {
@@ -70,7 +70,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "ani.arkhime.com"
+        applicationId = "com.arkhins.arkhime"
         minSdk = 26
         targetSdk = 36
 
@@ -106,28 +106,25 @@ android {
         }
     }
 
+    /*
+     * Three apps, each with its own package and its own updates (others/AppUpdater.kt reads CHANNEL):
+     *   release  com.arkhins.arkhime        tag v1.2.0       -> GitHub release      updates from full releases only
+     *   beta     com.arkhins.arkhime.beta   tag beta-v1.2.0  -> GitHub pre-release  updates from beta-v… pre-releases only
+     *   alpha    com.arkhins.arkhime.alpha  this PC (debug)  -> never published     never updates itself; reinstall from the PC
+     */
     buildTypes {
-        create("alpha") {
-            applicationIdSuffix = ".beta"
-            versionNameSuffix = "-alpha01"
+        // Alpha: built and installed from this PC (./gradlew installGoogleDebug). Debug key, never self-updates.
+        getByName("debug") {
+            applicationIdSuffix = ".alpha"
+            versionNameSuffix = "-alpha"
             manifestPlaceholders["icon_placeholder"] = "@mipmap/ic_launcher_alpha"
             manifestPlaceholders["icon_placeholder_round"] = "@mipmap/ic_launcher_alpha_round"
-            isDebuggable = true
-            isJniDebuggable = true
-            isMinifyEnabled = false
-            isShrinkResources = false
+            buildConfigField("String", "CHANNEL", "\"alpha\"")
             isDefault = true
         }
 
-        getByName("debug") {
-            applicationIdSuffix = ".beta"
-            versionNameSuffix = "-beta01"
-            manifestPlaceholders["icon_placeholder"] = "@mipmap/ic_launcher_beta"
-            manifestPlaceholders["icon_placeholder_round"] = "@mipmap/ic_launcher_beta_round"
-            isDebuggable = false
-        }
-
         getByName("release") {
+            buildConfigField("String", "CHANNEL", "\"release\"")
             manifestPlaceholders["icon_placeholder"] = "@mipmap/ic_launcher"
             manifestPlaceholders["icon_placeholder_round"] = "@mipmap/ic_launcher_round"
             isDebuggable = false
@@ -138,6 +135,19 @@ android {
                 "proguard-rules.pro"
             )
             signingConfig = signingConfigs.findByName("release")
+        }
+
+        // Beta: optimised and signed like the release, but its own app. Push a beta-v… tag
+        // (.github/workflows/beta.yml) to publish one; it updates itself from beta releases only.
+        create("beta") {
+            initWith(getByName("release"))
+            applicationIdSuffix = ".beta"
+            versionNameSuffix = "-beta"
+            manifestPlaceholders["icon_placeholder"] = "@mipmap/ic_launcher_beta"
+            manifestPlaceholders["icon_placeholder_round"] = "@mipmap/ic_launcher_beta_round"
+            buildConfigField("String", "CHANNEL", "\"beta\"")
+            signingConfig = signingConfigs.findByName("release") ?: signingConfigs.getByName("debug")
+            matchingFallbacks += "release"
         }
     }
 

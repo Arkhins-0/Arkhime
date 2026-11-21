@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- nyaa.si, sukebei, Crunchyroll and tracked feeds -->
+    <string name="nyaa" translatable="false">nyaa.si</string>
+    <string name="sukebei" translatable="false">sukebei.nyaa.si</string>
+    <string name="crunchyroll" translatable="false">Crunchyroll</string>
+    <string name="releases">Releases</string>
+    <string name="files">Files</string>
+    <string name="tracked_feeds_title">Tracked</string>
+    <string name="open_magnet">Magnet</string>
+    <string name="download_torrent">Torrent file</string>
+    <string name="copy_magnet">Copy</string>
+    <string name="open_on_nyaa">Browser</string>
+    <string name="track_search">Track</string>
+    <string name="nyaa_no_results">No results</string>
+    <string name="nyaa_error">Couldn\'t load results</string>
+    <string name="nyaa_stats">%1$s · %2$d seeders · %3$d leechers</string>
+    <string name="nyaa_downloads">%1$d downloads</string>
+    <string name="nyaa_trusted">Trusted</string>
+    <string name="nyaa_remake">Remake</string>
+    <string name="nyaa_comments">Comments</string>
+    <string name="nyaa_filter">Filter</string>
+    <string name="track_needs_keywords">Enter something to track</string>
+    <string name="tracking_feed">Tracking %1$s</string>
+    <string name="add_feed">Add</string>
+    <string name="feed_keywords_hint">Keywords</string>
+    <string name="feed_keywords_help">Separate with commas</string>
+    <string name="feed_empty">Nothing tracked yet</string>
+    <string name="feed_new_count">%1$d new</string>
+    <string name="feed_notify">Notify</string>
+    <string name="feed_check_now">Check now</string>
+    <string name="feed_checking">Checking…</string>
+    <string name="feed_remove_confirm">Remove %1$s?</string>
+    <string name="cr_recent">Out now</string>
+    <string name="cr_upcoming">Upcoming</string>
+    <string name="cr_search">Results</string>
+    <string name="cr_no_results">No results</string>
+    <string name="cr_not_on_crunchyroll">Not on Crunchyroll</string>
+    <string name="cr_open">Open in Crunchyroll</string>
+    <string name="cr_episode_in">Episode %1$d · %2$s</string>
+    <string name="cr_episodes">%1$d episodes</string>
+    <string name="discuss_episodes_only">Episodes</string>
+    <string name="discuss_all_threads">All</string>
+    <string name="discuss_empty">No threads yet</string>
+
+    <item name="releases" type="id" />
+    <item name="discuss" type="id" />
+
+    <!-- Same as the section titles on a media page -->
+    <style name="FeedSectionHeader">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">24dp</item>
+        <item name="android:layout_marginBottom">8dp</item>
+        <item name="android:fontFamily">@font/jakarta_bold</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+</resources>

@@ -44,6 +44,7 @@
                 android:background="@drawable/item_score"
                 android:backgroundTint="#FFFFFF"
                 android:backgroundTintMode="multiply"
+                android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingStart="8dp"
                 android:paddingEnd="6dp">
@@ -54,7 +55,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="2dp"
                     android:fontFamily="@font/jakarta_bold"
-                    android:paddingTop="2dp"
+                    android:includeFontPadding="false"
+                    android:paddingTop="3dp"
+                    android:paddingBottom="2dp"
                     android:textColor="?attr/colorOnPrimary"
                     android:textSize="12sp"
                     tools:ignore="TextContrastCheck"

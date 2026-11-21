@@ -392,7 +392,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center" />
 
-                <ani.arkhime.com.FadingEdgeRecyclerView
+                <com.arkhins.arkhime.FadingEdgeRecyclerView
                     android:id="@+id/homeUserStatusRecyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -442,7 +442,7 @@
                         tools:ignore="ContentDescription" />
                 </LinearLayout>
 
-                <ani.arkhime.com.FadingEdgeRecyclerView
+                <com.arkhins.arkhime.FadingEdgeRecyclerView
                     android:id="@+id/homeHiddenItemsRecyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -536,7 +536,7 @@
                         android:layout_gravity="center"
                         android:layout_margin="90dp" />
 
-                    <ani.arkhime.com.FadingEdgeRecyclerView
+                    <com.arkhins.arkhime.FadingEdgeRecyclerView
                         android:id="@+id/homeWatchingRecyclerView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -629,7 +629,7 @@
                         android:layout_gravity="center"
                         android:layout_margin="90dp" />
 
-                    <ani.arkhime.com.FadingEdgeRecyclerView
+                    <com.arkhins.arkhime.FadingEdgeRecyclerView
                         android:id="@+id/homeFavAnimeRecyclerView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -725,7 +725,7 @@
                         android:layout_gravity="center"
                         android:layout_margin="90dp" />
 
-                    <ani.arkhime.com.FadingEdgeRecyclerView
+                    <com.arkhins.arkhime.FadingEdgeRecyclerView
                         android:id="@+id/homePlannedAnimeRecyclerView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -821,7 +821,7 @@
                         android:layout_gravity="center"
                         android:layout_margin="90dp" />
 
-                    <ani.arkhime.com.FadingEdgeRecyclerView
+                    <com.arkhins.arkhime.FadingEdgeRecyclerView
                         android:id="@+id/homeReadingRecyclerView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -913,7 +913,7 @@
                         android:layout_gravity="center"
                         android:layout_margin="90dp" />
 
-                    <ani.arkhime.com.FadingEdgeRecyclerView
+                    <com.arkhins.arkhime.FadingEdgeRecyclerView
                         android:id="@+id/homeFavMangaRecyclerView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -1010,7 +1010,7 @@
                         android:layout_gravity="center"
                         android:layout_margin="90dp" />
 
-                    <ani.arkhime.com.FadingEdgeRecyclerView
+                    <com.arkhins.arkhime.FadingEdgeRecyclerView
                         android:id="@+id/homePlannedMangaRecyclerView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -1100,7 +1100,7 @@
                         android:layout_gravity="center"
                         android:layout_margin="90dp" />
 
-                    <ani.arkhime.com.FadingEdgeRecyclerView
+                    <com.arkhins.arkhime.FadingEdgeRecyclerView
                         android:id="@+id/homeMissingSequelsRecyclerView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -1191,7 +1191,7 @@
                         android:layout_gravity="center"
                         android:layout_margin="90dp" />
 
-                    <ani.arkhime.com.FadingEdgeRecyclerView
+                    <com.arkhins.arkhime.FadingEdgeRecyclerView
                         android:id="@+id/homeRecommendedRecyclerView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

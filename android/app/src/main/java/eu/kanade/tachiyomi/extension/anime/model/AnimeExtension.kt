@@ -47,7 +47,9 @@ sealed class AnimeExtension {
         val sources: List<AvailableAnimeSources>,
         val apkName: String,
         val iconUrl: String,
-        val repository: String
+        val repository: String,
+        /** Full download URL from a Mihon-style store index; null for legacy repos. */
+        val apkUrl: String? = null,
     ) : AnimeExtension()
 
     data class Untrusted(

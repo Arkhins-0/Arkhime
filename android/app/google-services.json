@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:475842360198:android:334a6587ee20c42f9b3207",
+        "mobilesdk_app_id": "1:475842360198:android:711d543c7e30160c9b3207",
         "android_client_info": {
-          "package_name": "ani.arkhime.com"
+          "package_name": "com.arkhins.arkhime"
         }
       },
       "oauth_client": [],
@@ -26,9 +26,28 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:475842360198:android:728ae8ea5ce113a99b3207",
+        "mobilesdk_app_id": "1:475842360198:android:0090acaa573a67b09b3207",
         "android_client_info": {
-          "package_name": "ani.arkhime.com.beta"
+          "package_name": "com.arkhins.arkhime.alpha"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB0s3avL7vLXm8qasB28R0BOn7d96AxaSw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:475842360198:android:ada715c0c681aacb9b3207",
+        "android_client_info": {
+          "package_name": "com.arkhins.arkhime.beta"
         }
       },
       "oauth_client": [],

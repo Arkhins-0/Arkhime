@@ -5,10 +5,10 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import androidx.core.content.ContextCompat
-import ani.arkhime.com.media.MediaType
-import ani.arkhime.com.parsers.novel.NovelExtension
-import ani.arkhime.com.parsers.novel.NovelLoadResult
-import ani.arkhime.com.util.Logger
+import com.arkhins.arkhime.media.MediaType
+import com.arkhins.arkhime.parsers.novel.NovelExtension
+import com.arkhins.arkhime.parsers.novel.NovelLoadResult
+import com.arkhins.arkhime.util.Logger
 import eu.kanade.tachiyomi.extension.anime.model.AnimeExtension
 import eu.kanade.tachiyomi.extension.anime.model.AnimeLoadResult
 import eu.kanade.tachiyomi.extension.manga.model.MangaExtension
